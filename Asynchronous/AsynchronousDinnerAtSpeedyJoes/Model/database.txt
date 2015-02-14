@@ -1,0 +1,174 @@
+create user joes identified by joes default tablespace users temporary tablespace temp;
+grant create table, create procedure, create session to joes;
+alter user joes quota 100M on users;
+grant create trigger to joes;
+
+grant execute on dbms_lock to joes;
+
+grant execute on dbms_scheduler to joes;
+grant create job to joes;
+
+
+Data Source: jdbc/joesRestaurantdssdsdds
+
+jdbc:oracle:thin:@10.10.10.5:1521:soarepos
+
+
+create table kitchen_orders
+( table_number varchar2(20)
+, menu_item    varchar2(50)
+, price        number(5,2)
+, appetizer_or_main varchar2(1)
+, start_time   timestamp default systimestamp
+, end_time     timestamp
+, log_entry    varchar2(2000)
+, retrived_YN  varchar2(1) default 'N'
+);
+
+CREATE OR REPLACE TRIGGER process_kitchen_orders
+FOR INSERT 
+ON kitchen_orders
+COMPOUND TRIGGER
+  TYPE t_kitchen_orders_tbl       IS TABLE OF kitchen_orders%ROWTYPE INDEX BY SIMPLE_INTEGER;
+  l_new_kitchen_orders            t_kitchen_orders_tbl;   
+  l_index                         simple_INTEGER       := 0;
+
+ PROCEDURE ask_crew_to_process_orders
+  IS
+    i simple_integer :=0;
+    synchronous boolean := true;
+  BEGIN
+    FOR i IN 1..l_index loop
+       if synchronous
+       then
+         kitchen_staff.process_order
+         ( p_menu_item =>  l_new_kitchen_orders(i).menu_item 
+         , p_appetizer_or_main =>  l_new_kitchen_orders(i).appetizer_or_main 
+         , p_table_number =>  l_new_kitchen_orders(i).table_number
+         );
+       else
+         -- schedule as asynchronous job
+         kitchen_staff.schedule_job_to_process_order
+         ( p_menu_item =>  l_new_kitchen_orders(i).menu_item 
+         , p_appetizer_or_main =>  l_new_kitchen_orders(i).appetizer_or_main 
+         , p_table_number =>  l_new_kitchen_orders(i).table_number
+         );
+       end if;
+    end loop;
+  END ask_crew_to_process_orders;
+
+AFTER EACH ROW
+  IS
+  BEGIN         
+    IF INSERTING 
+    THEN
+      l_index := l_index + 1;
+      l_new_kitchen_orders(l_index).table_number := :new.table_number;
+      l_new_kitchen_orders(l_index).appetizer_or_main := :new.appetizer_or_main;
+      l_new_kitchen_orders(l_index).menu_item := :new.menu_item;
+    end if;    
+END AFTER EACH ROW;
+  -- AFTER STATEMENT Section:
+  -- when all records have been inserted - not yet committed though
+  AFTER STATEMENT IS
+  BEGIN
+     ask_crew_to_process_orders;
+  END AFTER STATEMENT;
+ 
+END process_kitchen_orders;
+
+
+create or replace 
+package kitchen_staff
+as
+
+  procedure schedule_job_to_process_order
+  ( p_menu_item in varchar2
+  , p_appetizer_or_main  in varchar2
+  , p_table_number  in varchar2
+  );
+
+  procedure execute_job_to_process_order
+  ( p_menu_item in varchar2
+  , p_appetizer_or_main  in varchar2
+  , p_table_number  in varchar2
+  );
+
+
+  procedure process_order
+  ( p_menu_item in varchar2
+  , p_appetizer_or_main  in varchar2
+  , p_table_number  in varchar2
+  );
+end kitchen_staff;
+
+create or replace 
+package body kitchen_staff
+as
+
+  procedure schedule_job_to_process_order
+  ( p_menu_item in varchar2
+  , p_appetizer_or_main  in varchar2
+  , p_table_number  in varchar2
+  ) is
+    PRAGMA AUTONOMOUS_TRANSACTION;
+    l_job_plsql varchar2(2000);
+    BEGIN
+      l_job_plsql:= 'begin kitchen_staff.execute_job_to_process_order( p_menu_item => '''||p_menu_item||'''  
+                       , p_appetizer_or_main  => '''||p_appetizer_or_main||'''
+                       , p_table_number  => '''||p_table_number||'''); 
+                     end;'
+      ;
+    dbms_scheduler.create_job 
+    (  
+      job_name      =>  'ProcessMealItem4Tbl'||p_table_number||p_appetizer_or_main,  
+      job_type      =>  'PLSQL_BLOCK',  
+      job_action    =>  l_job_plsql,  
+      start_date    =>  sysdate,  
+      enabled       =>  TRUE,  
+      auto_drop     =>  TRUE,  
+      comments      =>  'immediate, one-time job');
+   -- need to commit in order to transfer job to scheduling engine
+   COMMIT;
+END;
+
+  procedure execute_job_to_process_order
+  ( p_menu_item in varchar2
+  , p_appetizer_or_main  in varchar2
+  , p_table_number  in varchar2
+  )  is
+  begin
+    process_order
+    ( p_menu_item => p_menu_item
+    , p_appetizer_or_main  => p_appetizer_or_main
+    , p_table_number  => p_table_number
+    );
+    commit;
+  end execute_job_to_process_order;
+
+  procedure process_order
+  ( p_menu_item in varchar2
+  , p_appetizer_or_main  in varchar2
+  , p_table_number  in varchar2
+  ) is
+  begin
+    -- simulate processing time, depending on type of menu_item
+    dbms_lock.sleep( case upper(p_appetizer_or_main) when 'A' then 6 when 'M' then 12 else 0 end );
+    -- when done preparing, update kitchen_orders
+    update kitchen_orders
+    set    MENU_ITEM = upper(menu_item)
+    ,      END_TIME = systimestamp
+    ,      price = case upper(APPETIZER_OR_MAIN) when 'A' then 7.50 else 24.45 end
+    where  table_number = p_table_number
+    and    APPETIZER_OR_MAIN = p_appetizer_or_main
+    and    END_TIME is null
+    ;
+    
+  end process_order;
+  
+  
+end kitchen_staff;
+
+
+
+

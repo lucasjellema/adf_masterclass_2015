@@ -1,0 +1,93 @@
+<html>
+    <head>
+       <title>OrderMeal</title>
+       <script type="text/javascript">
+        function ajaxAsyncRequest(reqURL) {
+          //Creating a new XMLHttpRequest object
+          var xmlhttp = new XMLHttpRequest(); //for IE7+, Firefox, Chrome, Opera, Safari
+          //Create a asynchronous GET request
+          xmlhttp.open("POST", reqURL, true);
+          xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencode"); 
+          //When readyState is 4 then get the server output
+          xmlhttp.onreadystatechange = function() {
+             if (xmlhttp.readyState == 4) {
+               if (xmlhttp.status == 200) {
+                  document.getElementById("message").innerHTML = "";        
+                  handleMealItemDelivery( xmlhttp.responseText);
+               }
+               else {
+                 alert('Something is wrong !!');
+               }
+            }
+          }; //callback function
+       
+          var tableNumber = document.getElementById("tableNumber").value;
+          var drink = document.getElementById("drink").value;
+          var appetizer = document.getElementById("appetizer").value;
+          var main = document.getElementById("main").value;
+          var meal = {"meal": { "drink":drink, "appetizer":appetizer, "main":main}
+                  , "tableNumber" : tableNumber};
+          ;
+          var mealJSON = JSON.stringify(meal);
+          xmlhttp.send(mealJSON);
+          document.getElementById("message").innerHTML = "Your meal order has been placed:"+mealJSON;        
+
+          // send order over websocket
+          // to let tablenumber know (to socket mediator)
+          sendText(mealJSON);      
+
+        } //ajaxAsyncRequest
+        
+        function waiter(form) {
+          ajaxAsyncRequest('ajaxordermeal');            
+        }
+        
+
+    var dinner = [];
+
+    </script>
+    <script type="text/javascript" src="websocket.js"></script>
+    <script type="text/javascript" src="speedyjoes.js"></script>
+    </head>
+    <body>
+     <h1>Speedy Joe's Restaurant</h1>
+       <div id="output"></div> 
+        <div id="message">Please place your order</div>
+        <br/>
+        <table>
+        <tr>
+        <td>
+        <img src="images/restaurantTable.png"/>
+        <div id="mealDiv">Dinner is being served...</div>
+        <br/>
+        <br/>
+        <form name="mealOrderForm" >
+        <table>
+        <tr>
+        <td>Table Number:</td>
+            <td><input type="text" name="tableNumber" id="tableNumber"/></td>
+            </tr>
+            <tr>
+            <td>
+            Drink:</td><td>
+            <input type="text" name="drink" id="drink"/>
+            </td></tr>
+            <tr><td>
+            Appetizer:</td><td>
+            <input type="text" name="appetizer" id="appetizer"/>
+            </td></tr><tr><td>
+            Main:
+            </td><td>
+            <input type="text" name="main" id="main"/>
+            </td></tr></table>
+            <input type="button" value="Place Order" onclick="javascript:waiter('a');"/>
+        </form>
+</td>
+        <td id="trace">
+Execution Trace<br/><br/>    
+        
+        </td>
+        </tr>
+        </table>
+    </body>
+</html>
