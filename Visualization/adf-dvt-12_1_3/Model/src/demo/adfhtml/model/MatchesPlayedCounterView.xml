@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="MatchesPlayedCounterView"
+  Version="12.1.3.10.8"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="demo.adfhtml.model.MatchesPlayedCounterView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="bind_date"
+    Kind="where"
+    Type="oracle.jbo.domain.Date"/>
+  <SQLQuery><![CDATA[select distinct 
+    trunc(LOCAL_START_TIME) match_date
+,   count(*) over (order by trunc(local_start_time)) matches_played_up_until
+,   round(100*count(*) over (order by trunc(local_start_time))/64)/100 percentage_matches_played
+from WC_MATCH_RESULTS m
+where m.local_start_time <= nvl(:bind_date, m.local_start_time)
+order by match_date]]></SQLQuery>
+  <ViewAttribute
+    Name="MatchDate"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="MATCH_DATE"
+    Expression="MATCH_DATE"
+    SQLType="DATE"/>
+  <ViewAttribute
+    Name="MatchesPlayedUpUntil"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="MATCHES_PLAYED_UP_UNTIL"
+    Expression="MATCHES_PLAYED_UP_UNTIL"
+    SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="PercentageMatchesPlayed"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="PERCENTAGE_MATCHES_PLAYED"
+    Expression="PERCENTAGE_MATCHES_PLAYED"
+    SQLType="NUMERIC"/>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="MatchDate"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="demo.adfhtml.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

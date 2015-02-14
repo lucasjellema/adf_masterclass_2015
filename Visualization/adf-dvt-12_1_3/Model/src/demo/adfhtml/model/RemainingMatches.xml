@@ -1,0 +1,490 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="RemainingMatches"
+   Version="12.1.3.10.8"
+   InheritPersonalization="true"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   PageIterMode="Partial" >
+   <DesignTime>
+      <Attr Name="_isExpertMode" Value="true" />
+   </DesignTime>
+   <Properties >
+      <SchemaBasedProperties >
+         <LABEL
+            ResId="demo.adfhtml.model.RemainingMatches_LABEL" >
+         </LABEL>
+      </SchemaBasedProperties>
+   </Properties>
+   <Variable
+      Name="b_selected_tags"
+      Kind="where"
+      Type="java.lang.String" >
+   </Variable>
+   <SQLQuery><![CDATA[
+with  filter_tags as
+ ( select regexp_substr(:b_selected_tags,'[^,]+', 1, level) filter_tag
+   from dual
+   connect 
+   by     regexp_substr(:b_selected_tags, '[^,]+', 1, level) is not null
+ )   
+, tag_filter as
+ ( select cast( collect(substr(filter_tag,1,30) ) as string_table) selected_tags
+   from   filter_tags
+ )
+ , matches as
+(  select  mr.id 
+  ,      mr.group1
+  ,      t1.country home_country
+  ,      t2.country away_country
+  ,      mr.home_goals
+  ,      mr.away_goals
+  ,      mr.rating
+  ,      t1.fifa_rank home_fifa_rank
+  ,      t2.fifa_rank away_fifa_rank
+  ,      r1.name home_region
+  ,      r1.continent home_continent
+  ,      r2.name away_region
+  ,      r2.continent away_continent
+  ,      mr.local_start_time
+  ,      mr.scoring_process
+  ,      sdm.lattitude
+  ,      sdm.city
+  from   wc_match_results mr
+         join
+         wc_stadiums sdm
+         on (mr.sdm_id = sdm.id)
+         join
+         wc_teams t1
+         on ( mr.home_team_id = t1.id )
+         join
+         wc_teams t2
+         on ( mr.away_team_id = t2.id
+            )
+         join 
+         wc_football_regions r1
+         on (t1.rgn_id = r1.id)
+         join 
+         wc_football_regions r2
+          on (t2.rgn_id = r2.id))
+, scoring_process (match_id, intermediate_score, iteration) as
+( select id, substr(scoring_process,1,1), 1
+  from   wc_match_results
+  union all
+  select id,substr(scoring_process,1,iteration+1), iteration+1
+  from   wc_match_results mr
+         join
+         scoring_process sp
+         on (sp.match_id = mr.id and length(scoring_process)>= iteration + 1)
+)
+, tagged as
+(select t.tag
+ ,      mt.match_id
+ from   wc_match_tags mt
+        join
+        wc_tags t
+        on (mt.tag_id = t.id)
+ union all
+ select 'extra time' tag
+ ,      m.id match_id
+ from   matches m
+ where  instr(m.scoring_process,'|') > 0 
+ union all
+ select 'penalty shootouts' tag
+ ,      m.id match_id
+ from   matches m
+ where  instr(m.scoring_process,'|') > 0 and  instr(m.scoring_process,'|') < length(m.scoring_process)
+ union all
+ select case 
+        when m.group1 is null
+        then 'knock out'
+        else 'group stage'
+        end
+ ,      m.id match_id
+ from   matches m
+ union all
+ select case 
+        when m.id between 49 and 56 then 'Round of 16'
+        when m.id between 57 and 60 then 'Quarter Final'
+        when m.id between 61 and 62 then 'Semi Final'
+        when m.id = 64 then 'Final'
+        when m.id = 63 then 'Consolation Final'
+        end
+ ,      m.id match_id
+ from   matches m
+ where  m.id > 48
+ union all
+ select 'goalless first half' tag
+ ,      m.id match_id
+ from   matches m
+ where  instr(m.scoring_process,'-') = 1
+ union all
+ select 'Surprise' tag
+ ,      m.id match_id
+ from   matches m
+ where (m.home_goals > m.away_goals and m.home_fifa_rank - m.away_fifa_rank > 5)
+        or 
+       (m.home_goals < m.away_goals and m.home_fifa_rank - m.away_fifa_rank < -5)
+        or 
+       (m.home_goals = m.away_goals and abs(m.home_fifa_rank - m.away_fifa_rank)  > 10)
+ union all      
+ select 'Intercontinental' tag
+ ,      m.id match_id
+ from   matches m
+ where (m.home_continent != m.away_continent)
+ union all      
+ select 'Derby' tag
+ ,        m.id match_id
+ from   matches m
+ where (m.home_region = m.away_region)
+ union all      
+ select case
+        when lattitude < 10 then 'north'
+        when lattitude > 23 then 'south'
+        else 'central' end tag
+ ,      m.id match_id
+ from   matches m
+ union all      
+ select  case to_char(m.LOCAL_START_TIME, 'HH24') 
+         when '13' then 'early' 
+         when '22' then 'late'
+         end tag
+ ,       m.id match_id
+ from    matches m
+ where   to_char(m.LOCAL_START_TIME, 'HH24') in ('13','22')
+ union all      
+ select   'goalless tie' tag
+ ,       m.id match_id
+ from    matches m
+ where   home_goals + away_goals=0
+ union all      
+ select  'recent' tag
+ ,       m.id match_id
+ from    ( select m.* 
+           ,      row_number() over (order by m.local_start_time desc) rnk
+           from   matches m
+        ) m
+ where   rnk < 6
+ union all      
+ select  'exciting' tag
+ ,        m.id match_id
+ from     matches m
+ where    home_goals + away_goals > 4
+ union all 
+ select  'comeback' tag 
+ ,        match_id 
+ from     ( select ms.match_id 
+            from   ( select sp.* 
+                     ,      length(translate('1'||intermediate_score, '10','1')) - length(translate('0'||intermediate_score, '01','0')) running_score 
+                     from   scoring_process sp 
+                   ) ms          
+            having max(running_score)> 0 and min(running_score) < 0 
+            group 
+            by     ms.match_id 
+          )         
+)
+, match_tag_sets as
+( select match_id
+  ,      cast(collect(substr(tag,1,25)) as string_table) tagset     
+  from   tagged
+         join
+         matches m
+         on (m.id = tagged.match_id)
+  group 
+  by     match_id
+)
+, selected_matches as
+( select match_id
+  from   match_tag_sets mts
+         cross join
+         tag_filter  tf     
+  where  tf.selected_tags SUBMULTISET  mts.tagset
+)
+select home_country
+,      away_country 
+,      home_goals 
+,      away_goals 
+,    home_goals ||'-'||away_goals score
+,      m.id match_id
+  ,      m.local_start_time
+  ,      m.scoring_process
+  , m.rating match_rating
+  , nvl(m.group1, 'N/A') group1
+  , city
+,      tags
+from   ( select match_id
+         ,      listagg(lower(tag),',') within group (order by tag) tags
+         from   tagged
+                join
+                selected_matches
+                using (match_id)   
+         cross join
+         tag_filter  tf     
+         where  tag not member of tf.selected_tags 
+         group
+         by     match_id
+       ) mt
+       join
+       matches m
+       on (m.id = mt.match_id)
+   ]]></SQLQuery>
+   <ViewAttribute
+      Name="HomeCountry"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      PrecisionRule="true"
+      Precision="255"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="HOME_COUNTRY"
+      Expression="HOME_COUNTRY"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+      <Properties >
+         <SchemaBasedProperties >
+            <LABEL
+               ResId="demo.adfhtml.model.RemainingMatches.HomeCountry_LABEL" >
+            </LABEL>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AwayCountry"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      PrecisionRule="true"
+      Precision="3"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="AWAY_COUNTRY"
+      Expression="AWAY_COUNTRY"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+      <Properties >
+         <SchemaBasedProperties >
+            <LABEL
+               ResId="demo.adfhtml.model.RemainingMatches.AwayCountry_LABEL" >
+            </LABEL>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="HomeGoals"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="2"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="HOME_GOALS"
+      Expression="HOME_GOALS"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+      <Properties >
+         <SchemaBasedProperties >
+            <LABEL
+               ResId="demo.adfhtml.model.RemainingMatches.HomeGoals_LABEL" >
+            </LABEL>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AwayGoals"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="2"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="AWAY_GOALS"
+      Expression="AWAY_GOALS"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+      <Properties >
+         <SchemaBasedProperties >
+            <LABEL
+               ResId="demo.adfhtml.model.RemainingMatches.AwayGoals_LABEL" >
+            </LABEL>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Score"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="81"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="SCORE"
+      Expression="SCORE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="81" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MatchId"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      PrecisionRule="true"
+      Precision="2"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="MATCH_ID"
+      Expression="MATCH_ID"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+      <Properties >
+         <SchemaBasedProperties >
+            <LABEL
+               ResId="demo.adfhtml.model.RemainingMatches.MatchId_LABEL" >
+            </LABEL>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LocalStartTime"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="LOCAL_START_TIME"
+      Expression="LOCAL_START_TIME"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <SchemaBasedProperties >
+            <FMT_FORMATTER
+               ResId="demo.adfhtml.model.RemainingMatches.LocalStartTime_FMT_FORMATTER" >
+            </FMT_FORMATTER>
+            <FMT_FORMAT
+               ResId="demo.adfhtml.model.RemainingMatches.LocalStartTime_FMT_FORMAT" >
+            </FMT_FORMAT>
+            <LABEL
+               ResId="demo.adfhtml.model.RemainingMatches.LocalStartTime_LABEL" >
+            </LABEL>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ScoringProcess"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="20"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="SCORING_PROCESS"
+      Expression="SCORING_PROCESS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MatchRating"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="1"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="MATCH_RATING"
+      Expression="MATCH_RATING"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Group1"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="GROUP1"
+      Expression="GROUP1"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1" />
+      </DesignTime>
+      <Properties >
+         <SchemaBasedProperties >
+            <LABEL
+               ResId="demo.adfhtml.model.RemainingMatches.Group1_LABEL" >
+            </LABEL>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="City"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="50"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CITY"
+      Expression="CITY"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="50" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tags"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="4000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TAGS"
+      Expression="TAGS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000" />
+      </DesignTime>
+   </ViewAttribute>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="MatchId" />
+   </AttrArray>
+   <ViewLinkAccessor
+      Name="GroupDesignation"
+      ViewLink="demo.adfhtml.model.GroupToMatchesViewLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false"/>
+   <ResourceBundle >
+      <PropertiesBundle
+         PropertiesFile="demo.adfhtml.model.ModelBundle" >
+      </PropertiesBundle>
+   </ResourceBundle>
+</ViewObject>

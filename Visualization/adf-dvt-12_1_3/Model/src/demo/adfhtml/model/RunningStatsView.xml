@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="RunningStatsView"
+  Version="12.1.3.10.8"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="demo.adfhtml.model.RunningStatsView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="bind_date"
+    Kind="where"
+    Type="oracle.jbo.domain.Date"/>
+  <SQLQuery><![CDATA[select * from running_score_stats
+where match_date <= nvl(:bind_date, match_date)]]></SQLQuery>
+  <ViewAttribute
+    Name="MatchDate"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="MATCH_DATE"
+    Expression="MATCH_DATE"
+    SQLType="DATE"/>
+  <ViewAttribute
+    Name="ShortAvg"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="SHORT_AVG"
+    Expression="SHORT_AVG"
+    SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="TotalAvg"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="TOTAL_AVG"
+    Expression="TOTAL_AVG"
+    SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="GoalsScoredOnDay"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="GOALS_SCORED_ON_DAY"
+    Expression="GOALS_SCORED_ON_DAY"
+    SQLType="NUMERIC"/>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="MatchDate"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="demo.adfhtml.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="MatchResultsView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="MatchResult.GROUP1, 
+       MatchResult.HOME_TEAM_ID, 
+       MatchResult.AWAY_TEAM_ID, 
+       MatchResult.HOME_GOALS, 
+       MatchResult.AWAY_GOALS, 
+       MatchResult.SDM_ID, 
+       MatchResult.LOCAL_START_TIME, 
+       MatchResult.SCORING_PROCESS, 
+       MatchResult.ID, 
+       HomeTeamTeam.COUNTRY, 
+       HomeTeamTeam.ID AS ID1, 
+       AwayTeam.COUNTRY AS COUNTRY1, 
+       AwayTeam.ID AS ID2, 
+       Stadium.CITY, 
+       Stadium.NAME, 
+       Stadium.ID AS ID3"
+  FromList="WC_MATCH_RESULTS MatchResult, WC_TEAMS HomeTeamTeam, WC_TEAMS AwayTeam, WC_STADIUMS Stadium"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  Where="((MatchResult.HOME_TEAM_ID = HomeTeamTeam.ID(+)) AND (MatchResult.AWAY_TEAM_ID = AwayTeam.ID(+))) AND (MatchResult.SDM_ID = Stadium.ID(+))">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="TeamsView"
+    ViewObjectName="demo.adfhtml.model.TeamsView"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="StadiumsView"
+    ViewObjectName="demo.adfhtml.model.StadiumsView"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_Home"
+    ListVOName="TeamsView"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Home"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="HomeTeamId"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Country"/>
+      <Item Value="Id"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_Away"
+    ListVOName="TeamsView"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Away"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="AwayTeamId"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Country"/>
+      <Item Value="Id"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_Name"
+    ListVOName="StadiumsView"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Name"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="SdmId"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Name"/>
+      <Item Value="Id"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="City"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <EntityUsage
+    Name="MatchResult"
+    Entity="demo.adfhtml.model.MatchResult"/>
+  <EntityUsage
+    Name="HomeTeamTeam"
+    Entity="demo.adfhtml.model.Team"
+    Association="demo.adfhtml.model.HomeTeam"
+    AssociationEnd="demo.adfhtml.model.HomeTeam.HomeTeam"
+    SourceUsage="demo.adfhtml.model.MatchResultsView.MatchResult"
+    ReadOnly="true"
+    Reference="true"
+    DeleteParticipant="false"
+    JoinType="LEFT OUTER JOIN">
+    <DesignTime>
+      <AttrArray Name="_srcAttributes">
+        <Item Value="demo.adfhtml.model.MatchResult.HomeTeamId"/>
+      </AttrArray>
+      <AttrArray Name="_dstAttributes">
+        <Item Value="demo.adfhtml.model.Team.Id"/>
+      </AttrArray>
+    </DesignTime>
+  </EntityUsage>
+  <EntityUsage
+    Name="AwayTeam"
+    Entity="demo.adfhtml.model.Team"
+    Association="demo.adfhtml.model.AwayTeam"
+    AssociationEnd="demo.adfhtml.model.AwayTeam.AwayTeam"
+    SourceUsage="demo.adfhtml.model.MatchResultsView.MatchResult"
+    ReadOnly="true"
+    Reference="true"
+    DeleteParticipant="false"
+    JoinType="LEFT OUTER JOIN">
+    <DesignTime>
+      <AttrArray Name="_srcAttributes">
+        <Item Value="demo.adfhtml.model.MatchResult.AwayTeamId"/>
+      </AttrArray>
+      <AttrArray Name="_dstAttributes">
+        <Item Value="demo.adfhtml.model.Team.Id"/>
+      </AttrArray>
+    </DesignTime>
+  </EntityUsage>
+  <EntityUsage
+    Name="Stadium"
+    Entity="demo.adfhtml.model.Stadium"
+    Association="demo.adfhtml.model.MatchVenue"
+    AssociationEnd="demo.adfhtml.model.MatchVenue.Stadium"
+    SourceUsage="demo.adfhtml.model.MatchResultsView.MatchResult"
+    ReadOnly="true"
+    Reference="true"
+    DeleteParticipant="false"
+    JoinType="LEFT OUTER JOIN">
+    <DesignTime>
+      <AttrArray Name="_srcAttributes">
+        <Item Value="demo.adfhtml.model.MatchResult.SdmId"/>
+      </AttrArray>
+      <AttrArray Name="_dstAttributes">
+        <Item Value="demo.adfhtml.model.Stadium.Id"/>
+      </AttrArray>
+    </DesignTime>
+  </EntityUsage>
+  <ViewAttribute
+    Name="Group1"
+    PrecisionRule="true"
+    EntityAttrName="Group1"
+    EntityUsage="MatchResult"
+    AliasName="GROUP1"/>
+  <ViewAttribute
+    Name="HomeTeamId"
+    PrecisionRule="true"
+    EntityAttrName="HomeTeamId"
+    EntityUsage="MatchResult"
+    AliasName="HOME_TEAM_ID"/>
+  <ViewAttribute
+    Name="AwayTeamId"
+    PrecisionRule="true"
+    EntityAttrName="AwayTeamId"
+    EntityUsage="MatchResult"
+    AliasName="AWAY_TEAM_ID"/>
+  <ViewAttribute
+    Name="HomeGoals"
+    PrecisionRule="true"
+    EntityAttrName="HomeGoals"
+    EntityUsage="MatchResult"
+    AliasName="HOME_GOALS"/>
+  <ViewAttribute
+    Name="AwayGoals"
+    PrecisionRule="true"
+    EntityAttrName="AwayGoals"
+    EntityUsage="MatchResult"
+    AliasName="AWAY_GOALS"/>
+  <ViewAttribute
+    Name="SdmId"
+    PrecisionRule="true"
+    EntityAttrName="SdmId"
+    EntityUsage="MatchResult"
+    AliasName="SDM_ID"/>
+  <ViewAttribute
+    Name="LocalStartTime"
+    PrecisionRule="true"
+    EntityAttrName="LocalStartTime"
+    EntityUsage="MatchResult"
+    AliasName="LOCAL_START_TIME">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMATTER
+          ResId="demo.adfhtml.model.MatchResultsView.LocalStartTime_FMT_FORMATTER"/>
+        <FMT_FORMAT
+          ResId="demo.adfhtml.model.MatchResultsView.LocalStartTime_FMT_FORMAT"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ScoringProcess"
+    PrecisionRule="true"
+    EntityAttrName="ScoringProcess"
+    EntityUsage="MatchResult"
+    AliasName="SCORING_PROCESS"/>
+  <ViewAttribute
+    Name="Id"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="MatchResult"
+    AliasName="ID"/>
+  <ViewAttribute
+    Name="Home"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Country"
+    EntityUsage="HomeTeamTeam"
+    AliasName="COUNTRY"
+    LOVName="LOV_Home"
+    IsUpdateable="false">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="HomeCountryId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="HomeTeamTeam"
+    AliasName="ID1"/>
+  <ViewAttribute
+    Name="Away"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Country"
+    EntityUsage="AwayTeam"
+    AliasName="COUNTRY1"
+    LOVName="LOV_Away"
+    IsUpdateable="false">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AwayCountryId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="AwayTeam"
+    AliasName="ID2"/>
+  <ViewAttribute
+    Name="City"
+    PrecisionRule="true"
+    EntityAttrName="City"
+    EntityUsage="Stadium"
+    AliasName="CITY"/>
+  <ViewAttribute
+    Name="Name"
+    PrecisionRule="true"
+    EntityAttrName="Name"
+    EntityUsage="Stadium"
+    AliasName="NAME"
+    LOVName="LOV_Name">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StadiumId"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="Stadium"
+    AliasName="ID3"/>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="Id"/>
+  </AttrArray>
+  <ViewLinkAccessor
+    Name="HomeTeam"
+    ViewLink="demo.adfhtml.model.HomeTeamViewLink"
+    Type="oracle.jbo.Row"
+    Reversed="true"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="AwayTeam"
+    ViewLink="demo.adfhtml.model.AwayTeamViewLink"
+    Type="oracle.jbo.Row"
+    Reversed="true"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="Stadium"
+    ViewLink="demo.adfhtml.model.MatchVenueViewLink"
+    Type="oracle.jbo.Row"
+    Reversed="true"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="AssociatedTags"
+    ViewLink="demo.adfhtml.model.TagsViewLink"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="GroupStandingView"
+    ViewLink="demo.adfhtml.model.MatchResultGroupStandingViewLink"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="MatchTagCloud"
+    ViewLink="demo.adfhtml.model.MatchResultMatchTagCloudViewLink"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="demo.adfhtml.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

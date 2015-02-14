@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE ViewLink SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewLink
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="GroupToMatchesViewLink"
+  Version="12.1.3.10.8"
+  InheritPersonalization="merge">
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="demo.adfhtml.model.GroupToMatchesViewLink_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <ViewLinkDefEnd
+    Name="GroupDesignation"
+    Cardinality="1"
+    Source="true"
+    Owner="demo.adfhtml.model.GroupsAndAvgRating">
+    <DesignTime>
+      <Attr Name="_accessor" Value="true"/>
+      <Attr Name="_finderName" Value="GroupDesignation"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="demo.adfhtml.model.GroupsAndAvgRating.GroupDesignation"/>
+    </AttrArray>
+  </ViewLinkDefEnd>
+  <ViewLinkDefEnd
+    Name="RemainingMatches"
+    Cardinality="-1"
+    Owner="demo.adfhtml.model.RemainingMatches">
+    <DesignTime>
+      <Attr Name="_finderName" Value="RemainingMatches"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="demo.adfhtml.model.RemainingMatches.Group1"/>
+    </AttrArray>
+  </ViewLinkDefEnd>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="demo.adfhtml.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewLink>

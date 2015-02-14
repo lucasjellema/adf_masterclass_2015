@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="TotalMatchPlayCountUntilDateView"
+  Version="12.1.3.10.8"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="demo.adfhtml.model.TotalMatchPlayCountUntilDateView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="bind_date"
+    Kind="where"
+    Type="oracle.jbo.domain.Date"
+    IsUpdateable="true"/>
+  <SQLQuery><![CDATA[select max(trunc(local_start_time)) match_date
+,      count(id) match_count
+from   wc_match_results m
+where m.local_start_time <= nvl(:bind_date, m.local_start_time)]]></SQLQuery>
+  <ViewAttribute
+    Name="MatchDate"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
+    AliasName="MATCH_DATE"
+    Expression="MATCH_DATE"
+    SQLType="DATE"/>
+  <ViewAttribute
+    Name="MatchCount"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="NUMBER"
+    AliasName="MATCH_COUNT"
+    Expression="MATCH_COUNT"
+    SQLType="NUMERIC"/>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="MatchDate"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="demo.adfhtml.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>
