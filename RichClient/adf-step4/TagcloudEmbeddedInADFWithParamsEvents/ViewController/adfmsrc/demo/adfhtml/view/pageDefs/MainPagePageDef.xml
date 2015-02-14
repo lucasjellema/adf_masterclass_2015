@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="MainPagePageDef"
+                Package="demo.adfhtml.view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <taskFlow id="tagcloudtaskflowdefinition1"
+              taskFlowId="/WEB-INF/tagcloud-task-flow-definition.xml#tagcloud-task-flow-definition"
+              activation="deferred"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding">
+      <parameters>
+        <parameter id="tags" value="#{viewScope.animalCloud.tags}"/>
+      </parameters>
+    </taskFlow>
+    <taskFlow id="tagcloudtaskflowdefinition2"
+              taskFlowId="/WEB-INF/tagcloud-task-flow-definition.xml#tagcloud-task-flow-definition"
+              activation="deferred"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding">
+      <parameters>
+        <parameter id="tags" value="#{viewScope.carsCloud.tags}"/>
+      </parameters>
+    </taskFlow>
+  </executables>
+  <bindings>
+    <methodAction id="handleEventForZoo" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="handleEvent"
+                  IsViewObjectMethod="false"
+                  DataControl="ZooTagClickedEventConsumer"
+                  InstanceName="ZooTagClickedEventConsumer.dataProvider">
+      <NamedData NDName="payload" NDType="java.lang.Object" NDValue="${payLoad}"/>
+    </methodAction>
+    <methodAction id="handleEventForParkingLot" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="handleEvent"
+                  IsViewObjectMethod="false"
+                  DataControl="CarTagClickedEventConsumer"
+                  InstanceName="CarTagClickedEventConsumer.dataProvider">
+      <NamedData NDName="payload" NDType="java.lang.Object" NDValue="${payLoad}"/>
+    </methodAction>
+  </bindings>
+  <eventMap xmlns="http://xmlns.oracle.com/adfm/contextualEvent">
+    <event name="TagClickedEvent">
+      <producer region="tagcloudtaskflowdefinition1.tagcloudPageDef.publishTagClickedEvent">
+        <consumer region="" handler="handleEventForZoo" handleCondition=""/>
+      </producer>
+      <producer region="tagcloudtaskflowdefinition2.tagcloudPageDef.publishTagClickedEvent">
+        <consumer region="" handler="handleEventForParkingLot" handleCondition=""/>
+      </producer>
+    </event>
+  </eventMap>
+</pageDefinition>

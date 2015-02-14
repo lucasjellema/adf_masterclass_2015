@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1">
+      <af:messages id="m1"/>
+      <af:resource type="javascript" source="/scripts/tagcloud.js"/>
+      <af:resource type="javascript" source="/scripts/integration.js"/>
+      <af:form id="f1">
+        <af:panelStretchLayout id="psl1" styleClass="AFStretchWidth "
+                               inlineStyle="height:600.0px;">
+          <f:facet name="top">
+            <af:panelHeader text="Simplest ADF application in the world ... with TAGCLOUD!"
+                            id="ph1">
+              <f:facet name="context"/>
+              <f:facet name="menuBar"/>
+              <f:facet name="legend"/>
+              <f:facet name="info"/>
+            </af:panelHeader>
+          </f:facet>
+          <f:facet name="center">
+            <af:panelAccordion id="pa1" discloseMany="true">
+              <af:showDetailItem text="Animals" id="sdi1"
+                                 stretchChildren="first">
+                <af:panelSplitter id="ps1" splitterPosition="100">
+                  <f:facet name="first">
+                    <af:inputText id="zoo" label="Zoo"
+                                  value="#{viewScope.zookeeper.animals}"
+                                  binding="#{viewScope.zookeeper.zooUIComponent}"/>
+                  </f:facet>
+                  <f:facet name="second">
+                    <af:region value="#{bindings.tagcloudtaskflowdefinition1.regionModel}"
+                               id="r1"/>
+                  </f:facet>
+                </af:panelSplitter>
+              </af:showDetailItem>
+              <af:showDetailItem text="Cars" id="sdi2" stretchChildren="first">
+               <af:panelSplitter id="ps1c" splitterPosition="100">
+                  <f:facet name="first">
+                    <af:panelGroupLayout layout="scroll"
+                                         xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                                         id="pgl1">
+                      
+                      <af:inputText id="parkinglot" label="Parkinglot"
+                                    value="#{viewScope.parkingattendant.parkedCars}"
+                                    binding="#{viewScope.parkingattendant.parkinglotUIComponent}"/>
+                      
+                    </af:panelGroupLayout>
+                  </f:facet>
+                  <f:facet name="second">
+                <af:region value="#{bindings.tagcloudtaskflowdefinition2.regionModel}"
+                           id="r2"/>
+                  </f:facet>
+                </af:panelSplitter>
+              </af:showDetailItem>
+            </af:panelAccordion>
+          </f:facet>
+        </af:panelStretchLayout>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

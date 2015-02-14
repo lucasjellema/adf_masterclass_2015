@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application"
+             version="11.1.1.64.93" id="DataBindings" SeparateXMLFiles="false"
+             Package="demo.adfhtml.view" ClientType="Generic">
+  <definitionFactories>
+    <factory nameSpace="http://xmlns.oracle.com/adf/controller/binding"
+             className="oracle.adf.controller.internal.binding.TaskFlowBindingDefFactoryImpl"/>
+    <dtfactory className="oracle.adf.controller.internal.dtrt.binding.BindingDTObjectFactory"/>
+  </definitionFactories>
+  <pageMap>
+    <page path="/MainPage.jspx" usageId="demo_adfhtml_view_MainPagePageDef"/>
+    <page path="/tagcloud.jsff" usageId="demo_adfhtml_view_tagcloudPageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="demo_adfhtml_view_MainPagePageDef"
+          path="demo.adfhtml.view.pageDefs.MainPagePageDef"/>
+    <page id="demo_adfhtml_view_tagcloudPageDef"
+          path="demo.adfhtml.view.pageDefs.tagcloudPageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <dc id="CarTagClickedEventConsumer"
+        path="demo.adfhtml.view.CarTagClickedEventConsumer"/>
+    <dc id="ZooTagClickedEventConsumer"
+        path="demo.adfhtml.view.ZooTagClickedEventConsumer"/>
+    <dc id="TagClickedEventPublisher"
+        path="demo.adfhtml.view.TagClickedEventPublisher"/>
+  </dataControlUsages>
+</Application>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<DataControlConfigs xmlns="http://xmlns.oracle.com/adfm/configuration"
+                    version="11.1.1.64.93" id="DataControls"
+                    Package="demo.adfhtml.view">
+  <AdapterDataControl id="TagClickedEventPublisher"
+                      FactoryClass="oracle.adf.model.adapter.bean.BeanDCFactoryImpl"
+                      ImplDef="oracle.adf.model.adapter.bean.BeanDefinition"
+                      SupportsTransactions="false" SupportsSortCollection="true"
+                      SupportsResetState="false" SupportsRangesize="false"
+                      SupportsFindMode="false" SupportsUpdates="true"
+                      Definition="demo.adfhtml.view.tagcloud.events.TagClickedEventPublisher"
+                      BeanClass="demo.adfhtml.view.tagcloud.events.TagClickedEventPublisher"
+                      xmlns="http://xmlns.oracle.com/adfm/datacontrol">
+    <CreatableTypes>
+      <TypeInfo FullName="demo.adfhtml.view.tagcloud.events.TagClickedEventPublisher"/>
+    </CreatableTypes>
+    <Source>
+      <bean-definition BeanClass="demo.adfhtml.view.tagcloud.events.TagClickedEventPublisher"
+                       xmlns="http://xmlns.oracle.com/adfm/adapter/bean"/>
+    </Source>
+  </AdapterDataControl>
+  <AdapterDataControl id="ZooTagClickedEventConsumer"
+                      FactoryClass="oracle.adf.model.adapter.bean.BeanDCFactoryImpl"
+                      ImplDef="oracle.adf.model.adapter.bean.BeanDefinition"
+                      SupportsTransactions="false" SupportsSortCollection="true"
+                      SupportsResetState="false" SupportsRangesize="false"
+                      SupportsFindMode="false" SupportsUpdates="true"
+                      Definition="demo.adfhtml.view.zoo.ZooTagClickedEventConsumer"
+                      BeanClass="demo.adfhtml.view.zoo.ZooTagClickedEventConsumer"
+                      xmlns="http://xmlns.oracle.com/adfm/datacontrol">
+    <CreatableTypes>
+      <TypeInfo FullName="demo.adfhtml.view.zoo.ZooTagClickedEventConsumer"/>
+    </CreatableTypes>
+    <Source>
+      <bean-definition BeanClass="demo.adfhtml.view.zoo.ZooTagClickedEventConsumer"
+                       xmlns="http://xmlns.oracle.com/adfm/adapter/bean"/>
+    </Source>
+  </AdapterDataControl>
+  <AdapterDataControl id="CarTagClickedEventConsumer"
+                      FactoryClass="oracle.adf.model.adapter.bean.BeanDCFactoryImpl"
+                      ImplDef="oracle.adf.model.adapter.bean.BeanDefinition"
+                      SupportsTransactions="false" SupportsSortCollection="true"
+                      SupportsResetState="false" SupportsRangesize="false"
+                      SupportsFindMode="false" SupportsUpdates="true"
+                      Definition="demo.adfhtml.view.parkinglot.CarTagClickedEventConsumer"
+                      BeanClass="demo.adfhtml.view.parkinglot.CarTagClickedEventConsumer"
+                      xmlns="http://xmlns.oracle.com/adfm/datacontrol">
+    <CreatableTypes>
+      <TypeInfo FullName="demo.adfhtml.view.parkinglot.CarTagClickedEventConsumer"/>
+    </CreatableTypes>
+    <Source>
+      <bean-definition BeanClass="demo.adfhtml.view.parkinglot.CarTagClickedEventConsumer"
+                       xmlns="http://xmlns.oracle.com/adfm/adapter/bean"/>
+    </Source>
+  </AdapterDataControl>
+</DataControlConfigs>

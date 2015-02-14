@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="tagcloudPageDef"
+                Package="demo.adfhtml.view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+  </executables>
+  <bindings>
+    <methodAction id="publishTagClickedEvent" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="publishEvent"
+                  IsViewObjectMethod="false"
+                  DataControl="TagClickedEventPublisher"
+                  InstanceName="TagClickedEventPublisher.dataProvider"
+                  ReturnName="data.TagClickedEventPublisher.methodResults.publishEvent_TagClickedEventPublisher_dataProvider_publishEvent_result">
+      <NamedData NDName="payload" NDType="java.lang.Object"/>
+           <events xmlns="http://xmlns.oracle.com/adfm/contextualEvent">
+        <event name="TagClickedEvent"/>
+      </events>
+    </methodAction>
+  </bindings>
+</pageDefinition>
