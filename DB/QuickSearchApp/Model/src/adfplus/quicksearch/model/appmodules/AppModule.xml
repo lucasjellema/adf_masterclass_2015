@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
+<!---->
+<AppModule
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AppModule"
+  Version="11.1.1.59.23"
+  ClearCacheOnRollback="true">
+  <DesignTime>
+    <Attr Name="_deployType" Value="0"/>
+  </DesignTime>
+  <ViewUsage
+    Name="DepartmentsVO1"
+    ViewObjectName="adfplus.quicksearch.model.views.DepartmentsVO"/>
+  <ViewUsage
+    Name="EmployeesVO1"
+    ViewObjectName="adfplus.quicksearch.model.views.EmployeesVO"/>
+  <ViewUsage
+    Name="EmployeesVO2"
+    ViewObjectName="adfplus.quicksearch.model.views.EmployeesVO"/>
+  <ViewUsage
+    Name="DepartmentsVO2"
+    ViewObjectName="adfplus.quicksearch.model.views.DepartmentsVO"/>
+  <ViewUsage
+    Name="EmployeesVO3"
+    ViewObjectName="adfplus.quicksearch.model.views.EmployeesVO"/>
+  <ViewUsage
+    Name="DepartmentsVO1QuickSearch"
+    ViewObjectName="adfplus.quicksearch.model.views.DepartmentsVO"/>
+  <ViewLinkUsage
+    Name="EmpManagerFkLink1"
+    ViewLinkObjectName="adfplus.quicksearch.model.views.links.EmpManagerFkLink"
+    SrcViewUsageName="adfplus.quicksearch.model.appmodules.AppModule.EmployeesVO1"
+    DstViewUsageName="adfplus.quicksearch.model.appmodules.AppModule.EmployeesVO2"
+    Reversed="false"/>
+  <ViewLinkUsage
+    Name="DeptMgrFkLink1"
+    ViewLinkObjectName="adfplus.quicksearch.model.views.links.DeptMgrFkLink"
+    SrcViewUsageName="adfplus.quicksearch.model.appmodules.AppModule.EmployeesVO1"
+    DstViewUsageName="adfplus.quicksearch.model.appmodules.AppModule.DepartmentsVO2"
+    Reversed="false"/>
+  <ViewLinkUsage
+    Name="EmpDeptFkLink1"
+    ViewLinkObjectName="adfplus.quicksearch.model.views.links.EmpDeptFkLink"
+    SrcViewUsageName="adfplus.quicksearch.model.appmodules.AppModule.DepartmentsVO1"
+    DstViewUsageName="adfplus.quicksearch.model.appmodules.AppModule.EmployeesVO3"
+    Reversed="false"/>
+</AppModule>

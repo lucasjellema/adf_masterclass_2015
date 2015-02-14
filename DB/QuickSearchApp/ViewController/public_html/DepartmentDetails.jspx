@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1" title="Quick search example">
+      <af:messages id="m1"/>
+      <af:form id="f1" partialTriggers="s1:cb7">
+        <af:decorativeBox id="db1">
+          <f:facet name="top">
+            <af:subform id="s1" defaultCommand="cb7">
+              <af:panelGroupLayout id="pgl4" layout="horizontal" inlineStyle="margin:10px;">
+                <af:inputText label="Search" id="it2"
+                              value="#{pageFlowScope.departmentsQuickSearch.searchValue}">
+                  <af:autoSuggestBehavior suggestItems="#{pageFlowScope.departmentsQuickSearch.suggestItems}"
+                                          maxSuggestedItems="10"/>
+                </af:inputText>
+                <af:commandButton text="Search" id="cb7"
+                                  action="#{pageFlowScope.departmentsQuickSearch.go}"
+                                  partialSubmit="true"/>
+              </af:panelGroupLayout>
+            </af:subform>
+          </f:facet>
+          <f:facet name="center">
+            <af:panelGroupLayout id="pgl1" layout="scroll">
+              <af:panelHeader text="Department details" id="ph1">
+                <f:facet name="toolbar">
+                  <af:toolbar id="t1">
+                    <af:group id="g1">
+                      <af:commandToolbarButton actionListener="#{bindings.First.execute}"
+                                               text="First" disabled="#{!bindings.First.enabled}"
+                                               partialSubmit="true" id="cb5"/>
+                      <af:commandToolbarButton actionListener="#{bindings.Previous.execute}"
+                                               text="Previous"
+                                               disabled="#{!bindings.Previous.enabled}"
+                                               partialSubmit="true" id="cb3"/>
+                      <af:commandToolbarButton actionListener="#{bindings.Next.execute}" text="Next"
+                                               disabled="#{!bindings.Next.enabled}"
+                                               partialSubmit="true" id="cb2"/>
+                      <af:commandToolbarButton actionListener="#{bindings.Last.execute}" text="Last"
+                                               disabled="#{!bindings.Last.enabled}"
+                                               partialSubmit="true" id="cb1"/>
+                    </af:group>
+                    <af:commandToolbarButton text="Commit" id="cb4"
+                                             actionListener="#{bindings.Commit.execute}"/>
+                    <af:commandToolbarButton actionListener="#{bindings.Rollback.execute}"
+                                             text="Rollback" immediate="true" id="cb6">
+                      <af:resetActionListener/>
+                    </af:commandToolbarButton>
+                  </af:toolbar>
+                </f:facet>
+                <af:panelFormLayout id="pfl1">
+                  <af:inputText value="#{bindings.DepartmentName.inputValue}"
+                                label="#{bindings.DepartmentName.hints.label}"
+                                required="#{bindings.DepartmentName.hints.mandatory}"
+                                columns="#{bindings.DepartmentName.hints.displayWidth}"
+                                maximumLength="#{bindings.DepartmentName.hints.precision}"
+                                shortDesc="#{bindings.DepartmentName.hints.tooltip}" id="it1">
+                    <f:validator binding="#{bindings.DepartmentName.validator}"/>
+                  </af:inputText>
+                  <af:inputListOfValues id="managerNameId"
+                                        popupTitle="Search and Select: #{bindings.ManagerName.hints.label}"
+                                        value="#{bindings.ManagerName.inputValue}"
+                                        label="#{bindings.ManagerName.hints.label}"
+                                        model="#{bindings.ManagerName.listOfValuesModel}"
+                                        required="#{bindings.ManagerName.hints.mandatory}"
+                                        columns="#{bindings.ManagerName.hints.displayWidth}"
+                                        shortDesc="#{bindings.ManagerName.hints.tooltip}"
+                                        searchDesc="Manager name">
+                    <af:autoSuggestBehavior suggestedItems="#{bindings.ManagerName.suggestedItems}"/>
+                    <f:validator binding="#{bindings.ManagerName.validator}"/>
+                  </af:inputListOfValues>
+                </af:panelFormLayout>
+              </af:panelHeader>
+            </af:panelGroupLayout>
+          </f:facet>
+        </af:decorativeBox>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

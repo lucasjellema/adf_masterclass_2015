@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application" version="11.1.1.59.23" id="DataBindings" SeparateXMLFiles="false"
+             Package="adfplus.quicksearch.view" ClientType="Generic">
+  <pageMap>
+    <page path="/DepartmentDetails.jspx" usageId="adfplus_quicksearch_view_DepartmentDetailsPageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="adfplus_quicksearch_view_DepartmentDetailsPageDef"
+          path="adfplus.quicksearch.view.pageDefs.DepartmentDetailsPageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <BC4JDataControl id="AppModuleDataControl" Package="adfplus.quicksearch.model.appmodules"
+                     FactoryClass="oracle.adf.model.bc4j.DataControlFactoryImpl" SupportsTransactions="true"
+                     SupportsFindMode="true" SupportsRangesize="true" SupportsResetState="true" SupportsSortCollection="true"
+                     Configuration="AppModuleLocal" syncMode="Immediate" xmlns="http://xmlns.oracle.com/adfm/datacontrol"/>
+  </dataControlUsages>
+</Application>

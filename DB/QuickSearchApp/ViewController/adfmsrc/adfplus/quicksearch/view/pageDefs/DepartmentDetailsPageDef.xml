@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.1.59.23" id="DepartmentDetailsPageDef"
+                Package="adfplus.quicksearch.view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="DepartmentsVO1" RangeSize="25" DataControl="AppModuleDataControl" id="DepartmentsVO1Iterator"
+              ChangeEventPolicy="ppr"/>
+    <iterator Binds="DepartmentsVO1QuickSearch" RangeSize="25" DataControl="AppModuleDataControl" id="DepartmentsVO1IteratorQuickSearch"
+              ChangeEventPolicy="ppr"/>
+  </executables>
+  <bindings>
+    <listOfValues StaticList="false" IterBinding="DepartmentsVO1Iterator" Uses="LOV_ManagerName" id="ManagerName"/>
+    <attributeValues IterBinding="DepartmentsVO1Iterator" id="DepartmentName">
+      <AttrNames>
+        <Item Value="DepartmentName"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="DepartmentsVO1Iterator" id="First" RequiresUpdateModel="true" Action="first"/>
+    <action IterBinding="DepartmentsVO1Iterator" id="Previous" RequiresUpdateModel="true" Action="previous"/>
+    <action IterBinding="DepartmentsVO1Iterator" id="Next" RequiresUpdateModel="true" Action="next"/>
+    <action IterBinding="DepartmentsVO1Iterator" id="Last" RequiresUpdateModel="true" Action="last"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction" DataControl="AppModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false" Action="rollbackTransaction" DataControl="AppModuleDataControl"/>
+  </bindings>
+</pageDefinition>

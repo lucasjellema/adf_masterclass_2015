@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="DepartmentDetails">
+    <page>/DepartmentDetails.jspx</page>
+  </view>
+  <managed-bean id="__3">
+    <managed-bean-name id="__1">departmentsQuickSearch</managed-bean-name>
+    <managed-bean-class id="__4">adfplus.quicksearch.controller.bean.QuickSearchBean</managed-bean-class>
+    <managed-bean-scope id="__2">pageFlow</managed-bean-scope>
+    <managed-property id="__8">
+      <property-name id="__10">iteratorBindingName</property-name>
+      <property-class>java.lang.String</property-class>
+      <value id="__9">DepartmentsVO1Iterator</value>
+    </managed-property>
+    <managed-property id="__11">
+      <property-name id="__13">searchAttribute</property-name>
+      <property-class>java.lang.String</property-class>
+      <value id="__12">DepartmentSearchString</value>
+    </managed-property>
+    <managed-property id="__14">
+      <property-name id="__15">searchIteratorBindingName</property-name>
+      <property-class>java.lang.String</property-class>
+      <value id="__16">DepartmentsVO1IteratorQuickSearch</value>
+    </managed-property>
+  </managed-bean>
+</adfc-config>
