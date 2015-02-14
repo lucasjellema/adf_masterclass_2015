@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
+
+<AppModule
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="HrmAppModule"
+   Version="12.1.3.10.8"
+   InheritPersonalization="merge" >
+   <DesignTime>
+      <Attr Name="_deployType" Value="4096" />
+   </DesignTime>
+   <ViewUsage
+      Name="CountriesView1"
+      ViewObjectName="nl.amis.hrm.model.CountriesView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="DepartmentsView1"
+      ViewObjectName="nl.amis.hrm.model.DepartmentsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="EmployeesView1"
+      ViewObjectName="nl.amis.hrm.model.EmployeesView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="JobsView1"
+      ViewObjectName="nl.amis.hrm.model.JobsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="LocationsView1"
+      ViewObjectName="nl.amis.hrm.model.LocationsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="RegionsView1"
+      ViewObjectName="nl.amis.hrm.model.RegionsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="EmployeesView2"
+      ViewObjectName="nl.amis.hrm.model.EmployeesView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="EmployeesView3"
+      ViewObjectName="nl.amis.hrm.model.EmployeesView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="DepartmentsView2"
+      ViewObjectName="nl.amis.hrm.model.DepartmentsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="EmployeesView4"
+      ViewObjectName="nl.amis.hrm.model.EmployeesView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="DepartmentsView3"
+      ViewObjectName="nl.amis.hrm.model.DepartmentsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="LocationsView2"
+      ViewObjectName="nl.amis.hrm.model.LocationsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="CountriesView2"
+      ViewObjectName="nl.amis.hrm.model.CountriesView" >
+   </ViewUsage>
+   <ViewLinkUsage
+      Name="EmpManagerFkLink1"
+      ViewLinkObjectName="nl.amis.hrm.model.EmpManagerFkLink"
+      SrcViewUsageName="nl.amis.hrm.model.HrmAppModule.EmployeesView1"
+      DstViewUsageName="nl.amis.hrm.model.HrmAppModule.EmployeesView2" >
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="EmpDeptFkLink1"
+      ViewLinkObjectName="nl.amis.hrm.model.EmpDeptFkLink"
+      SrcViewUsageName="nl.amis.hrm.model.HrmAppModule.DepartmentsView1"
+      DstViewUsageName="nl.amis.hrm.model.HrmAppModule.EmployeesView3" >
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="DeptMgrFkLink1"
+      ViewLinkObjectName="nl.amis.hrm.model.DeptMgrFkLink"
+      SrcViewUsageName="nl.amis.hrm.model.HrmAppModule.EmployeesView1"
+      DstViewUsageName="nl.amis.hrm.model.HrmAppModule.DepartmentsView2" >
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="EmpJobFkLink1"
+      ViewLinkObjectName="nl.amis.hrm.model.EmpJobFkLink"
+      SrcViewUsageName="nl.amis.hrm.model.HrmAppModule.JobsView1"
+      DstViewUsageName="nl.amis.hrm.model.HrmAppModule.EmployeesView4" >
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="DeptLocFkLink1"
+      ViewLinkObjectName="nl.amis.hrm.model.DeptLocFkLink"
+      SrcViewUsageName="nl.amis.hrm.model.HrmAppModule.LocationsView1"
+      DstViewUsageName="nl.amis.hrm.model.HrmAppModule.DepartmentsView3" >
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="LocCIdFkLink1"
+      ViewLinkObjectName="nl.amis.hrm.model.LocCIdFkLink"
+      SrcViewUsageName="nl.amis.hrm.model.HrmAppModule.CountriesView1"
+      DstViewUsageName="nl.amis.hrm.model.HrmAppModule.LocationsView2" >
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="CountrRegFkLink1"
+      ViewLinkObjectName="nl.amis.hrm.model.CountrRegFkLink"
+      SrcViewUsageName="nl.amis.hrm.model.HrmAppModule.RegionsView1"
+      DstViewUsageName="nl.amis.hrm.model.HrmAppModule.CountriesView2" >
+   </ViewLinkUsage>
+   <Remote
+      Name="ServiceInterface"
+      ServerClassName="nl.amis.hrm.model.server.serviceinterface.HrmWebServiceImpl"
+      ServerInterfaceName="nl.amis.hrm.model.common.serviceinterface.HrmWebService" >
+      <DesignTime>
+         <Attr Name="_webServiceName" Value="HrmWebService" />
+         <Attr Name="_genEntityListOp" Value="true" />
+         <Attr Name="_targetNameSpace" Value="nl.amis.hrm" />
+         <Attr Name="_genServiceLastUpdateTime" Value="true" />
+      </DesignTime>
+   </Remote>
+   <ServiceViewUsage
+      ViewUsageName="DepartmentsView1" >
+   </ServiceViewUsage>
+   <ServiceViewUsage
+      ViewUsageName="EmployeesView1"
+      CanCreate="true"
+      CanUpdate="true"
+      CanDelete="true" >
+      <DesignTime>
+         <Attr Name="_DeleteOpName" Value="deleteEmployee" />
+         <Attr Name="_FindOpName" Value="findEmployees" />
+         <Attr Name="_UpdateOpName" Value="updateEmployee" />
+         <Attr Name="_CreateOpName" Value="createEmployee" />
+      </DesignTime>
+   </ServiceViewUsage>
+</AppModule>

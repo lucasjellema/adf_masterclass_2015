@@ -1,0 +1,85 @@
+<schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="nl.amis.hrm/types/"
+     xmlns:tns="nl.amis.hrm/types/" xmlns:ns0="/nl/amis/hrm/model/common/" xmlns:ns1="http://xmlns.oracle.com/adf/svc/types/">
+    <import namespace="http://xmlns.oracle.com/adf/svc/types/" schemaLocation="classpath:/META-INF/wsdl/BC4JService.xsd"/>
+    <import namespace="/nl/amis/hrm/model/common/" schemaLocation="../EmployeesViewSDO.xsd"/>
+    <import namespace="/nl/amis/hrm/model/common/" schemaLocation="../DepartmentsViewSDO.xsd"/>
+    <element name="createEmployee">
+        <complexType>
+            <sequence>
+                <element name="employeesView1" type="ns0:EmployeesViewSDO"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="createEmployeeResponse">
+        <complexType>
+            <sequence>
+                <element name="result" type="ns0:EmployeesViewSDO"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="updateEmployee">
+        <complexType>
+            <sequence>
+                <element name="employeesView1" type="ns0:EmployeesViewSDO"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="updateEmployeeResponse">
+        <complexType>
+            <sequence>
+                <element name="result" type="ns0:EmployeesViewSDO"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="deleteEmployee">
+        <complexType>
+            <sequence>
+                <element name="employeesView1" type="ns0:EmployeesViewSDO"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="deleteEmployeeResponse">
+        <complexType>
+            <sequence/>
+        </complexType>
+    </element>
+    <element name="findEmployees">
+        <complexType>
+            <sequence>
+                <element name="findCriteria" type="ns1:FindCriteria"/>
+                <element name="findControl" type="ns1:FindControl"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="findEmployeesResponse">
+        <complexType>
+            <sequence>
+                <element name="result" type="ns0:EmployeesViewSDO" minOccurs="0" maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="getServiceLastUpdateTime">
+        <complexType>
+            <sequence/>
+        </complexType>
+    </element>
+    <element name="getServiceLastUpdateTimeResponse">
+        <complexType>
+            <sequence>
+                <element name="result" type="ns1:dateTime-Timestamp"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="getEntityList">
+        <complexType>
+            <sequence/>
+        </complexType>
+    </element>
+    <element name="getEntityListResponse">
+        <complexType>
+            <sequence>
+                <element name="result" type="ns1:ServiceViewInfo" minOccurs="0" maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+    </element>
+</schema>

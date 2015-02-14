@@ -1,0 +1,24 @@
+<xsd:schema xmlns:sdoJava="commonj.sdo/java" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sdoXML="commonj.sdo/xml"
+     targetNamespace="/nl/amis/hrm/model/common/" xmlns="/nl/amis/hrm/model/common/" elementFormDefault="qualified"
+     sdoJava:package="nl.amis.hrm.model.common">
+    <xsd:import schemaLocation="classpath:/xml/sdoJava.xsd" namespace="commonj.sdo/java"/>
+    <xsd:import schemaLocation="classpath:/xml/sdoXML.xsd" namespace="commonj.sdo/xml"/>
+    <xsd:include schemaLocation="EmployeesViewSDO.xsd"/>
+    <xsd:complexType name="DepartmentsViewSDO">
+        <xsd:annotation>
+            <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+                <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/">
+                    <attribute>DepartmentId</attribute>
+                </key>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="DepartmentId" type="xsd:int" minOccurs="0" sdoXML:dataType="sdoJava:IntObject"/>
+            <xsd:element name="DepartmentName" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="ManagerId" type="xsd:int" minOccurs="0" nillable="true"/>
+            <xsd:element name="LocationId" type="xsd:int" minOccurs="0" nillable="true"/>
+            <xsd:element name="EmployeesView" type="EmployeesViewSDO" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="departmentsViewSDO" type="DepartmentsViewSDO"/>
+</xsd:schema>

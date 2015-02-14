@@ -1,0 +1,33 @@
+<xsd:schema xmlns:sdoJava="commonj.sdo/java" xmlns:ns0="http://xmlns.oracle.com/adf/svc/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:sdoXML="commonj.sdo/xml" targetNamespace="/nl/amis/hrm/model/common/" xmlns="/nl/amis/hrm/model/common/"
+     elementFormDefault="qualified" sdoJava:package="nl.amis.hrm.model.common">
+    <xsd:import schemaLocation="classpath:/META-INF/wsdl/BC4JService.xsd" namespace="http://xmlns.oracle.com/adf/svc/types/"/>
+    <xsd:import schemaLocation="classpath:/xml/sdoJava.xsd" namespace="commonj.sdo/java"/>
+    <xsd:import schemaLocation="classpath:/xml/sdoXML.xsd" namespace="commonj.sdo/xml"/>
+    <xsd:include schemaLocation="DepartmentsViewSDO.xsd"/>
+    <xsd:complexType name="EmployeesViewSDO">
+        <xsd:annotation>
+            <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+                <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/">
+                    <attribute>EmployeeId</attribute>
+                </key>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="EmployeeId" type="xsd:int" minOccurs="0" sdoXML:dataType="sdoJava:IntObject"/>
+            <xsd:element name="FirstName" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="LastName" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="Email" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="PhoneNumber" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="HireDate" type="ns0:dateTime-Timestamp" minOccurs="0"/>
+            <xsd:element name="JobId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="Salary" type="xsd:decimal" minOccurs="0" nillable="true"/>
+            <xsd:element name="CommissionPct" type="xsd:decimal" minOccurs="0" nillable="true"/>
+            <xsd:element name="ManagerId" type="xsd:int" minOccurs="0" nillable="true"/>
+            <xsd:element name="DepartmentId" type="xsd:int" minOccurs="0" nillable="true"/>
+            <xsd:element name="EmployeesView" type="EmployeesViewSDO" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="DepartmentsView" type="DepartmentsViewSDO" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="employeesViewSDO" type="EmployeesViewSDO"/>
+</xsd:schema>

@@ -1,0 +1,171 @@
+<wsdl:definitions
+     name="HrmWebService"
+     targetNamespace="nl.amis.hrm"
+     xmlns:tns="nl.amis.hrm"
+     xmlns:types="nl.amis.hrm/types/"
+     xmlns:errors="http://xmlns.oracle.com/adf/svc/errors/"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <wsdl:import namespace="http://xmlns.oracle.com/adf/svc/errors/" location="classpath:/META-INF/wsdl/ServiceException.wsdl"/>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="nl.amis.hrm/types/" schemaLocation="HrmWebService.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="HrmWebService_createEmployee">
+        <wsdl:part name="parameters" element="types:createEmployee"/>
+    </wsdl:message>
+    <wsdl:message name="HrmWebService_createEmployeeResponse">
+        <wsdl:part name="parameters" element="types:createEmployeeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="HrmWebService_updateEmployee">
+        <wsdl:part name="parameters" element="types:updateEmployee"/>
+    </wsdl:message>
+    <wsdl:message name="HrmWebService_updateEmployeeResponse">
+        <wsdl:part name="parameters" element="types:updateEmployeeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="HrmWebService_deleteEmployee">
+        <wsdl:part name="parameters" element="types:deleteEmployee"/>
+    </wsdl:message>
+    <wsdl:message name="HrmWebService_deleteEmployeeResponse">
+        <wsdl:part name="parameters" element="types:deleteEmployeeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="HrmWebService_findEmployees">
+        <wsdl:part name="parameters" element="types:findEmployees"/>
+    </wsdl:message>
+    <wsdl:message name="HrmWebService_findEmployeesResponse">
+        <wsdl:part name="parameters" element="types:findEmployeesResponse"/>
+    </wsdl:message>
+    <wsdl:message name="HrmWebService_getServiceLastUpdateTime">
+        <wsdl:part name="parameters" element="types:getServiceLastUpdateTime"/>
+    </wsdl:message>
+    <wsdl:message name="HrmWebService_getServiceLastUpdateTimeResponse">
+        <wsdl:part name="parameters" element="types:getServiceLastUpdateTimeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="HrmWebService_getEntityList">
+        <wsdl:part name="parameters" element="types:getEntityList"/>
+    </wsdl:message>
+    <wsdl:message name="HrmWebService_getEntityListResponse">
+        <wsdl:part name="parameters" element="types:getEntityListResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="HrmWebService">
+        <wsdl:documentation>
+            <ViewInstance xmlns="http://xmlns.oracle.com/adf/svc/metadata/" Name="DepartmentsView1" xmlns:ns0="/nl/amis/hrm/model/common/"
+                 SDOName="ns0:DepartmentsViewSDO"/>
+            <ViewInstance xmlns="http://xmlns.oracle.com/adf/svc/metadata/" Name="EmployeesView1" xmlns:ns0="/nl/amis/hrm/model/common/"
+                 SDOName="ns0:EmployeesViewSDO" CreateOpName="createEmployee" UpdateOpName="updateEmployee"
+                 DeleteOpName="deleteEmployee" FindOpName="findEmployees"/>
+        </wsdl:documentation>
+        <wsdl:operation name="createEmployee">
+            <wsdl:input message="tns:HrmWebService_createEmployee"/>
+            <wsdl:output message="tns:HrmWebService_createEmployeeResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="updateEmployee">
+            <wsdl:input message="tns:HrmWebService_updateEmployee"/>
+            <wsdl:output message="tns:HrmWebService_updateEmployeeResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="deleteEmployee">
+            <wsdl:input message="tns:HrmWebService_deleteEmployee"/>
+            <wsdl:output message="tns:HrmWebService_deleteEmployeeResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="findEmployees">
+            <wsdl:input message="tns:HrmWebService_findEmployees"/>
+            <wsdl:output message="tns:HrmWebService_findEmployeesResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="getServiceLastUpdateTime">
+            <wsdl:input message="tns:HrmWebService_getServiceLastUpdateTime"/>
+            <wsdl:output message="tns:HrmWebService_getServiceLastUpdateTimeResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="getEntityList">
+            <wsdl:input message="tns:HrmWebService_getEntityList"/>
+            <wsdl:output message="tns:HrmWebService_getEntityListResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="HrmWebServiceSoapHttp" type="tns:HrmWebService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="createEmployee">
+            <soap:operation soapAction="nl.amis.hrm/createEmployee"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateEmployee">
+            <soap:operation soapAction="nl.amis.hrm/updateEmployee"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="deleteEmployee">
+            <soap:operation soapAction="nl.amis.hrm/deleteEmployee"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findEmployees">
+            <soap:operation soapAction="nl.amis.hrm/findEmployees"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getServiceLastUpdateTime">
+            <soap:operation soapAction="nl.amis.hrm/getServiceLastUpdateTime"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getEntityList">
+            <soap:operation soapAction="nl.amis.hrm/getEntityList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="HrmWebService">
+        <wsdl:port name="HrmWebServiceSoapHttpPort" binding="tns:HrmWebServiceSoapHttp">
+            <soap:address location="http://localhost:7101/HrmADFBCWebService-Model-context-root/HrmWebService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
