@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <managed-bean id="__2">
+    <managed-bean-name id="__1">carsCloud</managed-bean-name>
+    <managed-bean-class id="__4">demo.adfhtml.view.clouds.CarsCloud</managed-bean-class>
+    <managed-bean-scope id="__3">view</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__7">
+    <managed-bean-name id="__6">animalCloud</managed-bean-name>
+    <managed-bean-class id="__8">demo.adfhtml.view.clouds.AnimalKingdomCloud</managed-bean-class>
+    <managed-bean-scope id="__5">view</managed-bean-scope>
+  </managed-bean>
+</adfc-config>
