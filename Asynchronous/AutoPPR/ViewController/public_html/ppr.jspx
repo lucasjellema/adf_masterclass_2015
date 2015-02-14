@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="ppr.jspx" id="d1">
+            <af:form id="f1">
+                <af:panelHeader text="Employee Form for #{EmployeeBean.name}" id="ph1" partialTriggers="it1">
+                    <f:facet name="context"/>
+                    <f:facet name="menuBar"/>
+                    <f:facet name="toolbar"/>
+                    <f:facet name="legend"/>
+                    <f:facet name="info"/>
+                    <af:panelFormLayout id="pfl1">
+                        <af:inputText label="Name" id="it1" value="#{EmployeeBean.name}" autoSubmit="true"/>
+                        <af:inputText label="Country" id="it3" value="#{EmployeeBean.country}" autoSubmit="true"/>
+                        <af:inputText label="Role Title" id="it4" value="#{EmployeeBean.function}" autoSubmit="true"
+                                      partialTriggers="cb1"/>
+                        <af:inputText label="Salary" id="it5" value="#{EmployeeBean.salary}" partialTriggers="cb1"/>
+                        <af:button id="cb1" partialSubmit="true"
+                                   text="Submit for the #{EmployeeBean.buttonPressCount+1}th time"
+                                   actionListener="#{EmployeeBean.submitDetails}" partialTriggers="cb1"/>
+                    </af:panelFormLayout>
+                </af:panelHeader>
+                <af:outputFormatted value="Details for #{EmployeeBean.name} from #{EmployeeBean.country} 
+                            working as #{EmployeeBean.function} for a salary of #{EmployeeBean.salary}" id="of1"
+                                    binding="#{EmployeeBean.summaryComponent}" clientComponent="true"/>
+            </af:form>
+        </af:document>
+    </f:view>
+</jsp:root>

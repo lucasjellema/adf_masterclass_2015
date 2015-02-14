@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+    <af:panelStretchLayout id="psl1">
+        <f:facet name="center">
+            <af:panelFormLayout id="pfl1">
+                <af:inputText label="First Name" id="it1" value="#{viewScope.personBean.firstName}" autoSubmit="true"/>
+                <af:inputText label="Last Name" id="it2" value="#{viewScope.personBean.lastName}" autoSubmit="true"/>
+                <af:inputText label="Full Name" id="it3" value="#{viewScope.personBean.fullName}"/>
+                <af:inputDate label="Birth Date" id="id4" value="#{viewScope.personBean.birthdate}"/>
+                <f:facet name="footer"/>
+            </af:panelFormLayout>
+        </f:facet>
+        <f:facet name="top">
+            <af:panelHeader id="ph1" headerLevel="-1" text="Details For #{viewScope.personBean.fullName}"/>
+        </f:facet>
+    </af:panelStretchLayout>
+</jsp:root>
