@@ -1,0 +1,45 @@
+<schema targetNamespace="amis.nl/hr" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:hr="amis.nl/hr"
+        elementFormDefault="qualified">
+   <element name="retrieveDepartmentsRequest">
+      <!--Empty Parameter List-->
+      <complexType/>
+   </element>
+   <element name="retrieveDepartmentsResponse" type="hr:retrieveDepartmentsResponseType" />
+
+
+    <complexType name="retrieveDepartmentsResponseType">
+        <sequence>
+            <element name="Department" type="hr:departmentType" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+        </sequence>
+    </complexType>
+    <complexType name="departmentListType">
+        <sequence>
+            <element name="Department" type="hr:departmentType" minOccurs="0" nillable="true"/>
+        </sequence>
+    </complexType>
+    <complexType name="departmentType">
+        <sequence>
+            <element name="identifier" type="decimal" minOccurs="0" nillable="true"/>
+            <element name="name" type="string" minOccurs="0" nillable="true"/>
+            <element name="manager" type="hr:employeeType" minOccurs="0" nillable="true"/>
+            <element name="location" type="string" minOccurs="0" nillable="true"/>
+<!--            <element name="staff" type="hr:employeesListType" minOccurs="0" maxOccurs="1" nillable="true"/>-->
+            <element name="staff" type="hr:employeeType" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+        </sequence>
+    </complexType>
+    <complexType name="employeesListType">
+        <sequence>
+            <element name="employee" type="hr:employeeType" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+        </sequence>
+    </complexType>
+    <complexType name="employeeType">
+        <sequence>
+            <element name="identifier" type="decimal" minOccurs="0" nillable="true"/>
+            <element name="firstName" type="string" minOccurs="0" nillable="true"/>
+            <element name="lastName" type="string" minOccurs="0" nillable="true"/>
+            <element name="job" type="string" minOccurs="0" nillable="true"/>
+            <element name="salary" type="decimal" minOccurs="0" nillable="true"/>
+            <element name="hiredate" type="date" minOccurs="0" nillable="true"/>
+        </sequence>
+    </complexType>
+</schema>

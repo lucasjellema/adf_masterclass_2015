@@ -1,0 +1,26 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="HrmService"
+     targetNamespace="http://xmlns.oracle.com/HrmService/HrmService/HrmService"
+     xmlns:tns="http://xmlns.oracle.com/HrmService/HrmService/HrmService"
+     xmlns:inp1="amis.nl/hr"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="amis.nl/hr" schemaLocation="../Schemas/HrmSchema.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="requestMessage">
+        <wsdl:part name="part1" element="inp1:retrieveDepartmentsRequest"/>
+    </wsdl:message>
+    <wsdl:message name="replyMessage">
+        <wsdl:part name="part1" element="inp1:retrieveDepartmentsResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="hrm_ptt">
+        <wsdl:operation name="retrieveDepartments">
+            <wsdl:input message="tns:requestMessage"/>
+            <wsdl:output message="tns:replyMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

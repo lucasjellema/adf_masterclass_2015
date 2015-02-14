@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="HrmService">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="144" width="137" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="137" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="HrmService" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/HrmService/HrmService/HrmService#wsdl.interface(hrm_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>retrieveDepartments</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gService name="RestHrmService">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="26" width="137" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="19" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="RestHrmService" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/HrmService/HrmService/HrmService#wsdl.interface(hrm_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/RestAdapterService20x20px.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>retrieveDepartments</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="readDepartments">
+        <dgm:body borderWidth="2" arcRad="20" X="882" Y="111" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="872" Y="104" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="readDepartments" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/HrmService/HrmService/readDepartments#wsdl.interface(readDepartments_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/db_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>readDepartments</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="HrmMediator">
+        <dgm:body borderWidth="2" arcRad="20" X="455" Y="96" width="130" height="61">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="445" Y="89" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="HrmMediator" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/HrmService/HrmService/HrmService#wsdl.interface(hrm_ptt)"/>
+        <dgm:outputPort name="readDepartments" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/HrmService/HrmService/readDepartments#wsdl.interface(readDepartments_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="HrmService" target="HrmMediator/HrmMediator" width="2">
+        <dgm:gSegment X1="168" Y1="154" X2="192" Y2="154"/>
+        <dgm:gSegment X1="192" Y1="154" X2="192" Y2="121"/>
+        <dgm:gSegment X1="192" Y1="121" X2="445" Y2="121"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="HrmMediator/readDepartments" target="readDepartments" width="2">
+        <dgm:gSegment X1="595" Y1="121" X2="872" Y2="121"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RestHrmService" target="HrmMediator/HrmMediator" width="2">
+        <dgm:gSegment X1="168" Y1="36" X2="207" Y2="36"/>
+        <dgm:gSegment X1="207" Y1="36" X2="207" Y2="121"/>
+        <dgm:gSegment X1="207" Y1="121" X2="445" Y2="121"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>

@@ -1,0 +1,13 @@
+<adapter-config name="readDepartments" adapter="db" wsdlLocation="../WSDLs/readDepartments.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="hr_soadb" location="eis/DB/HRM"/>
+  <endpoint-interaction portType="readDepartments_ptt" operation="readDepartments">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="HR"/>
+      <property name="PackageName" value="HRM_API"/>
+      <property name="ProcedureName" value="GET_DEPARTMENTS"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

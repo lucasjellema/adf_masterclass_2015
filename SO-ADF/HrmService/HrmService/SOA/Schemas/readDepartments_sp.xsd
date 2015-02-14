@@ -1,0 +1,69 @@
+<schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/readDepartments" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/readDepartments" elementFormDefault="qualified">
+   <element name="InputParameters">
+      <!--Empty Parameter List-->
+      <complexType/>
+   </element>
+   <element name="OutputParameters">
+      <complexType>
+         <sequence>
+            <element name="GET_DEPARTMENTS" type="db:HR.DEPARTMENTS_TBL_T" db:index="0" db:type="Array" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <complexType name="HR.DEPARTMENT_T">
+      <sequence>
+         <element name="DEPARTMENT_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="DEPARTMENT_NAME" type="db:string30" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="MANAGER" type="db:HR.EMPLOYEE_T" db:type="Struct" minOccurs="0" nillable="true"/>
+         <element name="LOCATION" type="db:string100" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="EMPLOYEES" type="db:HR.EMPLOYEES_TBL_T" db:type="Array" minOccurs="0" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="HR.DEPARTMENTS_TBL_T">
+      <sequence>
+         <element name="GET_DEPARTMENTS_ITEM" type="db:HR.DEPARTMENT_T" db:type="Struct" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="HR.EMPLOYEES_TBL_T">
+      <sequence>
+         <element name="EMPLOYEES_ITEM" type="db:HR.EMPLOYEE_T" db:type="Struct" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="HR.EMPLOYEE_T">
+      <sequence>
+         <element name="EMPLOYEE_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="FIRST_NAME" type="db:string20" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="LAST_NAME" type="db:string25" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="EMAIL" type="db:string25" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="PHONE_NUMBER" type="db:string20" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="HIRE_DATE" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="JOB" type="db:string35" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="SALARY" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+      </sequence>
+   </complexType>
+   <simpleType name="string30">
+      <restriction base="string">
+         <maxLength value="30"/>
+      </restriction>
+   </simpleType>
+   <simpleType name="string20">
+      <restriction base="string">
+         <maxLength value="20"/>
+      </restriction>
+   </simpleType>
+   <simpleType name="string25">
+      <restriction base="string">
+         <maxLength value="25"/>
+      </restriction>
+   </simpleType>
+   <simpleType name="string35">
+      <restriction base="string">
+         <maxLength value="35"/>
+      </restriction>
+   </simpleType>
+   <simpleType name="string100">
+      <restriction base="string">
+         <maxLength value="100"/>
+      </restriction>
+   </simpleType>
+</schema>
