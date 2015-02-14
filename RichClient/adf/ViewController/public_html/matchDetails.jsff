@@ -1,0 +1,202 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelStretchLayout id="psl3" topHeight="110px" styleClass="AFStretchWidth"
+                         inlineStyle="height:500.0px;"
+                         bottomHeight="5px">
+    <f:facet name="bottom"></f:facet>
+    <f:facet name="center">
+      <af:panelStretchLayout id="psl1" styleClass="AFStretchWidth">
+        <f:facet name="bottom"/>
+        <f:facet name="center">
+          <af:panelTabbed id="pt1">
+            <af:showDetailItem text="Match Report" id="sdi1"
+                               stretchChildren="first">
+              <af:panelStretchLayout id="psl2" styleClass="AFStretchWidth">
+                <f:facet name="bottom"/>
+                <f:facet name="center">
+                  <af:panelGridLayout id="pgl112"
+                                      inlineStyle="background-color:Lime;">
+                    <af:gridRow marginTop="5px" height="auto" id="gr3bc">
+                      <af:gridCell marginStart="5px" width="100px" id="gc9tc"
+                                   inlineStyle="background-color:Silver;"/>
+                      <af:gridCell marginStart="5px" width="110px" id="gc11c"
+                                   halign="center">
+                        <af:image id="homeFlag2c"
+                                  source="/images/countryflags/#{bindings.Home.inputValue}.png"
+                                  inlineStyle="width:50.0px;"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" marginEnd="5px"
+                                   width="110px" id="gc1c" halign="center">
+                        <af:image id="awayFlag2c"
+                                  source="/images/countryflags/#{bindings.Away.inputValue}.png"
+                                  inlineStyle="width:50.0px;"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                    <af:iterator value="#{pageFlowScope.matchDetailsHelperBean.matchEvents}"
+                                 var="event" id="matcheventIteratorc">
+                      <af:gridRow marginTop="5px" height="auto" id="gr3c">
+                        <af:gridCell marginStart="5px" width="100px" id="gc9c"
+                                     inlineStyle="background-color:Silver;"
+                                     halign="end">
+                          <af:outputText id="firsthalfc"
+                                         value="#{event.timeLabel}"/>
+                        </af:gridCell>
+                        <af:gridCell marginStart="5px" width="110px" id="gc11xc"
+                                     halign="center">
+                          <af:image id="g1c" source="/images/goal.png"
+                                    inlineStyle="width:30.0px;"
+                                    rendered="#{event.eventType eq 'goal' and  event.home}"/>
+                          <af:image id="gg1c"
+                                    source="/images/goldenfootball.png"
+                                    inlineStyle="width:30.0px;"
+                                    rendered="#{event.eventType eq 'wop' and  event.home}"/>
+                        </af:gridCell>
+                        <af:gridCell marginStart="5px" marginEnd="5px"
+                                     width="110px" id="gc1xc" halign="center">
+                          <af:image id="g5c" source="/images/goal.png"
+                                    inlineStyle="width:30.0px;"
+                                    rendered="#{event.eventType eq 'goal' and  event.away}"/>
+                          <af:image id="gg2c"
+                                    source="/images/goldenfootball.png"
+                                    inlineStyle="width:30.0px;"
+                                    rendered="#{event.eventType eq 'wop' and  event.away}"/>
+                        </af:gridCell>
+                      </af:gridRow>
+                    </af:iterator>
+                  </af:panelGridLayout>
+                </f:facet>
+                <f:facet name="start"/>
+                <f:facet name="end"/>
+                <f:facet name="top"/>
+              </af:panelStretchLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="Tags" id="sdi2">
+              <af:region value="#{bindings.tagcloudtaskflowdefinition1.regionModel}"
+                         id="r1"/>
+            </af:showDetailItem>
+            <af:showDetailItem text="Final Group Standing in group #{bindings.Group1.inputValue}" id="sdi3"
+                               rendered="#{bindings.Group1.inputValue != null}">
+              <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                                  inlineStyle="height:400.0px;">
+                <f:facet name="menus"/>
+                <f:facet name="toolbar"/>
+                <f:facet name="statusbar"/>
+                <af:table value="#{bindings.GroupStandingView3.collectionModel}"
+                          var="row"
+                          rows="#{bindings.GroupStandingView3.rangeSize}"
+                          emptyText="#{bindings.GroupStandingView3.viewable ? 'No data to display.' : 'Access Denied.'}"
+                          fetchSize="#{bindings.GroupStandingView3.rangeSize}"
+                          styleClass="AFStretchWidth" rowBandingInterval="0"
+                          id="t1">
+                  <af:column sortProperty="#{bindings.GroupStandingView3.hints.RankInGroup.name}"
+                             sortable="false"
+                             headerText="#{bindings.GroupStandingView3.hints.RankInGroup.label}"
+                             id="c1">
+                    <af:outputText value="#{row.RankInGroup}" id="ot2"/>
+                  </af:column>
+                  <af:column sortProperty="#{bindings.GroupStandingView3.hints.Country.name}"
+                             sortable="false"
+                             headerText="#{bindings.GroupStandingView3.hints.Country.label}"
+                             id="c2">
+                    <af:outputText value="#{row.Country}" id="ot6"/>
+                  </af:column>
+                  <af:column sortProperty="#{bindings.GroupStandingView3.hints.GamesPlayed.name}"
+                             sortable="false"
+                             headerText="#{bindings.GroupStandingView3.hints.GamesPlayed.label}"
+                             id="c5">
+                    <af:outputText value="#{row.GamesPlayed}" id="ot1">
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.GroupStandingView3.hints.GamesPlayed.format}"/>
+                    </af:outputText>
+                  </af:column>
+                  <af:column sortProperty="#{bindings.GroupStandingView3.hints.Points.name}"
+                             sortable="false"
+                             headerText="#{bindings.GroupStandingView3.hints.Points.label}"
+                             id="c3">
+                    <af:outputText value="#{row.Points}" id="ot5">
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.GroupStandingView3.hints.Points.format}"/>
+                    </af:outputText>
+                  </af:column>
+                  <af:column sortProperty="#{bindings.GroupStandingView3.hints.GoalDifference.name}"
+                             sortable="false"
+                             headerText="#{bindings.GroupStandingView3.hints.GoalDifference.label}"
+                             id="c4">
+                    <af:outputText value="#{row.GoalDifference}" id="ot3">
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.GroupStandingView3.hints.GoalDifference.format}"/>
+                    </af:outputText>
+                  </af:column>
+                  <af:column sortProperty="#{bindings.GroupStandingView3.hints.GoalsScored.name}"
+                             sortable="false"
+                             headerText="#{bindings.GroupStandingView3.hints.GoalsScored.label}"
+                             id="c6">
+                    <af:outputText value="#{row.GoalsScored}" id="ot4">
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.GroupStandingView3.hints.GoalsScored.format}"/>
+                    </af:outputText>
+                  </af:column>
+                </af:table>
+              </af:panelCollection>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </f:facet>
+        <f:facet name="start"/>
+        <f:facet name="end"/>
+        <f:facet name="top"/>
+      </af:panelStretchLayout>
+    </f:facet>
+    <f:facet name="start"/>
+    <f:facet name="end"/>
+    <f:facet name="top">
+      <af:panelFormLayout id="pfl1">
+        <af:panelGroupLayout id="flagsPGL" layout="horizontal"
+                             inlineStyle="width:400px; background-color:yellow;">
+          <af:panelGridLayout id="pgl1" >
+            <af:gridRow marginTop="5px" height="auto" id="gr1">
+              <af:gridCell marginStart="5px" width="30%" id="gc4"  halign="center" valign="bottom">
+                <af:image id="homeFlag"
+                          source="/images/countryflags/#{bindings.Home.inputValue}.png"/>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" width="18%" id="gc8" halign="end" rowSpan="2" valign="middle">
+                <af:outputText value="#{bindings.HomeGoals.inputValue}"
+                               shortDesc="#{bindings.HomeGoals.inputValue}"
+                               inlineStyle="font-size:xx-large;" id="ot62hg"/>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" width="4%" id="gc2"  rowSpan="2" valign="middle"
+                           halign="center" >
+                <af:outputText value="-" shortDesc="versus" id="ot61a"
+                               inlineStyle="font-size:xx-large;"/>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" width="18%" id="gc6"  rowSpan="2"  valign="middle">
+                <af:outputText value="#{bindings.AwayGoals.inputValue}"
+                               shortDesc="#{bindings.AwayGoals.inputValue}"
+                               inlineStyle="font-size:xx-large;" id="ot62ag"/>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" marginEnd="5px" width="30%" halign="center" valign="bottom"
+                           id="gc5">
+                <af:image id="awayFlag"
+                          source="/images/countryflags/#{bindings.Away.inputValue}.png"/>
+              </af:gridCell>
+            </af:gridRow>
+            <af:gridRow marginTop="5px" height="auto" id="gr1b">
+              <af:gridCell marginStart="5px" width="30%" id="gc4b" valign="top"  halign="center">
+                <af:outputText value="#{bindings.Home.inputValue}"
+                               shortDesc="#{bindings.HomeCountryId.inputValue}"
+                               id="ot61" inlineStyle="font-size:xx-large;"/>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" marginEnd="5px" width="30%" valign="top" halign="center"
+                           id="gc5b">
+                <af:outputText value="#{bindings.Away.inputValue}"
+                               shortDesc="#{bindings.AwayCountryId.inputValue}"
+                               inlineStyle="font-size:xx-large;" id="ot62"/>
+              </af:gridCell>
+            </af:gridRow>
+          </af:panelGridLayout>
+        </af:panelGroupLayout>
+      </af:panelFormLayout>
+    </f:facet>
+  </af:panelStretchLayout>
+</jsp:root>

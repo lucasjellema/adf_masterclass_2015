@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="TagsView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  SelectList="Tag.ID, 
+       Tag.TAG"
+  FromList="WC_TAGS Tag"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+  </DesignTime>
+  <Variable
+    Name="b_tagValue"
+    Kind="viewcriteria"
+    Type="java.lang.String"/>
+  <EntityUsage
+    Name="Tag"
+    Entity="demo.adfhtml.model.Tag"/>
+  <ViewAttribute
+    Name="Id"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="Tag"
+    AliasName="ID"/>
+  <ViewAttribute
+    Name="Tag1"
+    PrecisionRule="true"
+    EntityAttrName="Tag"
+    EntityUsage="Tag"
+    AliasName="TAG"/>
+  <ViewCriteria
+    Name="FindByTag"
+    ViewObjectName="demo.adfhtml.model.TagsView"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow0"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="Tag1"
+        ViewAttribute="Tag1"
+        Operator="="
+        Conjunction="AND"
+        Value=":b_tagValue"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ViewLinkAccessor
+    Name="MatchTags"
+    ViewLink="demo.adfhtml.model.TagToMatchViewLink"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+</ViewObject>

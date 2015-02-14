@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="matchDetailsPageDef"
+                Package="demo.adfhtml.view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="MatchResultsView1" RangeSize="25"
+              DataControl="WorldCupServiceDataControl"
+              id="MatchResultsView1Iterator"/>
+    <iterator Binds="GroupStandingView3" RangeSize="25"
+              DataControl="WorldCupServiceDataControl"
+              id="GroupStandingView3Iterator"/>
+    <taskFlow id="tagcloudtaskflowdefinition1"
+              taskFlowId="/WEB-INF/tagcloud-task-flow-definition.xml#tagcloud-task-flow-definition"
+              activation="deferred"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding">
+      <parameters>
+        <parameter id="tags"
+                   value="#{pageFlowScope.matchDetailsHelperBean.tags}"/>
+        <parameter id="uniqueTags"
+                   value="#{pageFlowScope.matchDetailsHelperBean.previouslyAssignedTags}"/>
+        <parameter id="editable" value="true"/>
+      </parameters>
+    </taskFlow>
+    <iterator Binds="MatchTagCloudView1" RangeSize="25"
+              DataControl="WorldCupServiceDataControl"
+              id="MatchTagCloudView1Iterator"/>
+    <iterator id="UniqueTagsViewIterator" Binds="UniqueTagsView1"
+              DataControl="WorldCupServiceDataControl" RangeSize="25"/>
+    <iterator Binds="MatchTagsView2" RangeSize="10"
+              DataControl="WorldCupServiceDataControl"
+              id="MatchTagsView2Iterator"/>
+  </executables>
+  <bindings>
+    <listOfValues StaticList="false" IterBinding="MatchResultsView1Iterator"
+                  Uses="LOV_Home" id="Home"/>
+    <listOfValues StaticList="false" IterBinding="MatchResultsView1Iterator"
+                  Uses="LOV_Away" id="Away"/>
+    <attributeValues IterBinding="MatchResultsView1Iterator" id="Group1">
+      <AttrNames>
+        <Item Value="Group1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MatchResultsView1Iterator" id="HomeTeamId">
+      <AttrNames>
+        <Item Value="HomeTeamId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MatchResultsView1Iterator" id="AwayTeamId">
+      <AttrNames>
+        <Item Value="AwayTeamId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MatchResultsView1Iterator" id="HomeGoals">
+      <AttrNames>
+        <Item Value="HomeGoals"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MatchResultsView1Iterator" id="AwayGoals">
+      <AttrNames>
+        <Item Value="AwayGoals"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MatchResultsView1Iterator" id="SdmId">
+      <AttrNames>
+        <Item Value="SdmId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MatchResultsView1Iterator"
+                     id="ScoringProcess">
+      <AttrNames>
+        <Item Value="ScoringProcess"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MatchResultsView1Iterator" id="HomeCountryId">
+      <AttrNames>
+        <Item Value="HomeCountryId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MatchResultsView1Iterator" id="AwayCountryId">
+      <AttrNames>
+        <Item Value="AwayCountryId"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="GroupStandingView3Iterator" id="GroupStandingView3">
+      <nodeDefinition DefName="demo.adfhtml.model.GroupStandingView"
+                      Name="GroupStandingView30">
+        <AttrNames>
+          <Item Value="Group1"/>
+          <Item Value="Country"/>
+          <Item Value="GamesPlayed"/>
+          <Item Value="Points"/>
+          <Item Value="GoalDifference"/>
+          <Item Value="GoalsScored"/>
+          <Item Value="RankInGroup"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="MatchTagCloudView1Iterator" id="MatchTagCloudView1">
+      <nodeDefinition DefName="demo.adfhtml.model.MatchTagCloudView"
+                      Name="MatchTagCloudView10">
+        <AttrNames>
+          <Item Value="Tag"/>
+          <Item Value="MatchId"/>
+          <Item Value="Generated"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <table IterBinding="MatchTagsView2Iterator" id="MatchTagsView2">
+      <AttrNames>
+        <Item Value="MatchId"/>
+        <Item Value="TagId"/>
+      </AttrNames>
+    </table>
+
+    <methodAction id="handleTagAddedEvent" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="handleEvent"
+                  IsViewObjectMethod="false" DataControl="TagAddedEventConsumer"
+                  InstanceName="TagAddedEventConsumer.dataProvider">
+      <NamedData NDName="payload" NDType="java.lang.Object"
+                 NDValue="${payLoad}"/>
+    </methodAction>
+    <methodAction id="addTagToMatch" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="addTagToMatch"
+                  IsViewObjectMethod="false"
+                  DataControl="WorldCupServiceDataControl"
+                  InstanceName="WorldCupServiceDataControl.dataProvider">
+      <NamedData NDName="tag" NDType="java.lang.String"/>
+      <NamedData NDName="matchId" NDType="oracle.jbo.domain.Number"/>
+    </methodAction>
+    <action id="Commit" DataControl="WorldCupServiceDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <methodAction id="handleTagRemovedEvent" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="handleEvent"
+                  IsViewObjectMethod="false"
+                  DataControl="TagRemovedEventConsumer"
+                  InstanceName="TagRemovedEventConsumer.dataProvider">
+      <NamedData NDName="payload" NDType="java.lang.Object"
+                 NDValue="${payLoad}"/>
+    </methodAction>
+    <methodAction id="removeTagfromMatch" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="removeTagfromMatch"
+                  IsViewObjectMethod="false"
+                  DataControl="WorldCupServiceDataControl"
+                  InstanceName="WorldCupServiceDataControl.dataProvider">
+      <NamedData NDName="tag" NDType="java.lang.String"/>
+      <NamedData NDName="matchId" NDType="oracle.jbo.domain.Number"/>
+    </methodAction>
+  </bindings>
+  <eventMap xmlns="http://xmlns.oracle.com/adfm/contextualEvent">
+    <event name="TagAdded">
+      <producer region="*">
+        <consumer handler="handleTagAddedEvent"/>
+      </producer>
+    </event>
+    <event name="TagRemoved">
+      <producer region="*">
+        <consumer handler="handleTagRemovedEvent"/>
+      </producer>
+    </event>
+  </eventMap>
+</pageDefinition>

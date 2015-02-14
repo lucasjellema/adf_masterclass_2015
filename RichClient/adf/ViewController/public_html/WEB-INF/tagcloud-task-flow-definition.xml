@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="tagcloud-task-flow-definition">
+    <default-activity id="__1">tagcloud</default-activity>
+    <input-parameter-definition id="__7">
+      <name id="__6">tags</name>
+      <value>#{pageFlowScope.tagCloudBean.tags}</value>
+      <class>java.util.List</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__15">
+      <name id="__16">uniqueTags</name>
+      <value>#{pageFlowScope.tagCloudBean.previouslyAssignedTags}</value>
+      <class>java.util.list</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__18">
+      <name id="__17">editable</name>
+      <value>#{pageFlowScope.tagCloudBean.editable}</value>
+      <class>java.lang.Boolean</class>
+    </input-parameter-definition>
+    <managed-bean id="__4">
+      <managed-bean-name id="__5">tagCloudBean</managed-bean-name>
+      <managed-bean-class id="__3">demo.adfhtml.view.TagCloudBean</managed-bean-class>
+      <managed-bean-scope id="__2">pageFlow</managed-bean-scope>
+      <managed-property id="__12">
+        <property-name id="__14">otnBridge</property-name>
+        <value id="__13">#{pageFlowScope.otnBridge}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__9">
+      <managed-bean-name id="__11">otnBridge</managed-bean-name>
+      <managed-bean-class id="__8">demo.adfhtml.view.OTNBridge</managed-bean-class>
+      <managed-bean-scope id="__10">pageFlow</managed-bean-scope>
+    </managed-bean>
+    <view id="tagcloud">
+      <page>/tagcloud.jsff</page>
+    </view>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelBox text="#{bnd.TAG_CLOUD}" id="pb1"
+               binding="#{pageFlowScope.tagCloudBean.tagCloudUIComponent}"
+               icon="#{pageFlowScope.tagCloudBean.initialise}"
+               clientComponent="true">
+    <af:resource type="javascript">
+      function setNewTag(event) {
+          var tag = event.getSource();
+          var tagValue = tag.getProperty("tag");
+          var it1 = tag.findComponent("it1");
+          it1.setValue(tagValue);
+      }
+    </af:resource>
+    <af:serverListener type="guestMsg"
+                       method="#{pageFlowScope.tagCloudBean.tagcloudEvent}"/>
+    <af:panelGridLayout id="pgl2" partialTriggers="manualTagsIter:delTagCIL">
+      <af:gridRow id="gr1a" height="auto"
+                  rendered="#{pageFlowScope.tagCloudBean.editable}">
+        <af:gridCell id="gc1a" width="100%">
+        <af:panelLabelAndMessage for="it1"  label="New Tag to Apply" id="plm1" >
+        
+          <af:inputText value="#{pageFlowScope.tagCloudBean.newTag}"
+                         columns="30"
+                        shortDesc="New tag to apply; you could consider #{pageFlowScope.tagCloudBean.previouslyAssignedTagsAsString} "
+                        id="it1" partialTriggers="cl1"/>
+            <f:facet name="end">
+              <af:commandLink text="Add" id="cl1"
+                              actionListener="#{pageFlowScope.tagCloudBean.addTag}">
+                <af:image id="addTagI" source="/images/plus-icon-green-hi.png"
+                          shortDesc="Click to add new tag"
+                          inlineStyle="width:15.0px;"/>
+              </af:commandLink>
+            </f:facet>
+          </af:panelLabelAndMessage>
+          <af:iterator id="prevTagsIter"
+                       value="#{pageFlowScope.tagCloudBean.previouslyAssignedTags}"
+                       var="tag">
+            <af:outputText id="prevTag" value="#{tag}, ">
+              <af:clientAttribute name="tag" value="#{tag}"/>
+              <af:clientListener method="setNewTag" type="click"/>
+            </af:outputText>
+          </af:iterator>
+          <af:spacer id="hoi" height="10"/>
+          <af:iterator id="manualTagsIter"
+                       value="#{pageFlowScope.tagCloudBean.manualTags}"
+                       var="tag">
+            <af:commandLink text="#{tag.tag} " id="delTagCIL"
+                            actionListener="#{pageFlowScope.tagCloudBean.removeTag}">
+              <af:clientAttribute name="tagValue" value="#{tag.tag}"/>
+              <af:image id="removeTagIMG" source="/images/Remove-icon.png"
+                        shortDesc="Click to remove tag #{tag.tag}"
+                        inlineStyle="width:15.0px;"/>
+            </af:commandLink>
+          </af:iterator>
+        </af:gridCell>
+      </af:gridRow>
+      <af:gridRow id="gr1b" height="auto"
+                  rendered="#{!pageFlowScope.tagCloudBean.editable}">
+        <af:gridCell id="gc1b" width="100%">
+        <af:panelLabelAndMessage for="it1b"  label="Tags on which matches are filtered" id="plm2" >
+        
+          <af:inputText value="#{pageFlowScope.tagCloudBean.selectedTags}"                        
+                        autoSubmit="true" columns="50"
+                        shortDesc="Comma separated list of tags used to filter the set of matches"
+                        id="it1b"/>
+            <f:facet name="end">
+              <af:commandLink text="Reset" id="cl1b"
+                              actionListener="#{pageFlowScope.tagCloudBean.resetSelectedTags}">
+              <af:image id="resetTagsIMG" source="/images/Remove-icon.png"
+                        shortDesc="Click to reset"
+                        inlineStyle="width:15.0px;"/>
+              </af:commandLink>
+            </f:facet>
+          </af:panelLabelAndMessage>
+
+        </af:gridCell>
+      </af:gridRow>
+      <af:gridRow id="gr2" height="100%">
+        <af:gridCell id="gc2" halign="stretch" valign="stretch">
+          <af:panelGroupLayout id="pgl1" layout="vertical"
+                               styleClass="guest-component: tagcloud tc1;"
+                               clientComponent="true"/>
+        </af:gridCell>
+      </af:gridRow>
+    </af:panelGridLayout>
+  </af:panelBox>
+</jsp:root>

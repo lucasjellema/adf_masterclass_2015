@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="tagcloudPageDef"
+                Package="demo.adfhtml.view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+  </executables>
+  <bindings>
+    <methodAction id="publishTagAddedEvent" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="publishEvent"
+                  IsViewObjectMethod="false" DataControl="EventPublisher"
+                  InstanceName="EventPublisher.dataProvider"
+                  ReturnName="data.EventPublisher.methodResults.publishEvent_EventPublisher_dataProvider_publishEvent_result">
+      <NamedData NDName="payload" NDValue='"south,Surprise"'
+                 NDType="java.lang.Object"/>
+      <events xmlns="http://xmlns.oracle.com/adfm/contextualEvent">
+        <event name="TagAdded"/>
+      </events>
+    </methodAction>
+    <methodAction id="publishTagRemovedEvent" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="publishEvent"
+                  IsViewObjectMethod="false" DataControl="EventPublisher"
+                  InstanceName="EventPublisher.dataProvider"
+                  ReturnName="data.EventPublisher.methodResults.publishEvent_EventPublisher_dataProvider_publishEvent_result">
+      <NamedData NDName="payload" NDValue='"south,Surprise"'
+                 NDType="java.lang.Object"/>
+      <events xmlns="http://xmlns.oracle.com/adfm/contextualEvent">
+        <event name="TagRemoved"/>
+      </events>
+    </methodAction>
+   <methodAction id="publishEvent" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="publishEvent"
+                  IsViewObjectMethod="false" DataControl="EventPublisher"
+                  InstanceName="EventPublisher.dataProvider"
+                  ReturnName="data.EventPublisher.methodResults.publishEvent_EventPublisher_dataProvider_publishEvent_result">
+      <NamedData NDName="payload" NDValue='"south,Surprise"'
+                 NDType="java.lang.Object"/>
+      <events xmlns="http://xmlns.oracle.com/adfm/contextualEvent">
+        <event name="TagSelectionChanged"/>
+      </events>
+    </methodAction>
+    <methodAction id="handleEvent" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="handleEvent"
+                  IsViewObjectMethod="false"
+                  DataControl="AvailableTagsCollectionChangedEventConsumer"
+                  InstanceName="AvailableTagsCollectionChangedEventConsumer.dataProvider">
+      <NamedData NDName="payload" NDType="java.lang.Object"
+                 NDValue="${payLoad}"/>
+    </methodAction>
+  </bindings>
+  <eventMap xmlns="http://xmlns.oracle.com/adfm/contextualEvent">
+    <event name="AvailableTagsCollectionChanged">
+      <producer region="*">
+        <consumer handler="handleEvent"/>
+      </producer>
+    </event>
+  </eventMap>
+</pageDefinition>

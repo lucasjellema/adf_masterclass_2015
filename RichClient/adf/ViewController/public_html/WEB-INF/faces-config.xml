@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.1" xmlns="http://java.sun.com/xml/ns/javaee">
+  <application>
+    <default-render-kit-id>oracle.adf.rich</default-render-kit-id>
+    <resource-bundle>
+    <base-name>demo.adfhtml.view.i18n.bundles.matchcenter_resourcebundle</base-name>
+    <var>bnd</var>
+    </resource-bundle>
+    <locale-config>
+      <default-locale>en</default-locale>
+      <supported-locale>en</supported-locale>
+      <supported-locale>nl</supported-locale>
+      <supported-locale>de</supported-locale>
+    </locale-config>
+    <view-handler>demo.adfhtml.view.i18n.LocaleSettingViewHandler</view-handler>
+  </application>
+  <managed-bean>
+    <managed-bean-name>localeBean</managed-bean-name>
+    <managed-bean-class>demo.adfhtml.view.i18n.LocaleBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+  <managed-bean>
+    <managed-bean-name>SkinManager</managed-bean-name>
+    <managed-bean-class>demo.adfhtml.view.skin.SkinManager</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+</faces-config>

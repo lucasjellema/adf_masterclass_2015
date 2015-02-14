@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<DataControlConfigs xmlns="http://xmlns.oracle.com/adfm/configuration"
+                    version="11.1.1.64.93" id="DataControls"
+                    Package="demo.adfhtml.view">
+  <AdapterDataControl id="EventPublisher"
+                      FactoryClass="oracle.adf.model.adapter.bean.BeanDCFactoryImpl"
+                      ImplDef="oracle.adf.model.adapter.bean.BeanDefinition"
+                      SupportsTransactions="false" SupportsSortCollection="true"
+                      SupportsResetState="false" SupportsRangesize="false"
+                      SupportsFindMode="false" SupportsUpdates="true"
+                      Definition="demo.adfhtml.view.events.EventPublisher"
+                      BeanClass="demo.adfhtml.view.events.EventPublisher"
+                      xmlns="http://xmlns.oracle.com/adfm/datacontrol">
+    <CreatableTypes>
+      <TypeInfo FullName="demo.adfhtml.view.events.EventPublisher"/>
+    </CreatableTypes>
+    <Source>
+      <bean-definition BeanClass="demo.adfhtml.view.events.EventPublisher"
+                       xmlns="http://xmlns.oracle.com/adfm/adapter/bean"/>
+    </Source>
+  </AdapterDataControl>
+  <AdapterDataControl id="EventConsumer"
+                      FactoryClass="oracle.adf.model.adapter.bean.BeanDCFactoryImpl"
+                      ImplDef="oracle.adf.model.adapter.bean.BeanDefinition"
+                      SupportsTransactions="false" SupportsSortCollection="true"
+                      SupportsResetState="false" SupportsRangesize="false"
+                      SupportsFindMode="false" SupportsUpdates="true"
+                      Definition="demo.adfhtml.view.events.EventConsumer"
+                      BeanClass="demo.adfhtml.view.events.EventConsumer"
+                      xmlns="http://xmlns.oracle.com/adfm/datacontrol">
+    <CreatableTypes>
+      <TypeInfo FullName="demo.adfhtml.view.events.EventConsumer"/>
+    </CreatableTypes>
+    <Source>
+      <bean-definition BeanClass="demo.adfhtml.view.events.EventConsumer"
+                       xmlns="http://xmlns.oracle.com/adfm/adapter/bean"/>
+    </Source>
+  </AdapterDataControl>
+  <AdapterDataControl id="AvailableTagsCollectionChangedEventConsumer"
+                      FactoryClass="oracle.adf.model.adapter.bean.BeanDCFactoryImpl"
+                      ImplDef="oracle.adf.model.adapter.bean.BeanDefinition"
+                      SupportsTransactions="false" SupportsSortCollection="true"
+                      SupportsResetState="false" SupportsRangesize="false"
+                      SupportsFindMode="false" SupportsUpdates="true"
+                      Definition="demo.adfhtml.view.events.AvailableTagsCollectionChangedEventConsumer"
+                      BeanClass="demo.adfhtml.view.events.AvailableTagsCollectionChangedEventConsumer"
+                      xmlns="http://xmlns.oracle.com/adfm/datacontrol">
+    <CreatableTypes>
+      <TypeInfo FullName="demo.adfhtml.view.events.AvailableTagsCollectionChangedEventConsumer"/>
+    </CreatableTypes>
+    <Source>
+      <bean-definition BeanClass="demo.adfhtml.view.events.AvailableTagsCollectionChangedEventConsumer"
+                       xmlns="http://xmlns.oracle.com/adfm/adapter/bean"/>
+    </Source>
+  </AdapterDataControl>
+  <AdapterDataControl id="TagAddedEventConsumer"
+                      FactoryClass="oracle.adf.model.adapter.bean.BeanDCFactoryImpl"
+                      ImplDef="oracle.adf.model.adapter.bean.BeanDefinition"
+                      SupportsTransactions="false" SupportsSortCollection="true"
+                      SupportsResetState="false" SupportsRangesize="false"
+                      SupportsFindMode="false" SupportsUpdates="true"
+                      Definition="demo.adfhtml.view.events.TagAddedEventConsumer"
+                      BeanClass="demo.adfhtml.view.events.TagAddedEventConsumer"
+                      xmlns="http://xmlns.oracle.com/adfm/datacontrol">
+    <CreatableTypes>
+      <TypeInfo FullName="demo.adfhtml.view.events.TagAddedEventConsumer"/>
+    </CreatableTypes>
+    <Source>
+      <bean-definition BeanClass="demo.adfhtml.view.events.TagAddedEventConsumer"
+                       xmlns="http://xmlns.oracle.com/adfm/adapter/bean"/>
+    </Source>
+  </AdapterDataControl>
+  <AdapterDataControl id="TagRemovedEventConsumer"
+                      FactoryClass="oracle.adf.model.adapter.bean.BeanDCFactoryImpl"
+                      ImplDef="oracle.adf.model.adapter.bean.BeanDefinition"
+                      SupportsTransactions="false" SupportsSortCollection="true"
+                      SupportsResetState="false" SupportsRangesize="false"
+                      SupportsFindMode="false" SupportsUpdates="true"
+                      Definition="demo.adfhtml.view.events.TagRemovedEventConsumer"
+                      BeanClass="demo.adfhtml.view.events.TagRemovedEventConsumer"
+                      xmlns="http://xmlns.oracle.com/adfm/datacontrol">
+    <CreatableTypes>
+      <TypeInfo FullName="demo.adfhtml.view.events.TagRemovedEventConsumer"/>
+    </CreatableTypes>
+    <Source>
+      <bean-definition BeanClass="demo.adfhtml.view.events.TagRemovedEventConsumer"
+                       xmlns="http://xmlns.oracle.com/adfm/adapter/bean"/>
+    </Source>
+  </AdapterDataControl>
+</DataControlConfigs>

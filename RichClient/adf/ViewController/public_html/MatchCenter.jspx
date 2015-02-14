@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1">
+      <af:resource type="javascript" source="/scripts/tagcloud.js"/>
+      <af:resource type="javascript" source="/scripts/integration.js"/>
+      <af:form id="f1">
+        <af:panelStretchLayout topHeight="50px" id="psl1">
+          <f:facet name="top">
+            <af:panelHeader text="World Cup Football 2014 - #{bnd.MATCH_CENTER_HEADER}"
+                            id="ph1">
+              <f:facet name="context"/>
+              <f:facet name="menuBar"/>
+              <f:facet name="toolbar">
+                <af:panelGroupLayout layout="horizontal" id="pgl1">
+                  <af:selectOneChoice label="Select language" autoSubmit="true"
+                                      value="#{localeBean.language}" id="soc1">
+                    <af:selectItem label="Dutch" value="nl" id="si2"/>
+                    <af:selectItem label="English" value="en" id="si1"/>
+                    <af:selectItem label="German" value="de" id="si3"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="skinsel" label="Choose Skin:"
+                                      value="#{SkinManager.skinFamily}"
+                                      autoSubmit="true"
+                                      valueChangeListener="#{SkinManager.onNewSkinSelection}">
+                         <af:selectItem id="sis4a" value="simple" label="simple"/>
+                    <af:selectItem id="sis6a" value="customSkin"
+                                   label="customSkin"/>
+                    <af:selectItem id="sis8a" value="skyros" label="skyros"/>
+                    <af:selectItem id="sis9a" value="fusion" label="fusion"/>
+                    <af:selectItem id="sis11a" value="blafplus-rich"
+                                   label="blafplus-rich"/>
+                  </af:selectOneChoice>
+                </af:panelGroupLayout>
+              </f:facet>
+              <f:facet name="legend"/>
+              <f:facet name="info"/>
+            </af:panelHeader>
+          </f:facet>
+          <f:facet name="center">
+            <af:region value="#{bindings.matchtaskflowdefinition1.regionModel}"
+                       id="r1"/>
+            <!-- id="af_one_column_header_stretched"  -->
+          </f:facet>
+        </af:panelStretchLayout>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>
