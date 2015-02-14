@@ -1,0 +1,134 @@
+create or replace type filter_t 
+as object
+( name varchar2(40)
+, where_clause varchar2(500)
+, bind_parameter varchar2(50)
+)
+/
+
+create or replace type filter_table_t
+as table of filter_t
+/
+
+select filtered_emp.*
+,      row_number() over (partition by filter 
+                          order by     case filter
+                                       when 'Salary Category'
+                                       then decode( filter_value
+                                                  , 'Low','1' 
+                                                  , 'Medium', '2'
+                                                  , ' High' , '3'
+                                                  )
+                                       else filter_value
+                                       end
+                          ) rn 
+from   (
+select filters.filter
+,      filters.where_clause
+,      case filter
+       when 'Job' then job
+       when 'Department' then to_char(deptno)
+       when 'Hireyear' then to_char(extract(year from hiredate))
+       when 'Salary Category' then case
+                                   when sal < 1600 then 'Low'
+                                   when sal < 3000 then 'Medium'
+                                   else 'High' end
+       end  filter_value
+,      count(*)
+from   emp
+       cross join
+       ( select name filter
+         ,      where_clause
+         ,      bind_parameter
+         from   table( filter_table_t( filter_t( 'Job',':bind_job = job', 'bind_job')
+                                     , filter_t( 'Hireyear',':bind_hireyear = extract(year from hiredate)', 'bind_hireyear')
+                                     , filter_t( 'Salary Category',':bind_salaryCategory = case when sal < 1600 then ''Low'' 
+                                                                             when sal< 3000 then ''Medium'' else ''High'' end','bind_salaryCategory')
+                                     , filter_t( 'Department',':bind_deptno = deptno', 'bind_deptno')
+                                     )
+                     )
+       ) filters
+group
+by    filter
+,     where_clause
+,     case filter
+      when 'Job' then job
+      when 'Department' then to_char(deptno)
+      when 'Hireyear' then to_char(extract(year from hiredate))
+      when 'Salary Category' then case
+                                  when sal < 1600 then 'Low'
+                                  when sal < 3000 then 'Medium'
+                                  else 'High' end
+      end
+) filtered_emp
+order
+by    filter
+,     rn
+/
+
+
+
+HR_SCHEMA:
+
+select filtered_departments.*
+,      row_number() over (partition by filter 
+                          order by     case filter
+                                       when 'Region'
+                                       then decode( filter_value, 'Europe','1' ,'Americas', '2', '3')
+                                       else filter_value
+                                       end
+                          ) rn 
+from   (
+select filters.filter
+,      filters.where_clause
+,      filters.bind_parameter
+,      case filter
+       when 'City' then city
+       when 'State' then state_province
+       when 'Country' then country_name
+       when 'Region' then region_name
+       end  filter_value
+,      count(*) rowcount
+from   (
+select d.department_id
+,      d.department_name
+,      l.city
+,      l.state_province
+,      c.country_name
+,      r.region_name
+from   departments d
+       join
+       locations l
+       on (d.location_id = l.location_id)
+       join
+       countries c
+       on (l.country_id = c.country_id)
+       join
+       regions r
+       on (c.region_id = r.region_id)
+)  d   
+cross join
+       ( select name filter
+         ,      where_clause
+         ,      bind_parameter
+         from   table( filter_table_t( filter_t( 'City',':bind_city = city', 'bind_city')
+                                     , filter_t( 'State',':bind_state = state_province', 'bind_state')
+                                     , filter_t( 'Country',':bind_country = country_name', 'bind_country')
+                                     , filter_t( 'Region',':bind_region = region_name', 'bind_region')
+                                     )
+                     )
+       ) filters
+group 
+by     filter
+,      where_clause
+,      bind_parameter
+,      case filter
+       when 'City' then city
+       when 'State' then state_province
+       when 'Country' then country_name
+       when 'Region' then region_name
+       end 
+) filtered_departments
+order
+by    filter
+,     rn

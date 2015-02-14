@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="table-filters-task-flow-definition">
+    <input-parameter-definition>
+      <name>filterManagerBean</name>
+      <class>view.FilterManager</class>
+      <required/>
+    </input-parameter-definition>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

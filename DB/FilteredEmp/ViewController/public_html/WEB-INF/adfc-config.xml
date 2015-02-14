@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <managed-bean>
+    <managed-bean-name>EmpFilterManager</managed-bean-name>
+    <managed-bean-class>view.FilterManager</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+      <property-name>filterIterator</property-name>
+      <property-class>java.lang.String</property-class>
+      <value>FiltersOnEmpViewIterator</value>
+    </managed-property>
+    <managed-property>
+      <property-name>tofilterIterator</property-name>
+      <property-class>java.lang.String</property-class>
+      <value>EmpView1Iterator</value>
+    </managed-property>
+    <managed-property>
+      <property-name>componentsToRefresh</property-name>
+      <property-class>java.util.List</property-class>
+      <list-entries>
+        <value>Filters</value>
+        <value>EmpTable</value>
+      </list-entries>
+    </managed-property>
+  </managed-bean>
+</adfc-config>

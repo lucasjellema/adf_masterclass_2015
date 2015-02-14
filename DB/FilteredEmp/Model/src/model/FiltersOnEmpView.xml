@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="FiltersOnEmpView"
+  Version="11.1.1.51.56"
+  OrderBy="filter, rn"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  RowClass="model.FiltersOnEmpViewRowImpl">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Variable
+    Name="bind_job"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="bind_deptno"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="bind_hireyear"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="bind_salaryCategory"
+    Kind="where"
+    Type="java.lang.String"/>
+  <SQLQuery>
+    <![CDATA[select filtered_emp.*
+,      row_number() over (partition by filter 
+                          order by     case filter
+                                       when 'Salary Category'
+                                       then decode( filter_value, 'Low','1' ,'Medium', '2', ' High' , '3')
+                                       else filter_value
+                                       end
+                          ) rn 
+from   (
+select filters.filter
+,      filters.where_clause
+,      filters.bind_parameter
+,      case filter
+       when 'Job' then job
+       when 'Department' then to_char(deptno)
+       when 'Hireyear' then to_char(extract(year from hiredate))
+       when 'Salary Category' then case
+                                   when sal < 1600 then 'Low'
+                                   when sal < 3000 then 'Medium'
+                                   else 'High' end
+       end  filter_value
+,      count(*)
+from   ( select * 
+         from   emp 
+         where  job = nvl(:bind_job, job)
+         and    deptno = nvl(:bind_deptno, deptno)
+         and    extract(year from hiredate) = nvl(:bind_hireyear, extract(year from hiredate))
+         and    (:bind_salaryCategory is null or :bind_salaryCategory = case
+                                                                        when sal < 1600 then 'Low'
+                                                                        when sal < 3000 then 'Medium'
+                                                                        else 'High' end
+                )
+       ) 
+       cross join
+       ( select name filter
+         ,      where_clause
+         ,      bind_parameter
+         from   table( filter_table_t( filter_t( 'Job',''':bind_job'' = job', 'bind_job')
+                                     , filter_t( 'Hireyear',':bind_hireyear = extract(year from hiredate)', 'bind_hireyear')
+                                     , filter_t( 'Salary Category',''':bind_salaryCategory'' = case when sal < 1600 then ''Low'' when sal< 3000 then ''Medium'' else ''High'' end','bind_salaryCategory')
+                                     , filter_t( 'Department',':bind_deptno = deptno', 'bind_deptno')
+                                     )
+                     )
+       ) filters
+group
+by    filter
+,     where_clause
+,     bind_parameter
+,     case filter
+      when 'Job' then job
+      when 'Department' then to_char(deptno)
+      when 'Hireyear' then to_char(extract(year from hiredate))
+      when 'Salary Category' then case
+                                  when sal < 1600 then 'Low'
+                                  when sal < 3000 then 'Medium'
+                                  else 'High' end
+      end
+) filtered_emp]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="Filter"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="FILTER"
+    Expression="FILTER"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="WhereClause"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="500"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="WHERE_CLAUSE"
+    Expression="WHERE_CLAUSE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="500"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BindParameter"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="50"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="BIND_PARAMETER"
+    Expression="BIND_PARAMETER"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="FilterValue"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="FILTER_VALUE"
+    Expression="FILTER_VALUE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RecordCount"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="COUNT(*)"
+    Expression="COUNT(*)"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RownumberInFilter"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="RN"
+    Expression="RN"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="IsFirst"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Boolean"
+    ColumnType="NUMBER"
+    AliasName="VIEW_ATTR"
+    SQLType="BIT"/>
+</ViewObject>

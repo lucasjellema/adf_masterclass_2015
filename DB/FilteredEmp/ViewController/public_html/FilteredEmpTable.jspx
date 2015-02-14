@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=windows-1252"/>
+  <f:view>
+    <af:document id="d1">
+      <af:messages id="m1"/>
+      <af:form id="f1">
+        <af:panelHeader text="Filtered Employees" inlineStyle="height:412px;"
+                        id="ph1">
+          <f:facet name="context"/>
+          <f:facet name="menuBar"/>
+          <f:facet name="toolbar"/>
+          <f:facet name="legend"/>
+          <f:facet name="info"/>
+          <af:panelSplitter id="ps" inlineStyle="width:872px; height:394px;">
+            <f:facet name="first">
+              <af:panelGroupLayout layout="scroll" id="Filters"
+                                   xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+                <af:outputText id="filtersTitle" value="Filters"
+                               inlineStyle="font-size:x-large; font-weight:bolder;"/>
+                <af:panelList id="filterList">
+                  <af:iterator id="filterIter"
+                               value="#{bindings.FiltersOnEmpView1.collectionModel}"
+                               var="row">
+                    <af:panelGroupLayout id="filterHeaderPGL" layout="vertical"
+                                         rendered="#{row.IsFirst}">
+                      <af:spacer height="15" id="s1"/>
+                      <af:panelGroupLayout layout="horizontal" id="pgl1">
+                        <af:outputText id="filterHeader" value="#{row.Filter}"
+                                       inlineStyle="font-size:large; font-weight:bold;"/>
+                        <af:spacer width="20" id="s2"/>
+                        <af:commandLink id="resetFilter" text="Reset Filter"
+                                        rendered="#{EmpFilterManager.selectedFilters[row.Filter] != null}"
+                                        partialSubmit="true">
+                          <af:setPropertyListener from="#{row.Filter}"
+                                                  to="#{EmpFilterManager.removeFilter}"
+                                                  type="action"/>
+                        </af:commandLink>
+                      </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                    <af:commandLink id="filterValueLink"
+                                    disabled="#{EmpFilterManager.selectedFilters[row.Filter] != null}"
+                                    text="#{row.FilterValue} (#{row.RecordCount})"
+                                    partialSubmit="true">
+                      <af:setPropertyListener from="#{row}"
+                                              to="#{EmpFilterManager.selectFilterValue}"
+                                              type="action"/>
+                    </af:commandLink>
+                  </af:iterator>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:table id="EmpTable"
+                        value="#{bindings.EmpView1.collectionModel}" var="row"
+                        rows="#{bindings.EmpView1.rangeSize}"
+                        emptyText="#{bindings.EmpView1.viewable ? 'No rows yet.' : 'Access Denied.'}"
+                        fetchSize="#{bindings.EmpView1.rangeSize}"
+                        filterModel="#{bindings.EmpView1Query.queryDescriptor}"
+                        queryListener="#{bindings.EmpView1Query.processQuery}"
+                        filterVisible="true" varStatus="vs"
+                        selectedRowKeys="#{bindings.EmpView1.collectionModel.selectedRow}"
+                        selectionListener="#{bindings.EmpView1.collectionModel.makeCurrent}"
+                        rowSelection="single">
+                <af:column sortProperty="Empno" filterable="true"
+                           sortable="true"
+                           headerText="#{bindings.EmpView1.hints.Empno.label}"
+                           id="c1">
+                  <af:outputText value="#{row.Empno}" id="ot1">
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.EmpView1.hints.Empno.format}"/>
+                  </af:outputText>
+                </af:column>
+                <af:column sortProperty="Ename" filterable="true"
+                           sortable="true"
+                           headerText="#{bindings.EmpView1.hints.Ename.label}"
+                           id="c2">
+                  <af:outputText value="#{row.Ename}" id="ot2"/>
+                </af:column>
+                <af:column sortProperty="Job" filterable="true" sortable="true"
+                           headerText="#{bindings.EmpView1.hints.Job.label}"
+                           id="c3">
+                  <af:outputText value="#{row.Job}" id="ot3"/>
+                </af:column>
+                <af:column sortProperty="Hiredate" filterable="true"
+                           sortable="true"
+                           headerText="#{bindings.EmpView1.hints.Hiredate.label}"
+                           id="c4">
+                  <f:facet name="filter">
+                    <af:inputDate value="#{vs.filterCriteria.Hiredate}"
+                                  id="id1"/>
+                  </f:facet>
+                  <af:outputText value="#{row.Hiredate}" id="ot4">
+                    <af:convertDateTime pattern="#{bindings.EmpView1.hints.Hiredate.format}"/>
+                  </af:outputText>
+                </af:column>
+                <af:column sortProperty="Sal" filterable="true" sortable="true"
+                           headerText="#{bindings.EmpView1.hints.Sal.label}"
+                           id="c5">
+                  <af:outputText value="#{row.Sal}" id="ot5">
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.EmpView1.hints.Sal.format}"/>
+                  </af:outputText>
+                </af:column>
+                <af:column sortProperty="Deptno" filterable="true"
+                           sortable="true"
+                           headerText="#{bindings.EmpView1.hints.Deptno.label}"
+                           id="c6">
+                  <af:outputText value="#{row.Deptno}" id="ot6">
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.EmpView1.hints.Deptno.format}"/>
+                  </af:outputText>
+                </af:column>
+              </af:table>
+            </f:facet>
+          </af:panelSplitter>
+        </af:panelHeader>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>
