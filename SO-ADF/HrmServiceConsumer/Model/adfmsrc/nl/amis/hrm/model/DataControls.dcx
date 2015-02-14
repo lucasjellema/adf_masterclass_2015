@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<DataControlConfigs xmlns="http://xmlns.oracle.com/adfm/configuration" version="12.1.3.10.8" id="DataControls"
+                    Package="nl.amis.hrm.model">
+  <AdapterDataControl id="HrmDC" FactoryClass="oracle.adf.model.adapter.DataControlFactoryImpl"
+                      ImplDef="org.adfemg.datacontrol.xml.DataControlDefinition" SupportsTransactions="false"
+                      SupportsSortCollection="false" SupportsResetState="false" SupportsRangesize="false"
+                      SupportsFindMode="false" SupportsUpdates="false" Definition="nl.amis.hrm.model.HrmDC"
+                      BeanClass="nl.amis.hrm.model.HrmDC" xmlns="http://xmlns.oracle.com/adfm/datacontrol">
+    <Source>
+      <definition xmlns="http://adfemg.org/adfm/datacontrol/configuration"
+                  schema="http://soa2admin2.example.com:8001/soa-infra/services/default/HrmService/HrmService?XSD=../Schemas/HrmSchema.xsd"
+                  schema-root="retrieveDepartmentsResponse" dc-operation="getXML">
+        <data-provider class="org.adfemg.datacontrol.xml.provider.data.WSDataProvider">
+          <parameters>
+            <!-- use either end point URL or end point connection name -->
+            <parameter name="endPointUrl" value="http://soa2admin2.example.com:8001/soa-infra/services/default/HrmService/HrmService"/>
+            <!-- specify optional soapAction from soap:operation in wsdl to enable WS-Addressing SOAPAction http request header -->
+            <parameter name="soapAction" value="retrieveDepartments"/>
+            <!-- when using default version 1.1 the soapVersion parameter can be removed. It can also be used to specify non-default version 1.2 -->
+            <parameter name="soapVersion" value="1.1"/>
+            <xml-parameter name="requestElement">
+              <!-- add service request XML (SOAPBody child) within CDATA for proper namespace handling -->
+              <![CDATA[ <ns1:retrieveDepartmentsRequest xmlns:ns1="amis.nl/hr"></ns1:retrieveDepartmentsRequest> ]]>
+            </xml-parameter>
+          </parameters>
+        </data-provider>
+        <customization-provider class="org.adfemg.datacontrol.xml.provider.customization.CustomizationProviderImpl">
+  <parameters>
+    <list-parameter name="classes">
+      <value>nl.amis.hrm.model.xmldatacontrol.StaffCustomizer</value>
+    </list-parameter>
+  </parameters>
+</customization-provider>
+      </definition>
+    </Source>
+  </AdapterDataControl>
+</DataControlConfigs>

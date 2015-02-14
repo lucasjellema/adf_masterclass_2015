@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.10.8" id="indexPageDef"
+                Package="nl.amis.hrm.view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <methodIterator Binds="getXML.result" DataControl="HrmDC" RangeSize="25"
+                    BeanClass="nl.amis.hrm.model.HrmDC.getXML.retrieveDepartmentsResponse" id="getXMLIterator"
+                    ChangeEventPolicy="ppr"/>
+    <accessorIterator MasterBinding="getXMLIterator" Binds="Department" RangeSize="25" DataControl="HrmDC"
+                      BeanClass="nl.amis.hrm.model.HrmDC.getXML.retrieveDepartmentsResponse.Department"
+                      id="DepartmentIterator" ChangeEventPolicy="ppr"/>
+    <accessorIterator MasterBinding="DepartmentIterator" Binds="staff" RangeSize="25" DataControl="HrmDC"
+                      BeanClass="nl.amis.hrm.model.HrmDC.getXML.retrieveDepartmentsResponse.Department.staff"
+                      id="staffIterator" ChangeEventPolicy="ppr"/>
+  </executables>
+  <bindings>
+    <methodAction id="getXML" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getXML"
+                  IsViewObjectMethod="false" DataControl="HrmDC" InstanceName="data.HrmDC.root"
+                  ReturnName="data.HrmDC.methodResults.getXML_HrmDC_root_getXML_result"/>
+    <action IterBinding="DepartmentIterator" id="First" RequiresUpdateModel="true" Action="first"/>
+    <action IterBinding="DepartmentIterator" id="Previous" RequiresUpdateModel="true" Action="previous"/>
+    <action IterBinding="DepartmentIterator" id="Next" RequiresUpdateModel="true" Action="next"/>
+    <action IterBinding="DepartmentIterator" id="Last" RequiresUpdateModel="true" Action="last"/>
+    <attributeValues IterBinding="DepartmentIterator" id="identifier">
+      <AttrNames>
+        <Item Value="identifier"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="DepartmentIterator" id="name">
+      <AttrNames>
+        <Item Value="name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="DepartmentIterator" id="location">
+      <AttrNames>
+        <Item Value="location"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="staffIterator" id="staff">
+      <nodeDefinition DefName="nl.amis.hrm.model.HrmDC.getXML.retrieveDepartmentsResponse.Department.staff"
+                      Name="staff0">
+        <AttrNames>
+          <Item Value="identifier"/>
+          <Item Value="firstName"/>
+          <Item Value="lastName"/>
+          <Item Value="job"/>
+          <Item Value="salary"/>
+          <Item Value="hiredate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

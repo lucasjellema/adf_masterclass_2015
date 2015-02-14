@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application" version="12.1.3.10.8" id="DataBindings"
+             SeparateXMLFiles="false" Package="nl.amis.hrm.view" ClientType="Generic">
+  <pageMap>
+    <page path="/index.jspx" usageId="nl_amis_hrm_view_indexPageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="nl_amis_hrm_view_indexPageDef" path="nl.amis.hrm.view.pageDefs.indexPageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <dc id="HrmDC" path="nl.amis.hrm.model.HrmDC"/>
+  </dataControlUsages>
+</Application>
