@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1">
+      <af:resource type="javascript">
+        activeDataCallback = function (event) {
+            var value = event.getSource().getValue();
+            //alert("Value "+value+" was pushed into client.")
+            var pb2 = AdfPage.PAGE.findComponentByAbsoluteId("pb2");
+            pb2.setText("Me too "+value);
+            var ot = pb2.findComponent("ot1");
+            ot.setValue(value);
+
+            var pb3 = AdfPage.PAGE.findComponentByAbsoluteId("pb3");
+            pb3.setText("I am so up to date with my value of  "+value);
+            var pb4 = AdfPage.PAGE.findComponentByAbsoluteId("pb4");
+            pb4.setText("Did you know this latest news: "+value);
+
+            
+        }
+      </af:resource>
+      <af:form id="f1">
+        <af:panelStretchLayout id="psl1" bottomHeight="49px">
+          <f:facet name="top">
+            <af:panelHeader text="Active Page" id="ph1">
+            </af:panelHeader>
+          </f:facet>
+          <f:facet name="center">
+              <af:panelDashboard id="pd1" columns="2" rowHeight="200px">
+                <af:panelBox text="Autonomous, Active, Server Side driven Counter" id="pb1">
+                  <f:facet name="toolbar"/>
+                  <af:activeOutputText id="sessionCounter"
+                                       value="#{activeBean.state}"
+                                       inlineStyle="color:brown;font-size:100px;font-weight:bold;text-align:center;">
+                    <af:clientListener type="propertyChange"
+                                       method="activeDataCallback"/>
+                  </af:activeOutputText>
+                </af:panelBox>
+              <af:panelBox text="PanelBox 2" id="pb2">
+                <f:facet name="toolbar"/>
+                
+                <af:decorativeBox id="db1">
+                  <f:facet name="center">
+                  <af:outputText value="outputText1" id="ot1" clientComponent="true"
+                inlineStyle=""/>
+                </f:facet>
+                  <f:facet name="top">
+                  <af:outputText value="The value received from the server is: " id="ot2" />
+                  </f:facet>
+                </af:decorativeBox>
+              </af:panelBox>
+              <af:panelBox text="PanelBox 3" id="pb3">
+                <f:facet name="toolbar"/>
+              </af:panelBox>
+              <af:panelBox text="PanelBox 4" id="pb4">
+                <f:facet name="toolbar"/>
+              </af:panelBox>
+            </af:panelDashboard>
+          </f:facet>
+          <f:facet name="bottom"></f:facet>
+        </af:panelStretchLayout>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>
