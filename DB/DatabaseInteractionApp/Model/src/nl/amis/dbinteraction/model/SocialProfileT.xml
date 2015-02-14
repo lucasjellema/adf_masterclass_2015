@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Domain SYSTEM "jbo_03_01.dtd">
+<!---->
+<Domain
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="SocialProfileT"
+  Version="12.1.3.10.8">
+  <DesignTime>
+    <Attr Name="_type" Value="Struct"/>
+    <Attr Name="_isPersistent" Value="true"/>
+    <Attr Name="_isQueriable" Value="true"/>
+    <Attr Name="_isUpdateable" Value="true"/>
+    <Attr Name="_columnType" Value="SOCIAL_PROFILE_T"/>
+    <Attr Name="_isCodegen" Value="true"/>
+    <Attr Name="_isSelected" Value="true"/>
+  </DesignTime>
+  <Attribute
+    Name="LinkedinAccount"
+    Precision="100"
+    ColumnName="LINKEDIN_ACCOUNT"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="TwitterAccount"
+    Precision="100"
+    ColumnName="TWITTER_ACCOUNT"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="FacebookAccount"
+    Precision="100"
+    ColumnName="FACEBOOK_ACCOUNT"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="MsnAccount"
+    Precision="100"
+    ColumnName="MSN_ACCOUNT"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="PersonalBlog"
+    Precision="100"
+    ColumnName="PERSONAL_BLOG"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+</Domain>

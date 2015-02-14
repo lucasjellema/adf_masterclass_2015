@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<BC4JConfig version="11.1" xmlns="http://xmlns.oracle.com/bc4j/configuration">
+   <AppModuleConfigBag ApplicationName="nl.amis.dbinteraction.model.HrAppModule">
+      <AppModuleConfig DeployPlatform="LOCAL" name="HrAppModuleLocal" ApplicationName="nl.amis.dbinteraction.model.HrAppModule" jbo.project="nl.amis.dbinteraction.model.Model">
+         <Database jbo.TypeMapEntries="OracleApps"/>
+         <Security AppModuleJndiName="nl.amis.dbinteraction.model.HrAppModule"/>
+         <Custom ns0:ns0="http://xmlns.oracle.com/bc4j/configuration" ns0:JDBCDataSource="java:comp/env/jdbc/hr_soadbDS" xmlns:ns0="http://xmlns.oracle.com/bc4j/configuration"/>
+      </AppModuleConfig>
+      <AppModuleConfig jbo.project="nl.amis.dbinteraction.model.Model" ApplicationName="nl.amis.dbinteraction.model.HrAppModule" DeployPlatform="LOCAL" name="HrAppModuleShared" JDBCName="hr_soadb">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.resetnontransactionalstate="false" jbo.ampool.maxpoolsize="1" jbo.ampool.isuseexclusive="false"/>
+         <Database jbo.TypeMapEntries="OracleApps"/>
+         <Security AppModuleJndiName="nl.amis.dbinteraction.model.HrAppModule"/>
+         <Custom ns0:ns0="http://xmlns.oracle.com/bc4j/configuration" xmlns:ns0="http://xmlns.oracle.com/bc4j/configuration"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+</BC4JConfig>

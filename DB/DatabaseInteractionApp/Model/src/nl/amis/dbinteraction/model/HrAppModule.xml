@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<AppModule
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="HrAppModule"
+   Version="12.1.3.10.8"
+   InheritPersonalization="merge"
+   ComponentClass="nl.amis.dbinteraction.model.HrAppModuleImpl"
+   ComponentInterface="nl.amis.dbinteraction.model.common.HrAppModule"
+   ClearCacheOnRollback="true">
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <ViewUsage
+      Name="DepartmentsView1"
+      ViewObjectName="nl.amis.dbinteraction.model.DepartmentsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="EmployeesView1"
+      ViewObjectName="nl.amis.dbinteraction.model.EmployeesView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="EmployeesView2"
+      ViewObjectName="nl.amis.dbinteraction.model.EmployeesView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="EmployeesView3"
+      ViewObjectName="nl.amis.dbinteraction.model.EmployeesView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="DepartmentsView2"
+      ViewObjectName="nl.amis.dbinteraction.model.DepartmentsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="VEmployeesView1"
+      ViewObjectName="nl.amis.dbinteraction.model.VEmployeesView"/>
+   <ViewLinkUsage
+      Name="EmpManagerFkLink1"
+      ViewLinkObjectName="nl.amis.dbinteraction.model.EmpManagerFkLink"
+      SrcViewUsageName="nl.amis.dbinteraction.model.HrAppModule.EmployeesView1"
+      DstViewUsageName="nl.amis.dbinteraction.model.HrAppModule.EmployeesView2"
+      Reversed="false">
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="EmpDeptFkLink1"
+      ViewLinkObjectName="nl.amis.dbinteraction.model.EmpDeptFkLink"
+      SrcViewUsageName="nl.amis.dbinteraction.model.HrAppModule.DepartmentsView1"
+      DstViewUsageName="nl.amis.dbinteraction.model.HrAppModule.EmployeesView3"
+      Reversed="false">
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="DeptMgrFkLink1"
+      ViewLinkObjectName="nl.amis.dbinteraction.model.DeptMgrFkLink"
+      SrcViewUsageName="nl.amis.dbinteraction.model.HrAppModule.EmployeesView1"
+      DstViewUsageName="nl.amis.dbinteraction.model.HrAppModule.DepartmentsView2"
+      Reversed="false">
+   </ViewLinkUsage>
+   <ClientInterface
+      Name="__clientInterface" >
+      <Method
+         Name="rightNow"
+         MethodName="rightNow" >
+         <Return
+            Name="_return_type_"
+            Type="java.util.Date" >
+         </Return>
+      </Method>
+      <Method
+         Name="getThePeople"
+         MethodName="getThePeople">
+         <Return
+            Name="_return_type_"
+            Type="java.util.List"
+            IsGeneric="true">
+            <Element
+               Name="Person"
+               Type="nl.amis.dbinteraction.model.common.Person"/>
+         </Return>
+      </Method>
+      <Method
+         Name="getThePeopleNames"
+         MethodName="getThePeopleNames">
+         <Return
+            Name="_return_type_"
+            Type="java.util.List"
+            IsGeneric="true">
+            <Element
+               Name="String"
+               Type="java.lang.String"/>
+         </Return>
+      </Method>
+      <Method
+         Name="getPeopleNames"
+         MethodName="getPeopleNames">
+         <Return
+            Name="_return_type_"
+            Type="java.lang.String[]"/>
+      </Method>
+   </ClientInterface>
+</AppModule>

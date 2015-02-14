@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Domain SYSTEM "jbo_03_01.dtd">
+<!---->
+<Domain
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Person"
+  Version="12.1.3.10.8">
+  <DesignTime>
+    <Attr Name="_type" Value="Struct"/>
+    <Attr Name="_isPersistent" Value="true"/>
+    <Attr Name="_isQueriable" Value="true"/>
+    <Attr Name="_isUpdateable" Value="true"/>
+    <Attr Name="_columnType" Value="PERSON_T"/>
+    <Attr Name="_isCodegen" Value="true"/>
+    <Attr Name="_isSelected" Value="true"/>
+  </DesignTime>
+  <Attribute
+    Name="FirstName"
+    Precision="30"
+    ColumnName="FIRST_NAME"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="LastName"
+    Precision="30"
+    ColumnName="LAST_NAME"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Birthdate"
+    ColumnName="BIRTHDATE"
+    SQLType="DATE"
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"/>
+  <Attribute
+    Name="Gender"
+    Precision="1"
+    ColumnName="GENDER"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="SocialProfile"
+    Domain="nl.amis.dbinteraction.model.SocialProfileT"
+    ColumnName="SOCIAL_PROFILE"
+    SQLType="STRUCT"
+    Type="nl.amis.dbinteraction.model.common.SocialProfileT"
+    ColumnType="HR.SOCIAL_PROFILE_T"/>
+  <Attribute
+    Name="EmailAddresses"
+    Domain="nl.amis.dbinteraction.model.HrEmailAddressT"
+    ColumnName="EMAIL_ADDRESSES"
+    SQLType="ARRAY"
+    Type="nl.amis.dbinteraction.model.common.HrEmailAddressT"
+    ElemType="nl.amis.dbinteraction.model.common.HrEmailAddressT"
+    ColumnType="HR.EMAIL_ADDRESS_TBL"/>
+</Domain>
