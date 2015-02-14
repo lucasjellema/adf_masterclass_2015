@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1">
+      <af:messages id="m1"/>
+      <af:form id="f1">
+        <af:panelStretchLayout id="psl1">
+          <f:facet name="top"/>
+          <f:facet name="center">
+            <af:panelSplitter id="ps1" splitterPosition="315">
+              <f:facet name="first">
+                <af:panelFormLayout id="pfl1">
+                  <af:commandButton actionListener="#{bindings.ExecuteWithParams.execute}"
+                                    text="ExecuteWithParams" partialSubmit="true"
+                                    disabled="#{!bindings.ExecuteWithParams.enabled}"
+                                    id="cb1" partialTriggers="t1"/>
+                  <af:selectBooleanCheckbox value="#{bindings.group_by_hireyear1.inputValue}"
+                                            label="Aggregate by Hire Year"
+                                            shortDesc="#{bindings.group_by_hireyear1.hints.tooltip}"
+                                            id="sbc1"/>
+                  <af:selectBooleanCheckbox value="#{bindings.group_by_job1.inputValue}"
+                                            label="Aggregate by Job"
+                                            shortDesc="#{bindings.group_by_job1.hints.tooltip}"
+                                            id="sbc2"/>
+                  <af:selectBooleanCheckbox value="#{bindings.group_by_department1.inputValue}"
+                                            label="Aggregate by Department"
+                                            shortDesc="#{bindings.group_by_department1.hints.tooltip}"
+                                            id="sbc3"/>
+                </af:panelFormLayout>
+              </f:facet>
+              <f:facet name="second">
+                <af:table value="#{bindings.AggregationOnEmpView1.collectionModel}"
+                          var="row"
+                          rows="#{bindings.AggregationOnEmpView1.rangeSize}"
+                          emptyText="#{bindings.AggregationOnEmpView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                          fetchSize="#{bindings.AggregationOnEmpView1.rangeSize}"
+                          rowBandingInterval="0" id="t1">
+                  <af:column sortProperty="Deptno" sortable="true"
+                             headerText="#{bindings.AggregationOnEmpView1.hints.Deptno.label}"
+                             id="c1">
+                    <af:outputText value="#{row.Deptno}" id="ot4">
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.AggregationOnEmpView1.hints.Deptno.format}"/>
+                    </af:outputText>
+                  </af:column>
+                  <af:column sortProperty="Job" sortable="true"
+                             headerText="#{bindings.AggregationOnEmpView1.hints.Job.label}"
+                             id="c3">
+                    <af:outputText value="#{row.Job}" id="ot3"/>
+                  </af:column>
+                  <af:column sortProperty="Hireyear" sortable="true"
+                             headerText="#{bindings.AggregationOnEmpView1.hints.Hireyear.label}"
+                             id="c5">
+                    <af:outputText value="#{row.Hireyear}" id="ot1">
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.AggregationOnEmpView1.hints.Hireyear.format}"/>
+                    </af:outputText>
+                  </af:column>
+                  <af:column sortProperty="AverageSalary" sortable="true"
+                             headerText="#{bindings.AggregationOnEmpView1.hints.AverageSalary.label}"
+                             id="c2">
+                    <af:outputText value="#{row.AverageSalary}" id="ot5">
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.AggregationOnEmpView1.hints.AverageSalary.format}"/>
+                    </af:outputText>
+                  </af:column>
+                  <af:column sortProperty="NumInJob" sortable="true"
+                             headerText="#{bindings.AggregationOnEmpView1.hints.NumInJob.label}"
+                             id="c4">
+                    <af:outputText value="#{row.NumInJob}" id="ot2">
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.AggregationOnEmpView1.hints.NumInJob.format}"/>
+                    </af:outputText>
+                  </af:column>
+                </af:table>
+              </f:facet>
+            </af:panelSplitter>
+            <!-- id="af_one_column_header_footer_stretched"   -->
+          </f:facet>
+          <f:facet name="bottom"/>
+        </af:panelStretchLayout>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

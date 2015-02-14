@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application"
+             version="11.1.1.56.60" id="DataBindings" SeparateXMLFiles="false"
+             Package="nl.amis.hrmagg.view" ClientType="Generic">
+  <pageMap>
+    <page path="/EmpAggregation.jspx"
+          usageId="nl_amis_hrmagg_view_EmpAggregationPageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="nl_amis_hrmagg_view_EmpAggregationPageDef"
+          path="nl.amis.hrmagg.view.pageDefs.EmpAggregationPageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <BC4JDataControl id="HrmAppModuleDataControl" Package="nl.amis.hrmagg.model"
+                     FactoryClass="oracle.adf.model.bc4j.DataControlFactoryImpl"
+                     SupportsTransactions="true" SupportsFindMode="true"
+                     SupportsRangesize="true" SupportsResetState="true"
+                     SupportsSortCollection="true"
+                     Configuration="HrmAppModuleLocal" syncMode="Immediate"
+                     xmlns="http://xmlns.oracle.com/adfm/datacontrol"/>
+  </dataControlUsages>
+</Application>

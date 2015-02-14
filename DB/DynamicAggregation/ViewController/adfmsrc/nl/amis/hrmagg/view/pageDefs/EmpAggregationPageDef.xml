@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.56.60" id="EmpAggregationPageDef"
+                Package="nl.amis.hrmagg.view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables">
+      <variableUsage DataControl="HrmAppModuleDataControl"
+                     Binds="AggregationOnEmpView1.variablesMap.group_by_hireyear"
+                     Name="ExecuteWithParams_group_by_hireyear"
+                     IsQueriable="false"/>
+      <variableUsage DataControl="HrmAppModuleDataControl"
+                     Binds="AggregationOnEmpView1.variablesMap.group_by_job"
+                     Name="ExecuteWithParams_group_by_job" IsQueriable="false"/>
+      <variableUsage DataControl="HrmAppModuleDataControl"
+                     Binds="AggregationOnEmpView1.variablesMap.group_by_department"
+                     Name="ExecuteWithParams_group_by_department"
+                     IsQueriable="false"/>
+    </variableIterator>
+    <iterator Binds="AggregationOnEmpView1" RangeSize="25"
+              DataControl="HrmAppModuleDataControl"
+              id="AggregationOnEmpView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AggregationOnEmpView1Iterator" id="AggregationOnEmpView1"
+          ChangeEventPolicy="ppr">
+      <nodeDefinition DefName="nl.amis.hrmagg.model.AggregationOnEmpView"
+                      Name="AggregationOnEmpView10">
+        <AttrNames>
+          <Item Value="Deptno"/>
+          <Item Value="Job"/>
+          <Item Value="Hireyear"/>
+          <Item Value="AverageSalary"/>
+          <Item Value="NumInJob"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="AggregationOnEmpView1Iterator" id="ExecuteWithParams"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="group_by_hireyear" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_group_by_hireyear}"/>
+      <NamedData NDName="group_by_job" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_group_by_job}"/>
+      <NamedData NDName="group_by_department" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_group_by_department}"/>
+    </action>
+    <button IterBinding="variables" id="group_by_hireyear1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_group_by_hireyear"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="variables" id="group_by_job1" DTSupportsMRU="false"
+            StaticList="true">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_group_by_job"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="variables" id="group_by_department1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_group_by_department"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+  </bindings>
+</pageDefinition>
