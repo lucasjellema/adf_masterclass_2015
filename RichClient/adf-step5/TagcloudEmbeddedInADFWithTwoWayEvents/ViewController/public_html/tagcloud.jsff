@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="2.1">
+ 
+   <af:panelBox text="Integrated Tagcloud" id="root"
+               binding="#{pageFlowScope.tagCloudBean.tagCloudUIComponent}"
+               icon="#{pageFlowScope.tagCloudBean.initialise}"
+               clientComponent="true">
+ 
+    <af:serverListener type="guestMsg"
+                       method="#{pageFlowScope.tagCloudBean.tagcloudEvent}"/>
+    <af:panelGridLayout id="pgl2" >
+      <af:gridRow id="gr2" height="100%">
+        <af:gridCell id="gc2" halign="stretch" valign="stretch">
+          <af:panelGroupLayout id="pgl1" layout="vertical"
+                               styleClass="guest-component: tagcloud tc1;"
+                               clientComponent="true"/>
+        </af:gridCell>
+      </af:gridRow>
+      <af:gridRow id="gr3" height="auto">
+        <af:gridCell id="gc3" halign="stretch" width="100%" valign="top">         
+          <af:inputText id="log"  label="Most recent guest message" value="#{pageFlowScope.tagCloudBean.mostRecentMessage}" readOnly="true" /> 
+        </af:gridCell>
+      </af:gridRow>
+    </af:panelGridLayout>
+  </af:panelBox>
+</jsp:root>
