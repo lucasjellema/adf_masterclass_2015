@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelBox text="#{bnd.TAG_CLOUD}" id="pb1" binding="#{pageFlowScope.tagCloudBean.tagCloudUIComponent}" >
+    <f:facet name="toolbar"/>
+    <af:inputText value="#{pageFlowScope.tagCloudBean.selectedTags}"
+                  label="Tags on which matches are filtered" autoSubmit="true"
+                  columns="50"
+                  shortDesc="Comma separated list of tags used to filter the set of matches"
+                  id="it1"></af:inputText>
+    <af:iterator id="tagsIter" value="#{pageFlowScope.tagCloudBean.tags}"
+                 var="tag">
+      <af:panelList id="tagsList">
+        <af:outputText value="#{tag.tag} (#{tag.occurrences})" id="tagEntry"/>
+      </af:panelList>
+    </af:iterator>
+  </af:panelBox>
+  
+</jsp:root>

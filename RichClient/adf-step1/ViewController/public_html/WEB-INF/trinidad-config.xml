@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trinidad-config xmlns="http://myfaces.apache.org/trinidad/config">
+
+<skin-family>#{SkinManager.skinFamily}</skin-family>
+  <skin-version>v1.1</skin-version>
+</trinidad-config>
+<!--   #{sessionScope.skinFamily}!=null?sessionScope.skinFamily : 'skyros'}
+-->

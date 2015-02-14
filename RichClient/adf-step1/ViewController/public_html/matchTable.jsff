@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelStretchLayout id="psl1" styleClass="AFStretchWidth "
+                         inlineStyle="height:600.0px;">
+    <f:facet name="bottom"/>
+    <f:facet name="center">
+      <af:panelSplitter id="ps1" splitterPosition="850">
+        <f:facet name="first">
+          <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+            <f:facet name="menus"/>
+            <f:facet name="toolbar"/>
+            <f:facet name="statusbar"/>
+            <af:table value="#{bindings.RemainingMatches1.collectionModel}"
+                      var="row" rows="#{bindings.RemainingMatches1.rangeSize}"
+                      emptyText="#{bindings.RemainingMatches1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                      fetchSize="#{bindings.RemainingMatches1.rangeSize}"
+                      rowBandingInterval="0"
+                      filterModel="#{bindings.RemainingMatches1Query.queryDescriptor}"
+                      queryListener="#{bindings.RemainingMatches1Query.processQuery}"
+                      filterVisible="true" varStatus="vs" id="t2"
+                      styleClass="AFStretchWidth">
+              <af:column sortProperty="#{bindings.RemainingMatches1.hints.MatchId.name}"
+                         filterable="true" sortable="true"
+                         headerText="#{bnd.MATCH_NUMBER_COLUMN_TITLE}"
+                         id="c9">
+                <af:outputText value="#{row.MatchId}" id="ot8">
+                  <af:convertNumber groupingUsed="false"
+                                    pattern="#{bindings.RemainingMatches1.hints.MatchId.format}"/>
+                </af:outputText>
+                <af:commandLink text="..." id="cb1">
+                  <af:showPopupBehavior popupId=":::p1" triggerType="click"/>
+                  <af:setPropertyListener type="action" from="#{row.MatchId}"
+                                          to="#{pageFlowScope.matchHelperBean.selectedMatchId}"/>
+                </af:commandLink>
+              </af:column>
+              <af:column sortProperty="#{bindings.RemainingMatches1.hints.HomeCountry.name}"
+                         filterable="true" sortable="true"
+                         headerText="#{bindings.RemainingMatches1.hints.HomeCountry.label}"
+                         id="c10">
+                <af:image id="homeFlag1"
+                          source="/images/countryflags/#{row.HomeCountry}.png"
+                          inlineStyle="height:25.0px;"/>
+                <af:outputText value="#{row.HomeCountry}" id="ot13"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.RemainingMatches1.hints.AwayCountry.name}"
+                         filterable="true" sortable="true"
+                         headerText="#{bindings.RemainingMatches1.hints.AwayCountry.label}"
+                         id="c12">
+                <af:image id="awayFlag1"
+                          source="/images/countryflags/#{row.AwayCountry}.png"
+                          inlineStyle="height:25.0px;"/>
+                <af:outputText value="#{row.AwayCountry}" id="ot14"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.RemainingMatches1.hints.Score.name}"
+                         filterable="true" sortable="true"
+                         headerText="#{bnd.SCORE_COLUMN_TITLE}" id="c14">
+                <af:outputText value="#{row.Score}" id="ot16">
+                </af:outputText>
+              </af:column>
+             
+              <af:column sortProperty="#{bindings.RemainingMatches1.hints.LocalStartTime.name}"
+                         filterable="true" sortable="true"
+                         headerText="#{bindings.RemainingMatches1.hints.LocalStartTime.label}"
+                         id="c16">
+                <f:facet name="filter">
+                  <af:inputDate value="#{vs.filterCriteria.LocalStartTime}"
+                                id="id2"/>
+                </f:facet>
+                <af:outputText value="#{row.LocalStartTime}" id="ot15">
+                  <af:convertDateTime pattern="#{bindings.RemainingMatches1.hints.LocalStartTime.format}"/>
+                </af:outputText>
+              </af:column>
+              <af:column sortProperty="#{bindings.RemainingMatches1.hints.Group1.name}"
+                         filterable="true" sortable="true"
+                         headerText="#{bindings.RemainingMatches1.hints.Group1.label}"
+                         id="c11">
+                <af:outputText value="#{row.Group1}" id="ot11"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.RemainingMatches1.hints.City.name}"
+                         filterable="true" sortable="true"
+                         headerText="#{bindings.RemainingMatches1.hints.City.label}"
+                         id="c8">
+                <af:outputText value="#{row.City}" id="ot12"/>
+              </af:column>
+            </af:table>
+          </af:panelCollection>
+        </f:facet>
+        <f:facet name="second">
+          <af:showDetailHeader text="remaining tags" disclosed="true" id="sdh1"
+                               type="stretch">
+            <af:region value="#{bindings.tagcloudtaskflowdefinition1.regionModel}"
+                       id="r2"/>
+          </af:showDetailHeader>
+        </f:facet>
+      </af:panelSplitter>
+    </f:facet>
+    <f:facet name="start">
+    <af:spacer id="spacerLeft" width="10px" />
+    </f:facet>
+    <f:facet name="end"/>
+    <f:facet name="top"/>
+  </af:panelStretchLayout>
+ 
+  <af:popup id="p1" >
+    <af:panelWindow id="pw1" title="Match Details" resize="on" modal="true"
+                    inlineStyle="background-color:Orange;">
+      <af:region value="#{bindings.matchdetailstaskflowdefinition1.regionModel}"
+                 id="r1"/>
+    </af:panelWindow>
+  </af:popup>
+</jsp:root>

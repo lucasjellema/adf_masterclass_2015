@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<BC4JConfig version="11.1" xmlns="http://xmlns.oracle.com/bc4j/configuration">
+   <AppModuleConfigBag ApplicationName="demo.adfhtml.model.WorldCupService">
+      <AppModuleConfig name="WorldCupServiceLocal" ApplicationName="demo.adfhtml.model.WorldCupService" DeployPlatform="LOCAL" jbo.project="demo.adfhtml.model.Model">
+         <Security AppModuleJndiName="demo.adfhtml.model.WorldCupService"/>
+         <Custom JDBCDataSource="java:comp/env/jdbc/spiritDS"/>
+      </AppModuleConfig>
+      <AppModuleConfig name="WorldCupServiceShared" ApplicationName="demo.adfhtml.model.WorldCupService" DeployPlatform="LOCAL" jbo.project="demo.adfhtml.model.Model">
+         <AM-Pooling jbo.ampool.maxpoolsize="1" jbo.ampool.isuseexclusive="false"/>
+         <Security AppModuleJndiName="demo.adfhtml.model.WorldCupService"/>
+         <Custom JDBCDataSource="java:comp/env/jdbc/spiritDS"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+</BC4JConfig>

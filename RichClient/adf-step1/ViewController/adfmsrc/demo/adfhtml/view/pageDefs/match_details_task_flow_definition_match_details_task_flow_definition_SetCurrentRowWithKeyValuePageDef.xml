@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="match_details_task_flow_definition_match_details_task_flow_definition_SetCurrentRowWithKeyValuePageDef"
+                Package="demo.adfhtml.view.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="MatchResultsView1" RangeSize="25"
+              DataControl="WorldCupServiceDataControl"
+              id="MatchResultsView1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="MatchResultsView1Iterator"
+            id="setCurrentRowWithKeyValue" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKeyValue">
+      <NamedData NDName="rowKey" NDValue="#{pageFlowScope.matchId}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

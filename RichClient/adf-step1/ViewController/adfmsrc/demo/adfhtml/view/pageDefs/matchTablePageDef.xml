@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="matchTablePageDef"
+                Package="demo.adfhtml.view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables">
+      <variableUsage DataControl="WorldCupServiceDataControl"
+                     Binds="RemainingMatches1.variablesMap.b_selected_tags"
+                     Name="ExecuteWithParams_b_selected_tags"
+                     IsQueriable="false"/>
+    </variableIterator>
+    <iterator Binds="MatchResultsView1" RangeSize="25"
+              DataControl="WorldCupServiceDataControl"
+              id="MatchResultsView1Iterator"/>
+    <searchRegion Binds="MatchResultsView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="MatchResultsView1Query"/>
+    <taskFlow id="matchdetailstaskflowdefinition1"
+              taskFlowId="/WEB-INF/match-details-task-flow-definition.xml#match-details-task-flow-definition"
+              activation="deferred"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"
+              Refresh="ifNeeded">
+      <parameters>
+        <parameter id="matchId"
+                   value="#{pageFlowScope.matchHelperBean.selectedMatchId}"/>
+      </parameters>
+    </taskFlow>
+    <iterator Binds="RemainingMatches1" RangeSize="25"
+              DataControl="WorldCupServiceDataControl"
+              id="RemainingMatches1Iterator" ChangeEventPolicy="ppr"/>
+    <searchRegion Binds="RemainingMatches1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="RemainingMatches1Query"/>
+    <iterator Binds="RemainingTagCloudViewObj1" RangeSize="25"
+              DataControl="WorldCupServiceDataControl"
+              id="RemainingTagCloudViewObj1Iterator"/>
+    <taskFlow id="tagcloudtaskflowdefinition1"
+              taskFlowId="/WEB-INF/tagcloud-task-flow-definition.xml#tagcloud-task-flow-definition"
+              activation="deferred"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding">
+      <parameters>
+        <parameter id="tags" value="#{pageFlowScope.matchHelperBean.tags}"/>
+      </parameters>
+    </taskFlow>
+  </executables>
+  <bindings>
+    <tree IterBinding="RemainingMatches1Iterator" id="RemainingMatches1">
+      <nodeDefinition DefName="demo.adfhtml.model.RemainingMatches"
+                      Name="RemainingMatches10">
+        <AttrNames>
+          <Item Value="MatchId"/>
+          <Item Value="HomeCountry"/>
+          <Item Value="AwayCountry"/>
+          <Item Value="HomeGoals"/>
+          <Item Value="AwayGoals"/>
+          <Item Value="LocalStartTime"/>
+          <Item Value="Group1"/>
+          <Item Value="City"/>
+          <Item Value="Score"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="RemainingMatches1Iterator" id="ExecuteWithParams"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="b_selected_tags" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_b_selected_tags}"/>
+    </action>
+    <attributeValues IterBinding="variables" id="b_selected_tags">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_b_selected_tags"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="RemainingTagCloudViewObj1Iterator"
+          id="RemainingTagCloudViewObj1" ChangeEventPolicy="ppr">
+      <nodeDefinition DefName="demo.adfhtml.model.RemainingTagCloudViewObj"
+                      Name="RemainingTagCloudViewObj10">
+        <AttrNames>
+          <Item Value="Tag"/>
+          <Item Value="Occurrences"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <methodAction id="handleEvent" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="handleEvent"
+                  IsViewObjectMethod="false" DataControl="EventConsumer"
+                  InstanceName="EventConsumer.dataProvider">
+      <NamedData NDName="payload" NDType="java.lang.Object" NDValue="${payLoad}"/>
+    </methodAction>
+    <methodAction id="publishAvailableTagsCollectionChangedEvent" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="publishEvent"
+                  IsViewObjectMethod="false" DataControl="EventPublisher"
+                  InstanceName="EventPublisher.dataProvider"
+                  ReturnName="data.EventPublisher.methodResults.publishEvent_EventPublisher_dataProvider_publishEvent_result">
+      <NamedData NDName="payload" NDType="java.lang.Object"/>
+      <events xmlns="http://xmlns.oracle.com/adfm/contextualEvent">
+    <event name="AvailableTagsCollectionChanged"/>
+  </events> 
+    </methodAction>
+  </bindings>
+  <eventMap xmlns="http://xmlns.oracle.com/adfm/contextualEvent">
+    <event name="TagSelectionChanged">
+      <producer region="*">
+        <consumer handler="handleEvent" />
+      </producer>
+    </event>
+  </eventMap>
+</pageDefinition>
