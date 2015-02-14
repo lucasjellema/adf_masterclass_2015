@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.56.60" id="EmpTablePageDef"
+                Package="com.hrm.api.view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="EmployeeViewObj1" RangeSize="25"
+              DataControl="SharedAppModuleDataControl"
+              id="EmployeeViewObj1Iterator"/>
+    <iterator Binds="EmployeesNoAutoRefreshViewObj1" RangeSize="25"
+              DataControl="SharedAppModuleDataControl"
+              id="EmployeesNoAutoRefreshViewObj1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="EmployeeViewObj1Iterator" id="EmployeeViewObj1"
+          ChangeEventPolicy="ppr">
+      <nodeDefinition DefName="com.hrm.api.model.EmployeeViewObj"
+                      Name="EmployeeViewObj10">
+        <AttrNames>
+          <Item Value="Empno"/>
+          <Item Value="Ename"/>
+          <Item Value="Job"/>
+          <Item Value="Sal"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="EmployeesNoAutoRefreshViewObj1Iterator"
+          id="EmployeesNoAutoRefreshViewObj1" ChangeEventPolicy="ppr">
+      <nodeDefinition DefName="com.hrm.api.model.EmployeesNoAutoRefreshViewObj"
+                      Name="EmployeesNoAutoRefreshViewObj10">
+        <AttrNames>
+          <Item Value="Empno"/>
+          <Item Value="Ename"/>
+          <Item Value="Job"/>
+          <Item Value="Sal"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

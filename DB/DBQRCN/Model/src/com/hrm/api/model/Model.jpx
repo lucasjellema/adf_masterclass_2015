@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE JboProject SYSTEM "jbo_03_01.dtd">
+<!---->
+<JboProject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Model"
+  Version="11.1.1.56.60"
+  SeparateXMLFiles="true"
+  PackageName="com.hrm.api.model">
+  <DesignTime>
+    <Attr Name="_jprName" Value="../../../../../Model.jpr"/>
+    <Attr Name="_NamedConnection" Value="ScottLocal"/>
+    <Attr Name="_appModuleNames0" Value="com.hrm.api.model.SharedAppModule"/>
+  </DesignTime>
+  <Containee
+    Name="model"
+    PackageName="com.hrm.api.model"
+    ObjectType="JboPackage">
+    <DesignTime>
+      <Attr Name="_AM" Value="true"/>
+      <Attr Name="_VO" Value="true"/>
+    </DesignTime>
+  </Containee>
+  <AppModuleUsage
+    Name="SharedAppModule"
+    FullName="com.hrm.api.model.SharedAppModule"
+    ConfigurationName="com.hrm.api.model.SharedAppModuleShared"
+    SharedScope="2"/>
+</JboProject>
