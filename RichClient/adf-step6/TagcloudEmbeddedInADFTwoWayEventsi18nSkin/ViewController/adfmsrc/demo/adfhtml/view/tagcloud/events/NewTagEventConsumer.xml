@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<JavaBean xmlns="http://xmlns.oracle.com/adfm/beanmodel" version="11.1.1.64.93"
+          id="NewTagEventConsumer" Package="demo.adfhtml.view.tagcloud.events"
+          BeanClass="demo.adfhtml.view.tagcloud.events.NewTagEventConsumer"
+          isJavaBased="true">
+  <MethodAccessor IsCollection="false" Type="void" id="handleEvent"
+                  ReturnNodeName="Return">
+    <ParameterInfo id="payload" Type="java.lang.Object" isStructured="false"/>
+  </MethodAccessor>
+  <ConstructorMethod IsCollection="true"
+                     Type="demo.adfhtml.view.tagcloud.events.NewTagEventConsumer"
+                     BeanClass="demo.adfhtml.view.tagcloud.events.NewTagEventConsumer"
+                     id="NewTagEventConsumer"/>
+</JavaBean>

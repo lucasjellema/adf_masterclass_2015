@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<JavaBean xmlns="http://xmlns.oracle.com/adfm/beanmodel" version="11.1.1.64.93"
+          id="NewTagEventPublisher" Package="demo.adfhtml.view"
+          BeanClass="demo.adfhtml.view.NewTagEventPublisher" isJavaBased="true">
+  <MethodAccessor IsCollection="false" Type="java.lang.Object" id="publishEvent"
+                  ReturnNodeName="Return">
+    <ParameterInfo id="payload" Type="java.lang.Object" isStructured="false"/>
+  </MethodAccessor>
+  <ConstructorMethod IsCollection="true"
+                     Type="demo.adfhtml.view.NewTagEventPublisher"
+                     BeanClass="demo.adfhtml.view.NewTagEventPublisher"
+                     id="NewTagEventPublisher"/>
+</JavaBean>
