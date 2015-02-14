@@ -1,0 +1,12 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<BC4JConfig version="11.1" xmlns="http://xmlns.oracle.com/bc4j/configuration">
+   <AppModuleConfigBag ApplicationName="nl.amis.hrm.model.HrmService">
+      <AppModuleConfig name="HrmServiceLocal" ApplicationName="nl.amis.hrm.model.HrmService" DeployPlatform="LOCAL" JDBCName="ScottLocalXE" jbo.project="nl.amis.hrm.model.Model">
+         <Security AppModuleJndiName="nl.amis.hrm.model.HrmService"/>
+      </AppModuleConfig>
+      <AppModuleConfig name="HrmServiceShared" ApplicationName="nl.amis.hrm.model.HrmService" DeployPlatform="LOCAL" JDBCName="ScottLocalXE" jbo.project="nl.amis.hrm.model.Model">
+         <AM-Pooling jbo.ampool.maxpoolsize="1" jbo.ampool.isuseexclusive="false"/>
+         <Security AppModuleJndiName="nl.amis.hrm.model.HrmService"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+</BC4JConfig>

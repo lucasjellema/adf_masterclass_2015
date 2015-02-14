@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<faces-config version="2.1" xmlns="http://java.sun.com/xml/ns/javaee">
+  <application>
+    <default-render-kit-id>oracle.adf.rich</default-render-kit-id>
+  </application>
+  <managed-bean>
+    <managed-bean-name>imageManager</managed-bean-name>
+    <managed-bean-class>nl.amis.hrm.view.ImageManager</managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+  </managed-bean>
+  
+    <managed-bean>
+    <managed-bean-name>activeImageBean</managed-bean-name>
+    <managed-bean-class>nl.amis.hrm.view.ActiveMessageBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+      <property-name>msgMgr</property-name>
+      <property-class>nl.amis.hrm.view.MessageManager</property-class>
+      <value>#{imageManager}</value>
+    </managed-property>
+  </managed-bean>
+
+    <managed-bean>
+    <managed-bean-name>tableRefresher</managed-bean-name>
+    <managed-bean-class>nl.amis.hrm.view.DataRefresher</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+</managed-bean>
+</faces-config>

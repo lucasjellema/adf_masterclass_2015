@@ -1,0 +1,197 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1">
+      <af:resource type="javascript">
+        activeDataCallback = function (event) {
+        var tableToRefresh = event.getSource().getValue();
+        var ot = AdfPage.PAGE.findComponentByAbsoluteId("tableToRefresh");
+          //  alert(tableToRefresh+ ot); 
+        ot.setValue(tableToRefresh);
+        AdfCustomEvent.queue( ot, "refreshDataEvent"
+                            , {tablename : tableToRefresh}
+                            , true
+                            );
+        
+        }
+
+      </af:resource>
+      <af:messages id="m1"/>
+      <af:form id="f1">
+        <af:panelStretchLayout topHeight="50px" id="psl1">
+          <f:facet name="top">
+            <af:panelHeader text="Employees - actively monitored" id="ph1">
+              <f:facet name="context"/>
+              <f:facet name="menuBar"/>
+              <f:facet name="toolbar"/>
+              <f:facet name="legend"/>
+              <f:facet name="info"/>
+            </af:panelHeader>
+          </f:facet>
+          <f:facet name="center">
+              <af:panelSplitter id="ps1" splitterPosition="259"
+                                orientation="horizontal">
+                <f:facet name="first">
+                  <af:panelSplitter id="ps2" orientation="vertical">
+                    <f:facet name="first">
+                      <af:panelCollection id="pc1">
+                        <af:table value="#{bindings.EmployeesView1.collectionModel}"
+                                  var="row"
+                                  rows="#{bindings.EmployeesView1.rangeSize}"
+                                  emptyText="#{bindings.EmployeesView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  fetchSize="#{bindings.EmployeesView1.rangeSize}"
+                                  rowBandingInterval="0"
+                                  filterModel="#{bindings.EmployeesView1Query.queryDescriptor}"
+                                  queryListener="#{bindings.EmployeesView1Query.processQuery}"
+                                  filterVisible="true" varStatus="vs" id="t1">
+                          <af:column sortProperty="Empno" filterable="true"
+                                     sortable="true"
+                                     headerText="#{bindings.EmployeesView1.hints.Empno.label}"
+                                     id="c2">
+                            <af:outputText value="#{row.Empno}" id="ot5">
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.EmployeesView1.hints.Empno.format}"/>
+                            </af:outputText>
+                          </af:column>
+                          <af:column sortProperty="Ename" filterable="true"
+                                     sortable="true"
+                                     headerText="#{bindings.EmployeesView1.hints.Ename.label}"
+                                     id="c5">
+                            <af:outputText value="#{row.Ename}" id="ot6"/>
+                          </af:column>
+                          <af:column sortProperty="Job" filterable="true"
+                                     sortable="true"
+                                     headerText="#{bindings.EmployeesView1.hints.Job.label}"
+                                     id="c8">
+                            <af:outputText value="#{row.Job}" id="ot4"/>
+                          </af:column>
+                          <af:column sortProperty="Sal" filterable="true"
+                                     sortable="true"
+                                     headerText="#{bindings.EmployeesView1.hints.Sal.label}"
+                                     id="c4">
+                            <af:outputText value="#{row.Sal}" id="ot1">
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.EmployeesView1.hints.Sal.format}"/>
+                            </af:outputText>
+                          </af:column>
+                          <af:column sortProperty="Deptno" filterable="true"
+                                     sortable="true"
+                                     headerText="#{bindings.EmployeesView1.hints.Deptno.label}"
+                                     id="c1">
+                            <af:outputText value="#{row.Deptno}" id="ot8">
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.EmployeesView1.hints.Deptno.format}"/>
+                            </af:outputText>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </f:facet>
+                    <f:facet name="second">
+                    <dvt:barGraph id="barGraph1"
+                                  value="#{bindings.SumSalariesPerDepartmentView1.graphModel}"
+                                  subType="BAR_VERT_CLUST" threeDEffect="true"
+                                  animationOnDataChange="alphaFade"
+                                  animationOnDisplay="alphaFade">
+                      <dvt:background>
+                        <dvt:specialEffects/>
+                      </dvt:background>
+                      <dvt:graphPlotArea/>
+                      <dvt:seriesSet>
+                        <dvt:series/>
+                      </dvt:seriesSet>
+                      <dvt:o1Axis/>
+                      <dvt:y1Axis/>
+                      <dvt:legendArea automaticPlacement="AP_NEVER"/>
+                      <dvt:graphTitle text="Salaries per Department"/>
+                    </dvt:barGraph>
+                  </f:facet>
+                  </af:panelSplitter>
+              </f:facet>
+                <f:facet name="second">
+                  <af:table value="#{bindings.DepartmentsView1.collectionModel}"
+                            var="row"
+                            rows="#{bindings.DepartmentsView1.rangeSize}"
+                            emptyText="#{bindings.DepartmentsView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                            fetchSize="#{bindings.DepartmentsView1.rangeSize}"
+                            rowBandingInterval="0"
+                            filterModel="#{bindings.DepartmentsView1Query.queryDescriptor}"
+                            queryListener="#{bindings.DepartmentsView1Query.processQuery}"
+                            filterVisible="true" varStatus="vs" id="t2">
+                    <af:column sortProperty="Deptno" filterable="true"
+                               sortable="true"
+                               headerText="#{bindings.DepartmentsView1.hints.Deptno.label}"
+                               id="c10">
+                      <af:inputText value="#{row.bindings.Deptno.inputValue}"
+                                    label="#{bindings.DepartmentsView1.hints.Deptno.label}"
+                                    required="#{bindings.DepartmentsView1.hints.Deptno.mandatory}"
+                                    columns="#{bindings.DepartmentsView1.hints.Deptno.displayWidth}"
+                                    maximumLength="#{bindings.DepartmentsView1.hints.Deptno.precision}"
+                                    shortDesc="#{bindings.DepartmentsView1.hints.Deptno.tooltip}"
+                                    id="it1">
+                        <f:validator binding="#{row.bindings.Deptno.validator}"/>
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.DepartmentsView1.hints.Deptno.format}"/>
+                      </af:inputText>
+                    </af:column>
+                    <af:column sortProperty="Dname" filterable="true"
+                               sortable="true"
+                               headerText="#{bindings.DepartmentsView1.hints.Dname.label}"
+                               id="c9">
+                      <af:inputText value="#{row.bindings.Dname.inputValue}"
+                                    label="#{bindings.DepartmentsView1.hints.Dname.label}"
+                                    required="#{bindings.DepartmentsView1.hints.Dname.mandatory}"
+                                    columns="#{bindings.DepartmentsView1.hints.Dname.displayWidth}"
+                                    maximumLength="#{bindings.DepartmentsView1.hints.Dname.precision}"
+                                    shortDesc="#{bindings.DepartmentsView1.hints.Dname.tooltip}"
+                                    id="it2">
+                        <f:validator binding="#{row.bindings.Dname.validator}"/>
+                      </af:inputText>
+                    </af:column>
+                    <af:column sortProperty="Loc" filterable="true"
+                               sortable="true"
+                               headerText="#{bindings.DepartmentsView1.hints.Loc.label}"
+                               id="c11">
+                      <af:inputText value="#{row.bindings.Loc.inputValue}"
+                                    label="#{bindings.DepartmentsView1.hints.Loc.label}"
+                                    required="#{bindings.DepartmentsView1.hints.Loc.mandatory}"
+                                    columns="#{bindings.DepartmentsView1.hints.Loc.displayWidth}"
+                                    maximumLength="#{bindings.DepartmentsView1.hints.Loc.precision}"
+                                    shortDesc="#{bindings.DepartmentsView1.hints.Loc.tooltip}"
+                                    id="it3">
+                        <f:validator binding="#{row.bindings.Loc.validator}"/>
+                      </af:inputText>
+                    </af:column>
+                  </af:table>
+                </f:facet>
+              </af:panelSplitter>
+            <!-- id="af_one_column_header_stretched"  -->
+          </f:facet>
+          <f:facet name="bottom">
+            <af:panelGroupLayout>
+              <af:outputText id="tableToRefresh" value=""
+                             clientComponent="true">
+                <af:serverListener type="refreshDataEvent"
+                                   method="#{tableRefresher.refreshDataFromTable}"/>
+              </af:outputText>
+              
+              <af:activeOutputText id="activecomp"
+                                   value="#{activeImageBean.state}">
+                <af:clientListener type="propertyChange"
+                                   method="activeDataCallback"/>
+              </af:activeOutputText>
+<!--              <af:commandButton actionListener="#{bindings.Execute.execute}"
+                                text="Execute" id="cb1"/>
+                                
+                                -->
+            </af:panelGroupLayout>
+          </f:facet>
+        </af:panelStretchLayout>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="EmployeesPageDef"
+                Package="nl.amis.hrm.view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="EmployeesView1" RangeSize="25"
+              DataControl="HrmServiceDataControl" id="EmployeesView1Iterator"/>
+    <searchRegion Binds="EmployeesView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="EmployeesView1Query"/>
+    <iterator Binds="DepartmentsView1" RangeSize="25"
+              DataControl="HrmServiceDataControl"
+              id="DepartmentsView1Iterator"/>
+    <searchRegion Binds="DepartmentsView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="DepartmentsView1Query"/>
+    <iterator Binds="SumSalariesPerDepartmentView1" RangeSize="-1"
+              DataControl="HrmServiceDataControl"
+              id="SumSalariesPerDepartmentView1Iterator"
+              ChangeEventPolicy="none"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="EmployeesView1Iterator" id="EmployeesView1"
+          ChangeEventPolicy="ppr">
+      <nodeDefinition DefName="nl.amis.hrm.model.EmployeesView"
+                      Name="EmployeesView10">
+        <AttrNames>
+          <Item Value="Empno"/>
+          <Item Value="Ename"/>
+          <Item Value="Job"/>
+          <Item Value="Mgr"/>
+          <Item Value="Hiredate"/>
+          <Item Value="Sal"/>
+          <Item Value="Comm"/>
+          <Item Value="Deptno"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="EmployeesView1Iterator" id="RequeryEmployeesView"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <tree IterBinding="DepartmentsView1Iterator" id="DepartmentsView1">
+      <nodeDefinition DefName="nl.amis.hrm.model.DepartmentsView"
+                      Name="DepartmentsView10">
+        <AttrNames>
+          <Item Value="Deptno"/>
+          <Item Value="Dname"/>
+          <Item Value="Loc"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <graph IterBinding="SumSalariesPerDepartmentView1Iterator"
+           id="SumSalariesPerDepartmentView1"
+           xmlns="http://xmlns.oracle.com/adfm/dvt" type="BAR_VERT_CLUST">
+      <graphDataMap leafOnly="true">
+        <series>
+          <data>
+            <item value="Salarysum" label="Departmental Salary Sum"/>
+          </data>
+        </series>
+        <groups>
+          <item value="Deptno"/>
+        </groups>
+      </graphDataMap>
+    </graph>
+  </bindings>
+</pageDefinition>
