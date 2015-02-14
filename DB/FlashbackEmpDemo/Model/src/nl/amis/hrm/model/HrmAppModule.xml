@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<AppModule
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="HrmAppModule"
+   Version="12.1.3.10.8"
+   InheritPersonalization="merge" >
+   <ViewUsage
+      Name="DepartmentsView1"
+      ViewObjectName="nl.amis.hrm.model.DepartmentsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="EmployeesView1"
+      ViewObjectName="nl.amis.hrm.model.EmployeesView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="EmployeesView2"
+      ViewObjectName="nl.amis.hrm.model.EmployeesView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="HistoricEmpsView1"
+      ViewObjectName="nl.amis.hrm.model.HistoricEmpsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="EmpVersionsView1"
+      ViewObjectName="nl.amis.hrm.model.EmpVersionsView"/>
+   <ViewUsage
+      Name="EmpVersionsView2"
+      ViewObjectName="nl.amis.hrm.model.EmpVersionsView"/>
+   <ViewLinkUsage
+      Name="FkDeptnoLink1"
+      ViewLinkObjectName="nl.amis.hrm.model.FkDeptnoLink"
+      SrcViewUsageName="nl.amis.hrm.model.HrmAppModule.DepartmentsView1"
+      DstViewUsageName="nl.amis.hrm.model.HrmAppModule.EmployeesView2"
+      Reversed="false">
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="EmpToEmpVersionsViewLink1"
+      ViewLinkObjectName="nl.amis.hrm.model.EmpToEmpVersionsViewLink"
+      SrcViewUsageName="nl.amis.hrm.model.HrmAppModule.EmployeesView1"
+      DstViewUsageName="nl.amis.hrm.model.HrmAppModule.EmpVersionsView2"
+      Reversed="false"/>
+</AppModule>

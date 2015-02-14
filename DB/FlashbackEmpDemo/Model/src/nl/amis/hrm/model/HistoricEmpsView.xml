@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="HistoricEmpsView"
+   Version="12.1.3.10.8"
+   InheritPersonalization="merge"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   PageIterMode="Partial" >
+   <DesignTime>
+      <Attr Name="_isExpertMode" Value="true" />
+   </DesignTime>
+   <Properties >
+      <SchemaBasedProperties >
+         <LABEL
+            ResId="nl.amis.hrm.model.HistoricEmpsView_LABEL" >
+         </LABEL>
+      </SchemaBasedProperties>
+   </Properties>
+   <Variable
+      Name="bind_flashbacktime"
+      Kind="where"
+      Type="oracle.jbo.domain.Number"
+      DefaultValue="0" >
+   </Variable>
+   <SQLQuery><![CDATA[
+select emp.empno   
+, emp.ename   
+, emp.hiredate   
+, emp.sal   
+, emp.deptno   
+, emp.rowid   
+, emp.mgr   
+, emp.comm   
+, emp.job   
+FROM EMP as of timestamp (systimestamp + (0-1)* :bind_flashbacktime/(24*60)) Emp
+   ]]></SQLQuery>
+   <ViewAttribute
+      Name="Empno"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="nl.amis.hrm.model.common.Type"
+      ColumnType="TYPE"
+      AliasName="EMPNO"
+      Expression="EMPNO"
+      SQLType="STRUCT" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ename"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Domain="nl.amis.hrm.model.Type"
+      Type="nl.amis.hrm.model.common.Type"
+      ColumnType="TYPE"
+      AliasName="ENAME"
+      Expression="ENAME"
+      SQLType="STRUCT" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Hiredate"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Domain="nl.amis.hrm.model.Type"
+      Type="nl.amis.hrm.model.common.Type"
+      ColumnType="TYPE"
+      AliasName="HIREDATE"
+      Expression="HIREDATE"
+      SQLType="STRUCT" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sal"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Domain="nl.amis.hrm.model.Type"
+      Type="nl.amis.hrm.model.common.Type"
+      ColumnType="TYPE"
+      AliasName="SAL"
+      Expression="SAL"
+      SQLType="STRUCT" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Deptno"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Domain="nl.amis.hrm.model.Type"
+      Type="nl.amis.hrm.model.common.Type"
+      ColumnType="TYPE"
+      AliasName="DEPTNO"
+      Expression="DEPTNO"
+      SQLType="STRUCT" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Selectobjects5"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Domain="nl.amis.hrm.model.Type"
+      Type="nl.amis.hrm.model.common.Type"
+      ColumnType="TYPE"
+      AliasName="SELECTOBJECTS5"
+      Expression="SELECTOBJECTS5"
+      SQLType="STRUCT" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Mgr"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Domain="nl.amis.hrm.model.Type"
+      Type="nl.amis.hrm.model.common.Type"
+      ColumnType="TYPE"
+      AliasName="MGR"
+      Expression="MGR"
+      SQLType="STRUCT" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Comm"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Domain="nl.amis.hrm.model.Type"
+      Type="nl.amis.hrm.model.common.Type"
+      ColumnType="TYPE"
+      AliasName="COMM"
+      Expression="COMM"
+      SQLType="STRUCT" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Job"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Domain="nl.amis.hrm.model.Type"
+      Type="nl.amis.hrm.model.common.Type"
+      ColumnType="TYPE"
+      AliasName="JOB"
+      Expression="JOB"
+      SQLType="STRUCT" >
+   </ViewAttribute>
+   <ResourceBundle >
+      <PropertiesBundle
+         PropertiesFile="nl.amis.hrm.model.ModelBundle" >
+      </PropertiesBundle>
+   </ResourceBundle>
+</ViewObject>

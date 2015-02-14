@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.10.8" id="employeesPageDef"
+                Package="nl.amis.hrm.view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables">
+      <variableUsage DataControl="HrmAppModuleDataControl" Binds="HistoricEmpsView1.variablesMap.bind_flashbacktime"
+                     Name="ExecuteWithParams_bind_flashbacktime" IsQueriable="false"/>
+    </variableIterator>
+    <iterator Binds="EmployeesView1" RangeSize="25" DataControl="HrmAppModuleDataControl" id="EmployeesView1Iterator"/>
+    <searchRegion Binds="EmployeesView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer" id="EmployeesView1Query"/>
+    <iterator Binds="HistoricEmpsView1" RangeSize="25" DataControl="HrmAppModuleDataControl"
+              id="HistoricEmpsView1Iterator"/>
+    <searchRegion Binds="HistoricEmpsView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer" id="HistoricEmpsView1Query"/>
+    <iterator Binds="EmpVersionsView2" RangeSize="25" DataControl="HrmAppModuleDataControl"
+              id="EmpVersionsView2Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="EmployeesView1Iterator" id="EmployeesView1">
+      <nodeDefinition DefName="nl.amis.hrm.model.EmployeesView" Name="EmployeesView10">
+        <AttrNames>
+          <Item Value="Empno"/>
+          <Item Value="Ename"/>
+          <Item Value="Deptno"/>
+          <Item Value="Sal"/>
+          <Item Value="Job"/>
+          <Item Value="Mgr"/>
+          <Item Value="Hiredate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="HistoricEmpsView1Iterator" id="HistoricEmpsView1">
+      <nodeDefinition DefName="nl.amis.hrm.model.HistoricEmpsView" Name="HistoricEmpsView10">
+        <AttrNames>
+          <Item Value="Empno"/>
+          <Item Value="Ename"/>
+          <Item Value="Sal"/>
+          <Item Value="Job"/>
+          <Item Value="Deptno"/>
+          <Item Value="Mgr"/>
+          <Item Value="Comm"/>
+          <Item Value="Hiredate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="HistoricEmpsView1Iterator" id="ExecuteWithParams" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="bind_flashbacktime" NDType="oracle.jbo.domain.Number"
+                 NDValue="${bindings.ExecuteWithParams_bind_flashbacktime}"/>
+    </action>
+    <attributeValues IterBinding="variables" id="bind_flashbacktime">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_bind_flashbacktime"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="EmpVersionsView2Iterator" id="EmpVersionsView2">
+      <nodeDefinition DefName="nl.amis.hrm.model.EmpVersionsView" Name="EmpVersionsView20">
+        <AttrNames>
+          <Item Value="Empno"/>
+          <Item Value="Ename"/>
+          <Item Value="Deptno"/>
+          <Item Value="Sal"/>
+          <Item Value="Hiredate"/>
+          <Item Value="Job"/>
+          <Item Value="Comm"/>
+          <Item Value="VersionsStarttime"/>
+          <Item Value="VersionsEndtime"/>
+          <Item Value="VersionsOperation"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction" DataControl="HrmAppModuleDataControl"/>
+  </bindings>
+</pageDefinition>

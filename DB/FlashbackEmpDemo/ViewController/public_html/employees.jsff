@@ -1,0 +1,284 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+    <af:pageTemplate viewId="/oracle/templates/tabletFirstTemplate.jspx" id="pt1">
+        <f:facet name="header"/>
+        <f:facet name="status"/>
+        <f:facet name="appNav"/>
+        <f:facet name="globalLinks"/>
+        <f:facet name="footer"/>
+        <f:facet name="center">
+            <af:panelSplitter id="ps1" orientation="vertical">
+                <f:facet name="first">
+                    <af:panelHeader text="Actual Employee Situation" id="ph1">
+                        <f:facet name="context"/>
+                        <f:facet name="menuBar"/>
+                        <f:facet name="toolbar">
+                            <af:button actionListener="#{bindings.Commit.execute}" text="Commit"
+                                       disabled="#{!bindings.Commit.enabled}" id="b3"/>
+                        </f:facet>
+                        <f:facet name="legend"/>
+                        <f:facet name="info"/>
+                        <af:table value="#{bindings.EmployeesView1.collectionModel}" var="row"
+                                  rows="#{bindings.EmployeesView1.rangeSize}"
+                                  emptyText="#{bindings.EmployeesView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.EmployeesView1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.EmployeesView1.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.EmployeesView1.rangeSize}"
+                                  filterModel="#{bindings.EmployeesView1Query.queryDescriptor}"
+                                  queryListener="#{bindings.EmployeesView1Query.processQuery}" filterVisible="true"
+                                  varStatus="vs" id="t1">
+                            <af:column sortProperty="#{bindings.EmployeesView1.hints.Empno.name}" filterable="true"
+                                       sortable="true" headerText="#{bindings.EmployeesView1.hints.Empno.label}"
+                                       id="c1">
+                                <af:inputText value="#{row.bindings.Empno.inputValue}" readOnly="true"
+                                              label="#{bindings.EmployeesView1.hints.Empno.label}"
+                                              required="#{bindings.EmployeesView1.hints.Empno.mandatory}"
+                                              columns="#{bindings.EmployeesView1.hints.Empno.displayWidth}"
+                                              maximumLength="#{bindings.EmployeesView1.hints.Empno.precision}"
+                                              shortDesc="#{bindings.EmployeesView1.hints.Empno.tooltip}" id="it1">
+                                    <f:validator binding="#{row.bindings.Empno.validator}"/>
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.EmployeesView1.hints.Empno.format}"/>
+                                </af:inputText>
+                                <af:button text="History" id="b2">
+                                    <af:showPopupBehavior popupId="::popup1"/>
+                                </af:button>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.EmployeesView1.hints.Ename.name}" filterable="true"
+                                       sortable="true" headerText="#{bindings.EmployeesView1.hints.Ename.label}"
+                                       id="c2">
+                                <af:inputText value="#{row.bindings.Ename.inputValue}"
+                                              label="#{bindings.EmployeesView1.hints.Ename.label}"
+                                              required="#{bindings.EmployeesView1.hints.Ename.mandatory}"
+                                              columns="#{bindings.EmployeesView1.hints.Ename.displayWidth}"
+                                              maximumLength="#{bindings.EmployeesView1.hints.Ename.precision}"
+                                              shortDesc="#{bindings.EmployeesView1.hints.Ename.tooltip}" id="it2">
+                                    <f:validator binding="#{row.bindings.Ename.validator}"/>
+                                </af:inputText>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.EmployeesView1.hints.Deptno.name}" filterable="true"
+                                       sortable="true" headerText="#{bindings.EmployeesView1.hints.Deptno.label}"
+                                       id="c3">
+                                <af:inputText value="#{row.bindings.Deptno.inputValue}"
+                                              label="#{bindings.EmployeesView1.hints.Deptno.label}"
+                                              required="#{bindings.EmployeesView1.hints.Deptno.mandatory}"
+                                              columns="#{bindings.EmployeesView1.hints.Deptno.displayWidth}"
+                                              maximumLength="#{bindings.EmployeesView1.hints.Deptno.precision}"
+                                              shortDesc="#{bindings.EmployeesView1.hints.Deptno.tooltip}" id="it3">
+                                    <f:validator binding="#{row.bindings.Deptno.validator}"/>
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.EmployeesView1.hints.Deptno.format}"/>
+                                </af:inputText>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.EmployeesView1.hints.Sal.name}" filterable="true"
+                                       sortable="true" headerText="#{bindings.EmployeesView1.hints.Sal.label}" id="c4">
+                                <af:inputText value="#{row.bindings.Sal.inputValue}"
+                                              label="#{bindings.EmployeesView1.hints.Sal.label}"
+                                              required="#{bindings.EmployeesView1.hints.Sal.mandatory}"
+                                              columns="#{bindings.EmployeesView1.hints.Sal.displayWidth}"
+                                              maximumLength="#{bindings.EmployeesView1.hints.Sal.precision}"
+                                              shortDesc="#{bindings.EmployeesView1.hints.Sal.tooltip}" id="it4">
+                                    <f:validator binding="#{row.bindings.Sal.validator}"/>
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.EmployeesView1.hints.Sal.format}"/>
+                                </af:inputText>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.EmployeesView1.hints.Job.name}" filterable="true"
+                                       sortable="true" headerText="#{bindings.EmployeesView1.hints.Job.label}" id="c5">
+                                <af:inputText value="#{row.bindings.Job.inputValue}"
+                                              label="#{bindings.EmployeesView1.hints.Job.label}"
+                                              required="#{bindings.EmployeesView1.hints.Job.mandatory}"
+                                              columns="#{bindings.EmployeesView1.hints.Job.displayWidth}"
+                                              maximumLength="#{bindings.EmployeesView1.hints.Job.precision}"
+                                              shortDesc="#{bindings.EmployeesView1.hints.Job.tooltip}" id="it5">
+                                    <f:validator binding="#{row.bindings.Job.validator}"/>
+                                </af:inputText>
+                            </af:column>
+                         
+                           
+                        </af:table>
+                    </af:panelHeader>
+                </f:facet>
+                <f:facet name="second">
+                    <af:panelHeader text="Employees - Historical Analysis" id="ph2">
+                        <f:facet name="context"/>
+                        <f:facet name="menuBar"/>
+                        <f:facet name="toolbar"/>
+                        <f:facet name="legend"/>
+                        <f:facet name="info"/>
+                        <af:panelCollection id="pc1">
+                            <f:facet name="menus"/>
+                            <f:facet name="toolbar"/>
+                            <f:facet name="statusbar"/>
+                            <af:table value="#{bindings.HistoricEmpsView1.collectionModel}" var="row"
+                                      rows="#{bindings.HistoricEmpsView1.rangeSize}"
+                                      emptyText="#{bindings.HistoricEmpsView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                      rowBandingInterval="0" fetchSize="#{bindings.HistoricEmpsView1.rangeSize}"
+                                      filterModel="#{bindings.HistoricEmpsView1Query.queryDescriptor}"
+                                      queryListener="#{bindings.HistoricEmpsView1Query.processQuery}"
+                                      filterVisible="true" varStatus="vs" id="t2" partialTriggers=":::b1">
+                                <af:column sortProperty="#{bindings.HistoricEmpsView1.hints.Empno.name}"
+                                           filterable="true" sortable="true"
+                                           headerText="#{bindings.HistoricEmpsView1.hints.Empno.label}" id="c8">
+                                    <af:outputText value="#{row.Empno}"
+                                                   shortDesc="#{bindings.HistoricEmpsView1.hints.Empno.tooltip}"
+                                                   id="ot1"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.HistoricEmpsView1.hints.Ename.name}"
+                                           filterable="true" sortable="true"
+                                           headerText="#{bindings.HistoricEmpsView1.hints.Ename.label}" id="c9">
+                                    <af:outputText value="#{row.Ename}"
+                                                   shortDesc="#{bindings.HistoricEmpsView1.hints.Ename.tooltip}"
+                                                   id="ot2"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.HistoricEmpsView1.hints.Sal.name}" filterable="true"
+                                           sortable="true" headerText="#{bindings.HistoricEmpsView1.hints.Sal.label}"
+                                           id="c10">
+                                    <af:outputText value="#{row.Sal}"
+                                                   shortDesc="#{bindings.HistoricEmpsView1.hints.Sal.tooltip}"
+                                                   id="ot3"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.HistoricEmpsView1.hints.Job.name}" filterable="true"
+                                           sortable="true" headerText="#{bindings.HistoricEmpsView1.hints.Job.label}"
+                                           id="c11">
+                                    <af:outputText value="#{row.Job}"
+                                                   shortDesc="#{bindings.HistoricEmpsView1.hints.Job.tooltip}"
+                                                   id="ot4"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.HistoricEmpsView1.hints.Deptno.name}"
+                                           filterable="true" sortable="true"
+                                           headerText="#{bindings.HistoricEmpsView1.hints.Deptno.label}" id="c12">
+                                    <af:outputText value="#{row.Deptno}"
+                                                   shortDesc="#{bindings.HistoricEmpsView1.hints.Deptno.tooltip}"
+                                                   id="ot5"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.HistoricEmpsView1.hints.Comm.name}"
+                                           filterable="true" sortable="true"
+                                           headerText="#{bindings.HistoricEmpsView1.hints.Comm.label}" id="c14">
+                                    <af:outputText value="#{row.Comm}"
+                                                   shortDesc="#{bindings.HistoricEmpsView1.hints.Comm.tooltip}"
+                                                   id="ot7"/>
+                                </af:column>
+                            </af:table>
+                        </af:panelCollection>
+                        <af:panelFormLayout id="pfl1">
+                            
+                             <af:selectOneChoice value="#{bindings.bind_flashbacktime.inputValue}"
+                                  autoSubmit="true"
+                                  label="Data from how long ago?"
+                                  id="timeSelector"
+                                  valueChangeListener="#{MyBean.changeHistoryWindow}">
+                <af:selectItem label="Actual" value="0"/>
+                <af:selectItem label="1 Minute" value="1"/>
+                <af:selectItem label="5 Minutes" value="5"/>
+                <af:selectItem label="15 Minutes" value="15"/>
+                <af:selectItem label="One Hour" value="60"/>
+                <af:selectItem label="Two Hours" value="120"/>
+                <af:selectItem label="One Day" value="1440"/>
+                <af:selectItem label="One Week" value="10080"/>
+                <af:selectItem label="One Month" value="40380"/>
+               
+              </af:selectOneChoice>
+                            <af:button actionListener="#{bindings.ExecuteWithParams.execute}" text="ExecuteWithParams"
+                                       disabled="#{!bindings.ExecuteWithParams.enabled}" id="b1"/>
+                        </af:panelFormLayout>
+                    </af:panelHeader>
+                </f:facet>
+            </af:panelSplitter>
+        </f:facet>
+        <f:facet name="start"/>
+        <f:facet name="end">
+            <af:popup childCreation="deferred" autoCancel="disabled" id="popup1">
+                <af:panelWindow id="pw1" title="Evolution for Employee">
+                    <af:panelCollection id="pc2">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar"/>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.EmpVersionsView2.collectionModel}" var="row"
+                                  rows="#{bindings.EmpVersionsView2.rangeSize}"
+                                  emptyText="#{bindings.EmpVersionsView2.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0" fetchSize="#{bindings.EmpVersionsView2.rangeSize}" id="t3">
+                            <af:column sortProperty="#{bindings.EmpVersionsView2.hints.Empno.name}" sortable="true"
+                                       headerText="#{bindings.EmpVersionsView2.hints.Empno.label}" id="c16">
+                                <af:outputText value="#{row.Empno}"
+                                               shortDesc="#{bindings.EmpVersionsView2.hints.Empno.tooltip}" id="ot9">
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.EmpVersionsView2.hints.Empno.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.EmpVersionsView2.hints.Ename.name}" sortable="true"
+                                       headerText="#{bindings.EmpVersionsView2.hints.Ename.label}" id="c17">
+                                <af:outputText value="#{row.Ename}"
+                                               shortDesc="#{bindings.EmpVersionsView2.hints.Ename.tooltip}" id="ot10"/>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.EmpVersionsView2.hints.Deptno.name}" sortable="true"
+                                       headerText="#{bindings.EmpVersionsView2.hints.Deptno.label}" id="c18">
+                                <af:outputText value="#{row.Deptno}"
+                                               shortDesc="#{bindings.EmpVersionsView2.hints.Deptno.tooltip}" id="ot11">
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.EmpVersionsView2.hints.Deptno.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.EmpVersionsView2.hints.Sal.name}" sortable="true"
+                                       headerText="#{bindings.EmpVersionsView2.hints.Sal.label}" id="c19">
+                                <af:outputText value="#{row.Sal}"
+                                               shortDesc="#{bindings.EmpVersionsView2.hints.Sal.tooltip}" id="ot12">
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.EmpVersionsView2.hints.Sal.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.EmpVersionsView2.hints.Hiredate.name}" sortable="true"
+                                       headerText="#{bindings.EmpVersionsView2.hints.Hiredate.label}" id="c20">
+                                <af:outputText value="#{row.Hiredate}"
+                                               shortDesc="#{bindings.EmpVersionsView2.hints.Hiredate.tooltip}"
+                                               id="ot13">
+                                    <af:convertDateTime pattern="#{bindings.EmpVersionsView2.hints.Hiredate.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.EmpVersionsView2.hints.Job.name}" sortable="true"
+                                       headerText="#{bindings.EmpVersionsView2.hints.Job.label}" id="c21">
+                                <af:outputText value="#{row.Job}"
+                                               shortDesc="#{bindings.EmpVersionsView2.hints.Job.tooltip}" id="ot14"/>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.EmpVersionsView2.hints.Comm.name}" sortable="true"
+                                       headerText="#{bindings.EmpVersionsView2.hints.Comm.label}" id="c22">
+                                <af:outputText value="#{row.Comm}"
+                                               shortDesc="#{bindings.EmpVersionsView2.hints.Comm.tooltip}" id="ot15">
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.EmpVersionsView2.hints.Comm.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.EmpVersionsView2.hints.VersionsStarttime.name}"
+                                       sortable="true"
+                                       headerText="#{bindings.EmpVersionsView2.hints.VersionsStarttime.label}" id="c23">
+                                <af:outputText value="#{row.VersionsStarttime}"
+                                               shortDesc="#{bindings.EmpVersionsView2.hints.VersionsStarttime.tooltip}"
+                                               id="ot16">
+                                    <af:convertDateTime pattern="#{bindings.EmpVersionsView2.hints.VersionsStarttime.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.EmpVersionsView2.hints.VersionsEndtime.name}"
+                                       sortable="true"
+                                       headerText="#{bindings.EmpVersionsView2.hints.VersionsEndtime.label}" id="c24">
+                                <af:outputText value="#{row.VersionsEndtime}"
+                                               shortDesc="#{bindings.EmpVersionsView2.hints.VersionsEndtime.tooltip}"
+                                               id="ot17">
+                                    <af:convertDateTime pattern="#{bindings.EmpVersionsView2.hints.VersionsEndtime.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.EmpVersionsView2.hints.VersionsOperation.name}"
+                                       sortable="true"
+                                       headerText="#{bindings.EmpVersionsView2.hints.VersionsOperation.label}" id="c25">
+                                <af:outputText value="#{row.VersionsOperation}"
+                                               shortDesc="#{bindings.EmpVersionsView2.hints.VersionsOperation.tooltip}"
+                                               id="ot18"/>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </af:panelWindow>
+            </af:popup>
+        </f:facet>
+    </af:pageTemplate>
+</jsp:root>
