@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+    <af:panelGroupLayout id="pgl1" layout="vertical">
+        <af:panelBox text="Deck Demo 12C(12.1.3)" id="pb1" showDisclosure="false">
+            <f:facet name="toolbar"/>
+            <af:panelGroupLayout id="pgl2" layout="vertical" halign="center">
+                <af:panelGroupLayout id="pgl4" layout="horizontal" halign="center">
+                    <af:link id="l1" icon="#{resource['images:circle-lblue.png']}"
+                             actionListener="#{viewScope.DynamicDeckBean.link1Action}" partialSubmit="true"/>
+                    <af:link id="l2" icon="#{resource['images:circle-lblue.png']}"
+                             hoverIcon="#{resource['images:circle-lred.png']}" partialSubmit="true"
+                             actionListener="#{viewScope.DynamicDeckBean.link2Action}"/>
+                    <af:link id="l3" icon="#{resource['images:circle-lblue.png']}"
+                             hoverIcon="#{resource['images:circle-lred.png']}" partialSubmit="true"
+                             actionListener="#{viewScope.DynamicDeckBean.link3Action}"/>
+                    <af:link id="l4" icon="#{resource['images:circle-lblue.png']}"
+                             hoverIcon="#{resource['images:circle-lred.png']}" partialSubmit="true"
+                             actionListener="#{viewScope.DynamicDeckBean.link4Action}"/>
+                    <af:link id="l5" icon="#{resource['images:circle-lblue.png']}"
+                             hoverIcon="#{resource['images:circle-lred.png']}" partialSubmit="true"
+                             actionListener="#{viewScope.DynamicDeckBean.link5Action}"/>
+                    <af:link id="l6" icon="#{resource['images:circle-lblue.png']}"
+                             hoverIcon="#{resource['images:circle-lred.png']}" partialSubmit="true"
+                             actionListener="#{viewScope.DynamicDeckBean.link6Action}"/>
+                    <af:selectOneChoice label="Transition Effect" id="soc1"
+                                        value="#{viewScope.DynamicDeckBean.transitionEffect}" autoSubmit="true">
+                        <af:selectItem label="Fade" value="fade" id="si1"/>
+                        <af:selectItem label="Flip Up" value="flipUp" id="si2"/>
+                        <af:selectItem label="Flip Down" value="flipDown" id="si3"/>
+                        <af:selectItem label="Flip Start" value="flipStart" id="si4"/>
+                        <af:selectItem label="Flip End" value="flipEnd" id="si5"/>
+                        <af:selectItem label="Flip Left" value="flipLeft" id="si5b"/>
+                        <af:selectItem label="Flip Right" value="flipRight" id="si6"/>
+                        <af:selectItem label="Slide Up" value="slideUp" id="si7"/>
+                        <af:selectItem label="Slide Down" value="slideDown" id="si8"/>
+                        <af:selectItem label="Slide Start" value="slideStart" id="si9"/>
+                        <af:selectItem label="Slide End" value="slideEnd" id="si10"/>
+                        <af:selectItem label="Slide Left" value="slideLeft" id="si11"/>
+                        <af:selectItem label="Slide Right" value="slideRight" id="si12"/>
+                    </af:selectOneChoice>
+                </af:panelGroupLayout>
+                <af:deck id="d1" displayedChild="i1" binding="#{viewScope.DynamicDeckBean.deckBind}">
+                    <af:transition triggerType="forwardNavigate"
+                                   transition="#{viewScope.DynamicDeckBean.transitionEffect}"/>
+                    <af:transition transition="flipRight" triggerType="backNavigate"/>
+                    <af:image source="#{resource['images:1.jpg']}" shortDesc="Wild Life 1" id="i1"
+                              inlineStyle="height:300px;width:500px;"/>
+                    <af:image source="#{resource['images:2.jpg']}" shortDesc="Wild Life2" id="i2"
+                              inlineStyle="height:300px;width:500px;"/>
+                    <af:image source="#{resource['images:3.jpg']}" shortDesc="Wild Life3" id="i3"
+                              inlineStyle="height:300px;width:500px;"/>
+                    <af:image source="#{resource['images:4.jpg']}" shortDesc="Wild Life4" id="i4"
+                              inlineStyle="height:300px;width:500px;"/>
+                    <af:image source="#{resource['images:5.jpg']}" shortDesc="Wild Life5" id="i5"
+                              inlineStyle="height:300px;width:500px;"/>
+                    <af:image source="#{resource['images:6.jpg']}" shortDesc="Wild Life6" id="i6"
+                              inlineStyle="height:300px;width:500px;"/>
+                </af:deck>
+            </af:panelGroupLayout>
+        </af:panelBox>
+    </af:panelGroupLayout>
+</jsp:root>
