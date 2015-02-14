@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<faces-config version="2.1" xmlns="http://java.sun.com/xml/ns/javaee">
+  <application>
+    <default-render-kit-id>oracle.adf.rich</default-render-kit-id>
+  </application>
+  <managed-bean>
+    <managed-bean-name>activeBean</managed-bean-name>
+    <managed-bean-class>nl.amis.hrm.view.ActiveBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+  <managed-bean>
+    <managed-bean-name>messageManager</managed-bean-name>
+    <managed-bean-class>nl.amis.hrm.view.MessageManager</managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+  </managed-bean>
+  
+  <managed-bean>
+    <managed-bean-name>multiMessageManager</managed-bean-name>
+    <managed-bean-class>nl.amis.hrm.view.MessageManager</managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+  </managed-bean>  
+  <managed-bean>
+    <managed-bean-name>imageManager</managed-bean-name>
+    <managed-bean-class>nl.amis.hrm.view.ImageManager</managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+  </managed-bean>
+  <managed-bean>
+    <managed-bean-name>activeMessageBean</managed-bean-name>
+    <managed-bean-class>nl.amis.hrm.view.ActiveMessageBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+      <property-name>msgMgr</property-name>
+      <property-class>nl.amis.hrm.view.MessageManager</property-class>
+      <value>#{messageManager}</value>
+    </managed-property>
+  </managed-bean>
+
+  <managed-bean>
+    <managed-bean-name>activeMultiMessageBean</managed-bean-name>
+    <managed-bean-class>nl.amis.hrm.view.ActiveMultiMessageBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+      <property-name>msgMgr</property-name>
+      <property-class>nl.amis.hrm.view.MessageManager</property-class>
+      <value>#{multiMessageManager}</value>
+    </managed-property>
+  </managed-bean>
+
+    
+  <managed-bean>
+    <managed-bean-name>activeImageBean</managed-bean-name>
+    <managed-bean-class>nl.amis.hrm.view.ActiveMessageBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+      <property-name>msgMgr</property-name>
+      <property-class>nl.amis.hrm.view.MessageManager</property-class>
+      <value>#{imageManager}</value>
+    </managed-property>
+  </managed-bean>
+  
+    <managed-bean>
+    <managed-bean-name>DepartmentManagerBean</managed-bean-name>
+    <managed-bean-class>nl.amis.hrm.table.DepartmentManager</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+  <managed-bean>
+    <managed-bean-name>DepartmentBackend</managed-bean-name>
+    <managed-bean-class>nl.amis.hrm.table.DepartmentBackend</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+      <property-name>listener</property-name>
+      <value>#{DepartmentManagerBean}</value>
+    </managed-property>
+  </managed-bean> 
+
+  
+</faces-config>

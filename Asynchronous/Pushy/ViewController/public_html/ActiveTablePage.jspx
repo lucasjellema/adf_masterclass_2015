@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1">
+      <af:form id="f1">
+        <af:panelSplitter splitterPosition="50" orientation="vertical" id="ps2">
+          <f:facet name="first">
+            <af:panelHeader text="Message Board" id="ph1">
+              <f:facet name="context"/>
+              <f:facet name="menuBar"/>
+              <f:facet name="toolbar"/>
+              <f:facet name="legend"/>
+              <f:facet name="info"/>
+            </af:panelHeader>
+          </f:facet>
+          <f:facet name="second">
+            <af:panelStretchLayout bottomHeight="50px" id="psl1">
+              <f:facet name="center">
+                <af:panelSplitter splitterPosition="314" id="ps1">
+                  <f:facet name="first">
+                    <af:panelBox text="Submit to Message Board" id="pb3">
+                      <f:facet name="toolbar">
+                        <af:commandButton text="Post Message" id="cb1"/>
+                      </f:facet>
+                      <af:inputText id="messageIn"
+                                    value="#{multiMessageManager.message}"
+                                    autoSubmit="true"/>
+                    </af:panelBox>
+                  </f:facet>
+                  <f:facet name="second">
+<!--                    <af:table var="row" rowBandingInterval="0" id="t1"
+                    value="#{activeMultiMessageBean}">
+                      <af:column sortable="false" headerText="Message" id="c3">
+                        <af:outputText value="#{row.message}" id="ot1"/>
+                      </af:column>
+                      <af:column sortable="false" headerText="Timestamp" id="c3t">
+                        <af:outputText value="#{row.timestamp}" id="ott1">
+                          <af:convertDateTime type="time" timeStyle="long"/>
+                        </af:outputText>
+                      </af:column>
+                    </af:table>
+    -->
+                                    <af:table value="#{DepartmentManagerBean}" var="row"
+                          rowSelection="multiple" id="t2"
+                          columnSelection="multiple" width="700"
+                          inlineStyle="height:100px;">
+                  <af:column sortProperty="id" sortable="false" headerText="id"
+                             id="c11">
+                    <af:outputText value="#{row.id}" id="it3"/>
+                  </af:column>
+                  <af:column sortProperty="name" sortable="false"
+                             headerText="name" id="c21">
+                    <af:outputText value="#{row.name}" id="it4"/>
+                  </af:column>
+                  <af:column sortProperty="value" sortable="false"
+                             headerText="name" id="c221">
+                    <af:outputText value="#{row.value}" id="it43"/>
+                  </af:column>
+                </af:table>
+
+                  </f:facet>
+                </af:panelSplitter>
+              </f:facet>
+              <f:facet name="bottom"/>
+            </af:panelStretchLayout>
+          </f:facet>
+        </af:panelSplitter>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

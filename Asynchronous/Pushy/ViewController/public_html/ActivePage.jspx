@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1">
+      <af:resource type="javascript">
+        activeDataCallback = function (event) {
+            var image = event.getSource().getValue();
+            showPopup(image);
+        }
+        showPopup = function (image) {
+            var popup = AdfPage.PAGE.findComponentByAbsoluteId("demoPopup");
+            var dialog = popup.findComponent(":d2");
+            dialog.setTitle("Selected image " + image);
+            var imageComponent = popup.findComponent(":sharedImage");
+            imageComponent.setSource("images/"+image);
+            popup.show();
+        }
+        
+       function selectImage(event) {
+       var image = event.getSource();
+       var imageName = image.getProperty("imageSource");
+       var carousel = AdfPage.PAGE.findComponentByAbsoluteId("imgSelector");
+       AdfCustomEvent.queue(carousel, "processImageSelectionEvent", {imageName:imageName}, true);
+
+    }
+
+      </af:resource>
+      <af:form id="f1">
+
+
+        <af:panelStretchLayout id="psl1" bottomHeight="49px">
+          <f:facet name="top">
+            <af:panelHeader text="Active Page" id="ph1">
+              <f:facet name="context"/>
+              <f:facet name="menuBar"/>
+              <f:facet name="toolbar"/>
+              <f:facet name="legend"/>
+              <f:facet name="info"/>
+            </af:panelHeader>
+          </f:facet>
+          <f:facet name="center">
+            <af:panelDashboard id="pd1" rowHeight="250px" columns="3">
+              <af:panelBox text="Autonomous, Server Side, Counter" id="pb1">
+                <f:facet name="toolbar"/>
+                <af:activeOutputText id="sessionCounter"
+                                     value="#{activeBean.state}"
+                                     inlineStyle="color:brown;font-size:100px;font-weight:bold;text-align:center;"/>
+              </af:panelBox>
+              <af:panelBox text="Message Board, Application Wide" id="pb2">
+                <f:facet name="toolbar"/>
+                <af:activeOutputText id="message"
+                                     value="#{activeMessageBean.state}"
+                                     inlineStyle="color:blue;font-size:16px;font-weight:bold;text-align:center;"/>
+              </af:panelBox>
+              <af:panelBox text="Submit to Message Board" id="pb3">
+                <f:facet name="toolbar"/>
+                <af:inputText id="messageIn" value="#{messageManager.message}"
+                              autoSubmit="true"/>
+              </af:panelBox>
+              <af:panelBox text="Select Image" id="pb31">
+                <f:facet name="toolbar"/>
+                <af:panelGroupLayout id="pgl" layout="scroll">
+                  <af:carousel id="imgSelector" value="#{imageManager.images}"
+                               var="img">
+                    <f:facet name="nodeStamp">
+                      <af:carouselItem id="ci1">
+                        <af:image source="images/#{img}" id="i1">
+                          <!--<af:setPropertyListener from="#{img}" to="#{imageManager.message}" type="dblClick" />-->
+                          <af:clientListener method="selectImage"
+                                             type="dblClick"/>
+                          <af:clientAttribute name="imageSource"
+                                              value="#{img}"/>
+                        </af:image>
+                      </af:carouselItem>
+                    </f:facet>
+
+                  <af:serverListener type="processImageSelectionEvent"
+                                     method="#{imageManager.processImageSelection}"/>
+                  </af:carousel>
+                  <af:inputText id="imageIn" value="#{imageManager.image}"
+                                autoSubmit="true">
+                                </af:inputText>
+                </af:panelGroupLayout>
+              </af:panelBox>
+              <!-- id="af_one_column_header_footer_stretched"   -->
+            </af:panelDashboard>
+          </f:facet>
+          <f:facet name="bottom">
+            <af:panelGroupLayout id="pgl0">
+              <af:outputText id="titi" value="OUTPUT:"/>
+              <af:activeOutputText id="activecomp"
+                                   value="#{activeImageBean.state}">
+                <af:clientListener type="propertyChange"
+                                   method="activeDataCallback"/>
+              </af:activeOutputText>
+             
+            </af:panelGroupLayout>
+          </f:facet>
+        </af:panelStretchLayout>
+        <af:popup id="demoPopup" contentDelivery="immediate">
+          <af:dialog closeIconVisible="false" title="Image" visible="true"
+                     id="d2">
+            <af:outputText value="Real content would go here" id="txtBox"/>
+            <af:image  clientComponent="true" source="images/Chrysanthemum.jpg" id="sharedImage" inlineStyle="height:400px"/>
+          </af:dialog>
+        </af:popup>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>
